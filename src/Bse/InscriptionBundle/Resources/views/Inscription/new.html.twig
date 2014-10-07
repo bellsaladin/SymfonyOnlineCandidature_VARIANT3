@@ -1,0 +1,51 @@
+{% extends 'BseInscriptionBundle::layout.html.twig' %}
+
+{% block content %}
+    <h1>Inscription creation</h1>    
+    	
+    	{{ form_start(form, {'method': 'POST'}) }}
+
+	    	<div>{{ form_errors(form) }}</div>
+
+		    <div class="form-group">
+		        <label for="inputEmail">{{ form_label(form.cin) }}</label>
+		        <p>{{ form_errors(form.cin) }}</p>
+		        {{ form_widget(form.cin) }}
+		    </div>
+
+		    <div class="form-group">
+		        <label for="inputEmail">{{ form_label(form.cne) }}</label>
+		        <p>{{ form_errors(form.cne) }}</p>
+		        {{ form_widget(form.cne) }}	
+		    </div>
+		    
+		    <div class="form-group">
+		        <label for="inputEmail">{{ form_label(form.filiere1) }}</label>
+		        <p>{{ form_errors(form.filiere1) }}</p>
+		        <select id="{{ form.filiere1.vars.id }}" name="{{ form.filiere1.vars.full_name }}">
+		        	<option value="Filière 1">Filière 1</option>
+		        	<option value="Filière 2">Filière 2</option>
+		        	<option value="Filière 3">Filière 3</option>
+		        	<option value="Filière 4">Filière 4</option>
+		        </select>
+		    </div>
+		    <div class="form-group">
+		        <label for="inputEmail">{{ form_label(form.filiere2) }}</label>
+		        <p>{{ form_errors(form.filiere2) }}</p>
+		        {{ form_widget(form.filiere2) }}	
+		    </div>
+
+		    <div class="form-group">		        
+		        {{ form_row(form._token) }}
+		        <input type="submit" class="btn btn-primary" value="Enregistrer"/>		        
+	    	</div>	    	
+    	{{ form_end(form,{'render_rest': false}) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('inscription') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

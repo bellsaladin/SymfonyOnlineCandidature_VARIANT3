@@ -1,0 +1,65 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <title>{% block title %}UIT - Inscription {% endblock %}</title>
+	    <link rel="icon" sizes="16x16" href="{{ asset('favicon.ico') }}" />
+	    <link rel="stylesheet" href="{{ asset('bundles/bseinscription/css/bootstrap.min.css') }}" />
+	    <script src="{{ asset('bundles/bseinscription/js/jquery.min.js') }}"></script>
+	    <script src="{{ asset('bundles/bseinscription/js/bootstrap.min.js') }}"></script>	    
+	</head>
+	<body>
+		<div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="../" class="navbar-brand">UIT-Inscriptions</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Filières <span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="themes">
+                <li><a href="../default/">Default</a></li>
+                <li class="divider"></li>
+                <li><a href="../cerulean/">Cerulean</a></li>
+                <li><a href="../cosmo/">Cosmo</a></li>
+                <li><a href="../cyborg/">Cyborg</a></li>
+                <li><a href="../darkly/">Darkly</a></li>
+                <li><a href="../flatly/">Flatly</a></li>
+                <li><a href="../journal/">Journal</a></li>
+                <li><a href="../lumen/">Lumen</a></li>
+                <li><a href="../paper/">Paper</a></li>
+                <li><a href="../readable/">Readable</a></li>
+                <li><a href="../sandstone/">Sandstone</a></li>
+                <li><a href="../simplex/">Simplex</a></li>
+                <li><a href="../slate/">Slate</a></li>
+                <li><a href="../spacelab/">Spacelab</a></li>
+                <li><a href="../superhero/">Superhero</a></li>
+                <li><a href="../united/">United</a></li>
+                <li><a href="../yeti/">Yeti</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="{{ url('_welcome') }}">Aide</a>
+            </li>
+            <li>
+              <a href="{{ url('_welcome') }}">A propos</a>
+            </li>            
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">            
+            <li><a href="{{ url('fos_user_security_login') }}" style="background-color: #C23434;">Consulter mon dossier</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+    <div class="container" style="margin-top:50px">
+		{% block content %}{% endblock %}
+	</div>	
+	</body>
+<html>

@@ -1,0 +1,30 @@
+inscription:
+    path:     /
+    defaults: { _controller: "BseInscriptionBundle:Inscription:index" }
+
+inscription_show:
+    path:     /{id}/show
+    defaults: { _controller: "BseInscriptionBundle:Inscription:show" }
+
+inscription_new:
+    path:     /new
+    defaults: { _controller: "BseInscriptionBundle:Inscription:new" }
+
+inscription_create:
+    path:     /create
+    defaults: { _controller: "BseInscriptionBundle:Inscription:create" }
+    requirements: { _method: post }
+
+inscription_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BseInscriptionBundle:Inscription:edit" }
+
+inscription_update:
+    path:     /{id}/update
+    defaults: { _controller: "BseInscriptionBundle:Inscription:update" }
+    requirements: { _method: post|put }
+
+inscription_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BseInscriptionBundle:Inscription:delete" }
+    requirements: { _method: post|delete }

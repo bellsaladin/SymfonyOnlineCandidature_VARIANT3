@@ -1,0 +1,7 @@
+bse_inscription_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: BseInscriptionBundle:Default:index }
+
+BseInscriptionBundle_inscription:
+        resource: "@BseInscriptionBundle/Resources/config/routing/inscription.yml"
+        prefix:   /inscription

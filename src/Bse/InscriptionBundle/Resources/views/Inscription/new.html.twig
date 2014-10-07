@@ -1,98 +1,145 @@
 {% extends 'BseInscriptionBundle::layout.html.twig' %}
 
-{% block content %}
-    	
+{% block content %}    			
+
     	{{ form_start(form, {'method': 'POST'}) }}
 
-	    	<h2>Candidature - Etape 1 : Informations générales</h2>
 
-	    	<div>{{ form_errors(form) }}</div>
-
-	    	<div class="row">
-		    	<div class="col-xs-12 col-md-6 col-lg-6">
-				    <div class="form-group">
-				        <label>{{ form_label(form.cin) }}</label>
-				        <p>{{ form_errors(form.cin) }}</p>
-				        <input type="text" name="{{ form.cin.vars.full_name }}" placeholder="ex : G 42402" class="form-control input-sm"/>	
-				    </div>
-				    <div class="form-group">
-				        <label>{{ form_label(form.cne) }}</label>
-				        <p>{{ form_errors(form.cne) }}</p>
-				        <input type="text" name="{{ form.cne.vars.full_name }}" placeholder="ex : G 42402" class="form-control input-sm"/>	
-				    </div>	
-				    <div class="form-group">
-				        <label>{{ form_label(form.adresse) }}</label>
-				        <p>{{ form_errors(form.adresse) }}</p>
-				        <textarea name="{{ form.adresse.vars.full_name }}" placeholder="ex : G 42402" class="form-control input-sm">	</textarea>
-				    </div>				    				    			    
-				</div>
-				<div class="col-xs-12 col-md-6 col-lg-6">
-					<div class="form-group">
-				        <label>{{ form_label(form.filiere1) }}</label>
-				        <p>{{ form_errors(form.filiere1) }}</p>
-				        <select id="{{ form.filiere1.vars.id }}" name="{{ form.filiere1.vars.full_name }}" class="form-control input-sm">
-				        	<option value="Filière 1">Filière 1</option>
-				        	<option value="Filière 2">Filière 2</option>
-				        	<option value="Filière 3">Filière 3</option>
-				        	<option value="Filière 4">Filière 4</option>
-				        </select>
-				        <p><button type="button">Ajouter une autre filière</button></p>
-			        </div>		    
-				    <div class="form-group">
-				        <label>{{ form_label(form.filiere2) }}</label>
-				        <p>{{ form_errors(form.filiere2) }}</p>
-				        {{ form_widget(form.filiere2) }}	
-				    </div>		    
-				</div>
+    		<div id="rootwizard" style="margin-top:100px">
+			<div class="col-xs-3">
+				<ul class="nav nav-tabs tabs-left" style="height: 300px;">
+				  	<li class="active"><a href="#tab1" data-toggle="tab">Etape 1 : Choix de la filière</a></li>
+					<li><a href="#tab2" data-toggle="tab">Etape 2 : Informations générales</a></li>
+					<li><a href="#tab3" data-toggle="tab">Etape 3 : Cursus</a></li>					
+				</ul>
 			</div>
+			<div class="col-xs-9">
+				<div class="tab-content">
+				    <div class="tab-pane active" id="tab1">
+				      <h1>Candidature - Etape 1 : Choix de la filière </h1>
 
-			<h2>Candidature - Etape 2 : Cursus</h2>
+				    	<div>{{ form_errors(form) }}</div>
+
+				    	<div class="row">
+					    	<div class="col-xs-12 col-md-12 col-lg-12">
+							    <div class="form-group">
+							        <label>Choisissez le filière où vous désirez déposer votre candidature</label>
+							        <p>{{ form_errors(form.filiere1) }}</p>
+							        <select id="{{ form.filiere1.vars.id }}" name="{{ form.filiere1.vars.full_name }}" class="form-control input-md">
+							        	<option value="Filière 1">Filière 1</option>
+							        	<option value="Filière 2">Filière 2</option>
+							        	<option value="Filière 3">Filière 3</option>
+							        	<option value="Filière 4">Filière 4</option>
+							        </select>
+							        <span class="label label-danger">Simplement faire en sorte qu'une inscription soit faite par filière tout en permetant la modification des inscriptions </span>					    
+							    </div>				    				    			    
+							</div>
+						</div>
+				    </div>
+
+				    <div class="tab-pane" id="tab2">
+				        <h1>Candidature - Etape 2 : Informations générales</h1>
+
+				    	<div>{{ form_errors(form) }}</div>
+
+				    	<div class="row">
+					    	<div class="col-xs-12 col-md-6 col-lg-6">
+							    <div class="form-group">
+							        <label>{{ form_label(form.cin) }}</label>
+							        <p>{{ form_errors(form.cin) }}</p>
+							        <input type="text" name="{{ form.cin.vars.full_name }}" placeholder="ex : G 42402" class="form-control input-sm"/>	
+							    </div>
+							    <div class="form-group">
+							        <label>{{ form_label(form.cne) }}</label>
+							        <p>{{ form_errors(form.cne) }}</p>
+							        <input type="text" name="{{ form.cne.vars.full_name }}" placeholder="ex : G 42402" class="form-control input-sm"/>	
+							    </div>	
+							    <div class="form-group">
+							        <label>{{ form_label(form.adresse) }}</label>
+							        <p>{{ form_errors(form.adresse) }}</p>
+							        <textarea name="{{ form.adresse.vars.full_name }}" placeholder="ex : G 42402" class="form-control input-sm"></textarea>
+							    </div>				    				    			    
+							</div>
+							<div class="col-xs-12 col-md-6 col-lg-6">
+								<div class="form-group">
+							        <label>{{ form_label(form.filiere1) }}</label>
+							        <p>{{ form_errors(form.filiere1) }}</p>
+							        <select id="{{ form.filiere1.vars.id }}" name="{{ form.filiere1.vars.full_name }}" class="form-control input-sm">
+							        	<option value="Filière 1">Filière 1</option>
+							        	<option value="Filière 2">Filière 2</option>
+							        	<option value="Filière 3">Filière 3</option>
+							        	<option value="Filière 4">Filière 4</option>
+							        </select>				        				        
+						        </div>		    
+							    <div class="form-group">
+							        <label>{{ form_label(form.filiere2) }}</label>
+							        <p>{{ form_errors(form.filiere2) }}</p>
+							        {{ form_widget(form.filiere2) }}	
+							    </div>		    
+							</div>
+						</div>
+				    </div>
+
+					<div class="tab-pane" id="tab3">
+						<h1>Candidature - Etape 3 : Cursus</h1>
 	    	
-	    	<div>{{ form_errors(form) }}</div>
+				    	<div>{{ form_errors(form) }}</div>
 
-	    	<div class="row">
-		    	<div class="col-xs-12 col-md-4 col-lg-4">
-				    <div class="form-group">
-				        <label>{{ form_label(form.noteS1) }}</label>
-				        <p>{{ form_errors(form.noteS1) }}</p>
-				        <input type="text" name="{{ form.noteS1.vars.full_name }}" placeholder="ex : 13,50" class="form-control input-sm"/>	
-			        </div>
-			        <div class="form-group">
-				        <label>{{ form_label(form.noteS2) }}</label>
-				        <p>{{ form_errors(form.noteS2) }}</p>
-				        <input type="text" name="{{ form.noteS2.vars.full_name }}" placeholder="ex : 11,00" class="form-control input-sm"/>	
-				    </div>	
-				</div>
-				<div class="col-xs-12 col-md-4 col-lg-4">
-					<div class="form-group">
-				        <label>{{ form_label(form.noteS3) }}</label>
-				        <p>{{ form_errors(form.noteS3) }}</p>
-				        <input type="text" name="{{ form.noteS3.vars.full_name }}" placeholder="ex : 14,00" class="form-control input-sm"/>	
-			        </div>
-			        <div class="form-group">
-				        <label>{{ form_label(form.noteS4) }}</label>
-				        <p>{{ form_errors(form.noteS4) }}</p>
-				        <input type="text" name="{{ form.noteS4.vars.full_name }}" placeholder="ex : 10,00" class="form-control input-sm"/>	
-				    </div>		    
-				</div>
-				<div class="col-xs-12 col-md-4 col-lg-4">
-					<div class="form-group">
-				        <label>{{ form_label(form.noteS5) }}</label>
-				        <p>{{ form_errors(form.noteS5) }}</p>
-				        <input type="text" name="{{ form.noteS5.vars.full_name }}" placeholder="ex : 14,00" class="form-control input-sm"/>	
-			        </div>
-			        <div class="form-group">
-				        <label>{{ form_label(form.noteS6) }}</label>
-				        <p>{{ form_errors(form.noteS6) }}</p>
-				        <input type="text" name="{{ form.noteS6.vars.full_name }}" placeholder="ex : 10,00"class="form-control input-sm"/>	
-				    </div>		    
-				</div>
-			</div>		   
+				    	<div class="row">
+					    	<div class="col-xs-12 col-md-4 col-lg-4">
+							    <div class="form-group">
+							        <label>{{ form_label(form.noteS1) }}</label>
+							        <p>{{ form_errors(form.noteS1) }}</p>
+							        <input type="text" name="{{ form.noteS1.vars.full_name }}" placeholder="ex : 13,50" class="form-control input-sm"/>	
+						        </div>
+						        <div class="form-group">
+							        <label>{{ form_label(form.noteS2) }}</label>
+							        <p>{{ form_errors(form.noteS2) }}</p>
+							        <input type="text" name="{{ form.noteS2.vars.full_name }}" placeholder="ex : 11,00" class="form-control input-sm"/>	
+							    </div>	
+							</div>
+							<div class="col-xs-12 col-md-4 col-lg-4">
+								<div class="form-group">
+							        <label>{{ form_label(form.noteS3) }}</label>
+							        <p>{{ form_errors(form.noteS3) }}</p>
+							        <input type="text" name="{{ form.noteS3.vars.full_name }}" placeholder="ex : 14,00" class="form-control input-sm"/>	
+						        </div>
+						        <div class="form-group">
+							        <label>{{ form_label(form.noteS4) }}</label>
+							        <p>{{ form_errors(form.noteS4) }}</p>
+							        <input type="text" name="{{ form.noteS4.vars.full_name }}" placeholder="ex : 10,00" class="form-control input-sm"/>	
+							    </div>		    
+							</div>
+							<div class="col-xs-12 col-md-4 col-lg-4">
+								<div class="form-group">
+							        <label>{{ form_label(form.noteS5) }}</label>
+							        <p>{{ form_errors(form.noteS5) }}</p>
+							        <input type="text" name="{{ form.noteS5.vars.full_name }}" placeholder="ex : 14,00" class="form-control input-sm"/>	
+						        </div>
+						        <div class="form-group">
+							        <label>{{ form_label(form.noteS6) }}</label>
+							        <p>{{ form_errors(form.noteS6) }}</p>
+							        <input type="text" name="{{ form.noteS6.vars.full_name }}" placeholder="ex : 10,00"class="form-control input-sm"/>	
+							    </div>		    
+							</div>
+						</div>		   
 
-		    <div class="form-group">		        
-		        {{ form_row(form._token) }}
-		        <input type="submit" class="btn btn-primary" value="Enregistrer"/>		        
-	    	</div>	    	
+					    <div class="form-group">		        
+					        {{ form_row(form._token) }}
+					        <input type="submit" class="btn btn-primary" value="Enregistrer"/>		        
+				    	</div>	
+				    </div>										
+				</div>	
+				<ul class="pager wizard">
+						<li class="previous first disabled" style="display:none;"><a href="#">First</a></li>
+						<li class="previous disabled"><a href="#">Previous</a></li>
+						<li class="next last" style="display:none;"><a href="#">Last</a></li>
+					  	<li class="next"><a href="#">Next</a></li>
+				</ul>
+			</div>	
+		</div>
+
+	    		    				    	
     	{{ form_end(form,{'render_rest': false}) }}
 
         <ul class="record_actions">
@@ -102,4 +149,15 @@
         </a>
     </li>
 </ul>
+
+<script type="text/javascript">  
+
+	$(document).ready(function() {
+	  	$('#rootwizard').bootstrapWizard({'tabClass': 'nav nav-tabs'});
+	});
+</script>
+
+
+<script src="{{ asset('bundles/bseinscription/js/jquery.bootstrap.wizard.min.js') }}"></script>
+
 {% endblock %}

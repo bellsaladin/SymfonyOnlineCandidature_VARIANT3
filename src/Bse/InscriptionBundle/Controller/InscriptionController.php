@@ -25,6 +25,11 @@ class InscriptionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        if(!$user instanceof FOSUserEntity){
+            return $this->redirect($this->generateUrl('bse_inscription_welcome'));
+        }
 
         $user = $this->get('security.context')->getToken()->getUser();
 
@@ -86,7 +91,7 @@ class InscriptionController extends Controller
                 // checker (not enabled, expired, etc.).
             }
 
-            return $this->redirect($this->generateUrl('inscription', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('inscription'));
         }
         
         return $this->render('BseInscriptionBundle:Inscription:new.html.twig', array(

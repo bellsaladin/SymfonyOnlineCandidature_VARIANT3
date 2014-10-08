@@ -5,10 +5,18 @@ namespace Bse\InscriptionBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 
+use Bse\InscriptionBundle\Entity\User as FOSUserEntity;
+
 class DefaultController extends Controller
 {
     public function indexAction()
     {
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        if($user instanceof FOSUserEntity){
+            return $this->redirect($this->generateUrl('inscription'));
+        }
+
     	$request = $this->container->get('request');
         /* @var $request \Symfony\Component\HttpFoundation\Request */
         $session = $request->getSession();

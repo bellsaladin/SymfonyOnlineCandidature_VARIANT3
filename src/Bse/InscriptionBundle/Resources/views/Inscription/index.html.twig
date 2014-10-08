@@ -1,22 +1,20 @@
 {% extends 'BseInscriptionBundle::layout.html.twig' %}
 
-{% block content %}
-    <h3>Votre dossier de candidatures</h3>
-    
-        <p>Vous avez postulé aux filières suivantes :
+{% block subTitle %}Dossier de candidatures{% endblock %}
+
+{% block content %}    
+        <br/><br/>
+        <h4>Vous êtes candidat aux filières suivantes :</h4>
+        <br/>
         <ul>
         {% for entity in entities %}
-            <li>>               
-                <b>{{ entity.filiere }}</b>  ( <a href="{{ path('inscription_show', { 'id': entity.id }) }}">voir</a> )                                                  
+            <li>
+                <b>{{ entity.filiere }}</b>  ( <a href="{{ path('inscription_show', { 'id': entity.id }) }}">voir</a> )
             </li>            
         {% endfor %}
         </ul>    
-
-        <ul>
-            <li>
-                <a href="{{ path('inscription_new') }}">
-                    Nouvelle candidature
-                </a>
-            </li>
-        </ul>
-    {% endblock %}
+        <br/>
+        <a href="{{ path('inscription_new') }}">
+            Nouvelle candidature
+        </a>                    
+{% endblock %}

@@ -1,10 +1,10 @@
 {% extends 'BseInscriptionBundle::layout.html.twig' %}
 
+{% block subTitle %}Nouvelle candidature {% endblock %}
 
 {% block content %}    					
     	{{ form_start(form, {'method': 'POST', 'attr': {'id': 'newInscriptionForm'}} ) }} 
-    		<input type="hidden" name="firstInscription" value="{{ first }}">   		
-    		<hr/>
+    		<input type="hidden" name="firstInscription" value="{{ first }}">
     		<div id="rootwizard" style="margin-top:40px">
 			<div class="col-xs-3">
 				<ul class="nav nav-tabs tabs-left" style="height: 580px;">

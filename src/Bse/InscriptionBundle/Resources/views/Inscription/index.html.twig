@@ -3,18 +3,21 @@
 {% block subTitle %}Dossier de candidatures{% endblock %}
 
 {% block content %}    
-        <br/><br/>
-        <h4>Vous êtes candidat aux filières suivantes :</h4>
-        <br/>
+        <a class="btn btn-success btn-sm" href="{{ path('inscription_new') }}">
+            Nouvelle candidature
+        </a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="btn btn-danger btn-sm" href="{{ path('inscription_new') }}">
+            Deconnexion
+        </a>                    
+        <br/><br/>            
+        <h4>Vous êtes candidat aux filières suivantes :</h4>        
+        <br/>        
         <ul>
         {% for entity in entities %}
             <li>
-                <b>{{ entity.filiere }}</b>  ( <a href="{{ path('inscription_show', { 'id': entity.id }) }}">voir</a> )
+                <b class="label label-info" style="font-size:12px">{{ entity.filiere }}</b>  ( <a href="{{ path('inscription_show', { 'id': entity.id }) }}">Voir les détails de cette candidature</a> )
             </li>            
         {% endfor %}
         </ul>    
-        <br/>
-        <a href="{{ path('inscription_new') }}">
-            Nouvelle candidature
-        </a>                    
+        <br/>        
 {% endblock %}

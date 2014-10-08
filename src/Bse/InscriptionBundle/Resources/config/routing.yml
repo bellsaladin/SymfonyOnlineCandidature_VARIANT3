@@ -2,10 +2,6 @@ bse_inscription_welcome:
     pattern:  /
     defaults: { _controller: BseInscriptionBundle:Default:index }
 
-bse_resetting_password:
-    pattern:  /
-    defaults: { _controller: BseInscriptionBundle:Default:resetPassword }
-
 # bse_inscription_homepage:
 #     path:     /hello/{name}
 #     defaults: { _controller: BseInscriptionBundle:Default:index }

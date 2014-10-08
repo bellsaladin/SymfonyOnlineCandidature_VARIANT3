@@ -20,7 +20,8 @@ class InscriptionType extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('email')            
-            ->add('dateNaissance')  
+            ->add('dateNaissance', 'birthday',
+                   array( 'empty_value' => array('year' => 'Année', 'month' => 'Mois', 'day' => 'Jour')))
             ->add('pays')  
             ->add('ville')
             ->add('adresse')  

@@ -227,11 +227,11 @@
 								    <div class="col-xs-4">
 									    <div class="form-group">
 									        <label>Mot de passe</label>								        
-									        <input type="password" name="{{ form.motDePasse.vars.full_name }}" class="form-control input-sm"/>	
+									        <input type="password" id="txt_motDePasse" name="{{ form.motDePasse.vars.full_name }}" class="form-control input-sm"/>	
 								        </div>
 								        <div class="form-group">
 									        <label>Confirmation du mot de passe</label>								        
-									        <input type="password" name="mot_de_passe_confirmation" class="form-control input-sm"/>	
+									        <input type="password" id="txt_motDePasseConfirmation" name="txt_motDePasseConfirmation" class="form-control input-sm"/>	
 									    </div>
 									</div>									
 								{% else %}	
@@ -286,7 +286,9 @@
 			onNext: function(tab, navigation, index) {
 				if(index==2) {
 					// Make sure we entered the name
-					$("#newInscriptionForm").valid();
+					if(!$("#newInscriptionForm").valid()){
+						return false;
+					}
 					/*if(!$('#txt_cin').val()) {
 						alert('Veuillez saisir un cne valid');
 						$('#txt_cin').focus();
@@ -316,10 +318,10 @@
 			}
 		});
 
-	  	$('#rootwizard .finish').click(function() {
-			// alert('Finished! Post the form here !');
-			// $('#rootwizard').find("a[href*='tab0']").trigger('click');
-			$( "#newInscriptionForm" ).submit();
+	  	$('#rootwizard .finish').click(function() {			
+			if($("#newInscriptionForm").valid()){
+				$( "#newInscriptionForm" ).submit();
+			}				
 		});
 		
 		$("#newInscriptionForm").validate();
@@ -331,6 +333,11 @@
   		$( "#txt_cne" ).rules( "add", {required: true} );
   		$( "#txt_ville" ).rules( "add", {required: true} );
   		$( "#txt_adresse" ).rules( "add", {required: true} );
+		$( "#txt_motDePasse" ).rules( "add", {required: true} );
+		$.validator.addMethod("passwordCheck", function (value, element) {
+        		return value == $("#txt_motDePasse").val(); 
+        }, 'La confirmation du mot de passe ne correspond pas au mot de passe renseigné');
+		$( "#txt_motDePasseConfirmation" ).rules( "add", {required:true, passwordCheck: true} );  	
 	});
 </script>
 

@@ -27,7 +27,7 @@
                 <input name="_password" required="required"  type="password" placeholder="Mot de passe" class="form-control input-sm"><br>
                 
                 <input type="submit" required="required" class="btn btn-info pull-left" value="Accèder à mon dossier"/>
-                <div><a data-toggle="modal" href="#forgotPasswordModal" style="display: block;margin:10px 170px 0;">Mot de passe oubié ?</a></div>
+                <div><div><a data-toggle="modal" href="{{ url('fos_user_resetting_request') }}" style="display: block;margin:10px 170px 0;">Mot de passe oubié ?</a></div></div>
             </form>
 	    </div>
 	</div>

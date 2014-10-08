@@ -8,6 +8,7 @@
 
 	    <script src="{{ asset('bundles/bseinscription/js/jquery.min.js') }}"></script>
 	    <script src="{{ asset('bundles/bseinscription/js/bootstrap.min.js') }}"></script>	  
+
 	</head>
 	<body>
 		<div class="navbar navbar-default navbar-fixed-top">
@@ -55,7 +56,18 @@
 
           <ul class="nav navbar-nav navbar-right">            
             <li class="dropdown">
-              <a href="#" data-toggle="dropdown" style="background-color: #5F6369; color:#fff; font-weight:bold;font-size:10px">CONSULTER MON DOSSIER</a>
+              <a href="#" data-toggle="dropdown" style="background-color: {% if app.user is empty %}#5F6369{% else %} #5B9E9E;{% endif %} ;color:#fff; font-weight:bold;font-size:10px">
+                {% if app.user is not empty %}
+                  Bonjour <span style="text-transform:uppercase">{{ app.user.username }}</span>             
+                {% else %}
+                CONSULTER MON DOSSIER 
+                {% endif %}
+              </a>
+              {% if app.user is not empty %}
+              <div class="dropdown-menu" style="padding:17px;">
+                  <a href="{{ url('fos_user_security_logout') }}">Se déconnecter  </a>
+              </div>
+              {% else %}
               <div class="dropdown-menu" style="padding:17px;">
                 <form class="form" id="formLogin" action="{{ url('fos_user_security_login') }}"> 
                   <input name="username" id="email" type="text" placeholder="email" class="form-control input-sm"/><br/> <input name="password" id="mot_de_passe" type="password" placeholder="Mot de passe" class="form-control input-sm"><br>
@@ -63,6 +75,7 @@
                   <a data-toggle="modal" role="button" href="#forgotPasswordModal">Mot de passe oublié ?</a>
                 </form>
               </div>
+              {% endif %}
             </li>
           </ul>
           
@@ -71,7 +84,7 @@
     </div>
     <div class="container" style="margin-top:50px">
       <h4>Service en ligne de candidature aux masters</h4>
-      <small>TODO : <ul><li>1. Create user at inscription creation</li><li>2. Add fields validation using javascript</li><li>3. Make the connection working & redirect to the list of inscriptions</li><li>4. Create a home page inviting for a new inscription or to consult the open the folder of inscriptions</li><li>5. the cin should be unique if exists then tell to the user to connect to the folder and redo the inscription</li></ul></small>
+            
 		  {% block content %}{% endblock %}
 	</div>	
 	</body>

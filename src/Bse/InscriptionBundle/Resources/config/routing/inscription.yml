@@ -7,8 +7,8 @@ inscription_show:
     defaults: { _controller: "BseInscriptionBundle:Inscription:show" }
 
 inscription_new:
-    path:     /new
-    defaults: { _controller: "BseInscriptionBundle:Inscription:new" }
+    path:     /new/{first}
+    defaults: { _controller: "BseInscriptionBundle:Inscription:new", first:'null' }
 
 inscription_create:
     path:     /create

@@ -1,5 +1,13 @@
+
+
+
+php app/console cache:clear --env=prod
+
+
 php app/console doctrine:mapping:convert yml ./src/Bse/InscriptionBundle/Resources/config/doctrine/metadata/orm --from-database --force
+
 
 php app/console doctrine:mapping:import BseInscriptionBundle annotation
 
- php app/console doctrine:generate:entities BseInscriptionBundle
+
+php app/console doctrine:generate:entities BseInscriptionBundle

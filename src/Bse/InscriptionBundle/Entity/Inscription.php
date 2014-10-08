@@ -196,7 +196,7 @@ class Inscription
      */
     private $fosuserId;
 
-
+    private $motDePasse;
 
     /**
      * Get id
@@ -781,5 +781,28 @@ class Inscription
     public function getFosuserId()
     {
         return $this->fosuserId;
+    }
+
+    /**
+     * Set motDePasse
+     *
+     * @param string $motDePasse
+     * @return Inscription
+     */
+    public function setMotDePasse($motDePasse)
+    {
+        $this->motDePasse = $motDePasse;
+
+        return $this;
+    }
+
+    /**
+     * Get motDePasse
+     *
+     * @return string 
+     */
+    public function getmotDePasse()
+    {
+        return $this->motDePasse;
     }
 }

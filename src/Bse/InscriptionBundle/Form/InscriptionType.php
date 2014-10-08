@@ -37,7 +37,8 @@ class InscriptionType extends AbstractType
             ->add('noteS4')
             ->add('noteS5')
             ->add('noteS6')
-            ->add('filiere')            
+            ->add('filiere') 
+            ->add('motDePasse')           
         ;
     }
     

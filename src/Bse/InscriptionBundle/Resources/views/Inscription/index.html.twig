@@ -1,65 +1,22 @@
 {% extends 'BseInscriptionBundle::layout.html.twig' %}
 
 {% block content %}
-    <h1>Inscription list</h1>
-
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Cin</th>
-                <th>Cne</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Email</th>
-                <th>Adresse</th>                
-                <th>Notes1</th>
-                <th>Notes2</th>
-                <th>Notes3</th>
-                <th>Notes4</th>
-                <th>Notes5</th>
-                <th>Notes6</th>
-                <th>Filière</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <h3>Votre dossier de candidatures</h3>
+    
+        <p>Vous avez postulé aux filières suivantes :
+        <ul>
         {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('inscription_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.cin }}</td>
-                <td>{{ entity.cne }}</td>
-                <td>{{ entity.nom }}</td>
-                <td>{{ entity.prenom }}</td>
-                <td>{{ entity.email }}</td>
-                <td>{{ entity.adresse }}</td>                
-                <td>{{ entity.noteS1 }}</td>
-                <td>{{ entity.noteS2 }}</td>
-                <td>{{ entity.noteS3 }}</td>
-                <td>{{ entity.noteS4 }}</td>
-                <td>{{ entity.noteS5 }}</td>
-                <td>{{ entity.noteS6 }}</td>
-                <td>{{ entity.filiere }}</td>                
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('inscription_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('inscription_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
+            <li>>               
+                <b>{{ entity.filiere }}</b>  ( <a href="{{ path('inscription_show', { 'id': entity.id }) }}">voir</a> )                                                  
+            </li>            
         {% endfor %}
-        </tbody>
-    </table>
+        </ul>    
 
         <ul>
-        <li>
-            <a href="{{ path('inscription_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+            <li>
+                <a href="{{ path('inscription_new') }}">
+                    Nouvelle candidature
+                </a>
+            </li>
+        </ul>
     {% endblock %}

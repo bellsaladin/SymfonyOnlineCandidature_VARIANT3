@@ -183,9 +183,9 @@ class Inscription
     private $filiere;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="annee_inscription", type="string", length=45, nullable=true)
+     * @ORM\Column(name="annee_inscription", type="integer", nullable=true)
      */
     private $anneeInscription;
 

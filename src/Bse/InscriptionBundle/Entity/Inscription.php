@@ -183,9 +183,9 @@ class Inscription
     private $filiere;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="annee_inscription", type="string", length=45, nullable=true)
+     * @ORM\Column(name="annee_inscription", type="integer", nullable=true)
      */
     private $anneeInscription;
 
@@ -196,7 +196,9 @@ class Inscription
      */
     private $fosuserId;
 
+    /* Transcient property */
     private $motDePasse;
+
 
     /**
      * Get id
@@ -740,7 +742,7 @@ class Inscription
     /**
      * Set anneeInscription
      *
-     * @param string $anneeInscription
+     * @param integer $anneeInscription
      * @return Inscription
      */
     public function setAnneeInscription($anneeInscription)
@@ -753,7 +755,7 @@ class Inscription
     /**
      * Get anneeInscription
      *
-     * @return string 
+     * @return integer 
      */
     public function getAnneeInscription()
     {
@@ -805,4 +807,5 @@ class Inscription
     {
         return $this->motDePasse;
     }
+
 }

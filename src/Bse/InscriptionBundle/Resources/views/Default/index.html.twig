@@ -1,1 +1,23 @@
-Hello {{ name }}!
+{% extends 'BseInscriptionBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="row">
+	    <div class="col-xs-6">
+	    	<h4>Votre toute nouvelle candidature ?</h4>
+	    	<hr/>
+	    	<p>S'il s'agit de votre toute première inscription et que vous ne disposez pas de dossier de candidature, vous allez devoir faire votre première candidature.<br/><br/>    	
+	    	<a href="{{ url('inscription_new') }}"><button type="button" id="btnLogin" class="btn btn-success">Première candidature</button></a>
+	    	</p>
+	    </div>
+	    <div class="col-xs-6">
+	    	<h4>Vous disposez déjà d'un dossier</h4>
+	    	<hr/>
+	    	<p>Saisissez votre email et mot de passe pour consulter votre dossier.</p>
+	    	<form class="form" id="formLogin" action="http://localhost/symfony/UIT_CandidatEnLigne/web/app_dev.php/login"> 
+                  <input name="username" id="email" type="text" placeholder="email" class="form-control input-sm"><br> <input name="password" id="mot_de_passe" type="password" placeholder="Mot de passe" class="form-control input-sm"><br>
+                  <button type="button" id="btnLogin" class="btn btn-info pull-left">Accèder à mon dossier</button>
+                  <div><a data-toggle="modal" href="#forgotPasswordModal" style="display: block;margin:10px 170px 0;">Mot de passe oubié ?</a></div>
+                </form>
+	    </div>
+	</div>
+{% endblock %}

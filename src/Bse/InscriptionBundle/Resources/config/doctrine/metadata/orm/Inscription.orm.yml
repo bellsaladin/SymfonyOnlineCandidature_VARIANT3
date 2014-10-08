@@ -14,17 +14,15 @@ Inscription:
         cin:
             type: string
             nullable: true
-            length: 45
+            length: 30
             fixed: false
             comment: ''
-            column: CIN
         cne:
             type: string
             nullable: true
             length: 12
             fixed: false
             comment: ''
-            column: CNE
         nom:
             type: string
             nullable: true
@@ -37,7 +35,18 @@ Inscription:
             length: 65
             fixed: false
             comment: ''
-        email:
+        dateNaissance:
+            type: date
+            nullable: true
+            comment: ''
+            column: date_naissance
+        pays:
+            type: string
+            nullable: true
+            length: 100
+            fixed: false
+            comment: ''
+        ville:
             type: string
             nullable: true
             length: 100
@@ -49,20 +58,56 @@ Inscription:
             length: null
             fixed: false
             comment: ''
-        telMobile:
+        sexe:
             type: string
             nullable: true
-            length: 45
+            length: 1
             fixed: false
             comment: ''
-            column: tel_mobile
-        telFixe:
+        email:
             type: string
             nullable: true
-            length: 45
+            length: 100
             fixed: false
             comment: ''
-            column: tel_fixe
+        etablissementOrigine:
+            type: string
+            nullable: true
+            length: 90
+            fixed: false
+            comment: ''
+            column: etablissement_origine
+        typeDiplome:
+            type: string
+            nullable: true
+            length: 50
+            fixed: false
+            comment: ''
+            column: type_diplome
+        intituleDiplome:
+            type: string
+            nullable: true
+            length: 100
+            fixed: false
+            comment: ''
+            column: intitule_diplome
+        mention:
+            type: string
+            nullable: true
+            length: 20
+            fixed: false
+            comment: ''
+        diplomeEtranger:
+            type: boolean
+            nullable: true
+            comment: ''
+            column: diplome_etranger
+        anneeObtention:
+            type: integer
+            nullable: true
+            unsigned: false
+            comment: ''
+            column: annee_obtention
         noteS1:
             type: float
             nullable: true
@@ -105,39 +150,23 @@ Inscription:
             scale: 0
             comment: ''
             column: note_s6
-        filiere1:
+        filiere:
             type: string
             nullable: true
             length: 150
             fixed: false
             comment: ''
-            column: filiere_1
-        filiere2:
+        anneeInscription:
             type: string
             nullable: true
-            length: 150
+            length: 45
             fixed: false
             comment: ''
-            column: filiere_2
-        filiere3:
-            type: string
+            column: annee_inscription
+        fosuserId:
+            type: integer
             nullable: true
-            length: 150
-            fixed: false
+            unsigned: false
             comment: ''
-            column: filiere_3
-        filiere4:
-            type: string
-            nullable: true
-            length: 150
-            fixed: false
-            comment: ''
-            column: filiere_4
-        filiere5:
-            type: string
-            nullable: true
-            length: 150
-            fixed: false
-            comment: ''
-            column: filiere_5
+            column: fosuser_id
     lifecycleCallbacks: {  }

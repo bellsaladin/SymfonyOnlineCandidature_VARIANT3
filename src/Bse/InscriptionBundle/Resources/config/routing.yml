@@ -1,3 +1,7 @@
+bse_inscription_welcome:
+    pattern:  /
+    defaults: { _controller: BseInscriptionBundle:Default:index }
+
 bse_inscription_homepage:
     path:     /hello/{name}
     defaults: { _controller: BseInscriptionBundle:Default:index }

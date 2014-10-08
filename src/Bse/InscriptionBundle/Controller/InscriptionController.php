@@ -4,7 +4,7 @@ namespace Bse\InscriptionBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use FOS\UserBundle\Model\UserManager;
 use Bse\InscriptionBundle\Entity\Inscription;
 use Bse\InscriptionBundle\Form\InscriptionType;
 
@@ -24,11 +24,20 @@ class InscriptionController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('BseInscriptionBundle:Inscription')->findAll();
-
+        
+        /*$userManager = $this->container->get('fos_user.user_manager');
+        $user = $userManager->createUser();
+        $user->setUsername('dddd');
+        $user->setEmail('email@email.com');
+        $user->setPassword('email');
+        $user->setEnabled(true);
+        $userManager->updateUser($user);*/
+        
         return $this->render('BseInscriptionBundle:Inscription:index.html.twig', array(
             'entities' => $entities,
         ));
     }
+
     /**
      * Creates a new Inscription entity.
      *
@@ -44,7 +53,7 @@ class InscriptionController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('inscription_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('inscription', array('id' => $entity->getId())));
         }
 
         return $this->render('BseInscriptionBundle:Inscription:new.html.twig', array(

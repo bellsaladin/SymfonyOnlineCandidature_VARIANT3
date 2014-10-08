@@ -24,14 +24,14 @@ class Inscription
     /**
      * @var string
      *
-     * @ORM\Column(name="CIN", type="string", length=45, nullable=true)
+     * @ORM\Column(name="cin", type="string", length=30, nullable=true)
      */
     private $cin;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="CNE", type="string", length=12, nullable=true)
+     * @ORM\Column(name="cne", type="string", length=12, nullable=true)
      */
     private $cne;
 
@@ -50,11 +50,25 @@ class Inscription
     private $prenom;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_naissance", type="date", nullable=true)
+     */
+    private $dateNaissance;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=100, nullable=true)
+     * @ORM\Column(name="pays", type="string", length=100, nullable=true)
      */
-    private $email;
+    private $pays;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ville", type="string", length=100, nullable=true)
+     */
+    private $ville;
 
     /**
      * @var string
@@ -66,16 +80,58 @@ class Inscription
     /**
      * @var string
      *
-     * @ORM\Column(name="tel_mobile", type="string", length=45, nullable=true)
+     * @ORM\Column(name="sexe", type="string", length=1, nullable=true)
      */
-    private $telMobile;
+    private $sexe;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="tel_fixe", type="string", length=45, nullable=true)
+     * @ORM\Column(name="email", type="string", length=100, nullable=true)
      */
-    private $telFixe;
+    private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="etablissement_origine", type="string", length=90, nullable=true)
+     */
+    private $etablissementOrigine;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type_diplome", type="string", length=50, nullable=true)
+     */
+    private $typeDiplome;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="intitule_diplome", type="string", length=100, nullable=true)
+     */
+    private $intituleDiplome;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mention", type="string", length=20, nullable=true)
+     */
+    private $mention;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="diplome_etranger", type="boolean", nullable=true)
+     */
+    private $diplomeEtranger;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="annee_obtention", type="integer", nullable=true)
+     */
+    private $anneeObtention;
 
     /**
      * @var float
@@ -122,37 +178,23 @@ class Inscription
     /**
      * @var string
      *
-     * @ORM\Column(name="filiere_1", type="string", length=150, nullable=true)
+     * @ORM\Column(name="filiere", type="string", length=150, nullable=true)
      */
-    private $filiere1;
+    private $filiere;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="filiere_2", type="string", length=150, nullable=true)
+     * @ORM\Column(name="annee_inscription", type="string", length=45, nullable=true)
      */
-    private $filiere2;
+    private $anneeInscription;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="filiere_3", type="string", length=150, nullable=true)
+     * @ORM\Column(name="fosuser_id", type="integer", nullable=true)
      */
-    private $filiere3;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="filiere_4", type="string", length=150, nullable=true)
-     */
-    private $filiere4;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="filiere_5", type="string", length=150, nullable=true)
-     */
-    private $filiere5;
+    private $fosuserId;
 
 
 
@@ -259,26 +301,72 @@ class Inscription
     }
 
     /**
-     * Set email
+     * Set dateNaissance
      *
-     * @param string $email
+     * @param \DateTime $dateNaissance
      * @return Inscription
      */
-    public function setEmail($email)
+    public function setDateNaissance($dateNaissance)
     {
-        $this->email = $email;
+        $this->dateNaissance = $dateNaissance;
 
         return $this;
     }
 
     /**
-     * Get email
+     * Get dateNaissance
+     *
+     * @return \DateTime 
+     */
+    public function getDateNaissance()
+    {
+        return $this->dateNaissance;
+    }
+
+    /**
+     * Set pays
+     *
+     * @param string $pays
+     * @return Inscription
+     */
+    public function setPays($pays)
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * Get pays
      *
      * @return string 
      */
-    public function getEmail()
+    public function getPays()
     {
-        return $this->email;
+        return $this->pays;
+    }
+
+    /**
+     * Set ville
+     *
+     * @param string $ville
+     * @return Inscription
+     */
+    public function setVille($ville)
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    /**
+     * Get ville
+     *
+     * @return string 
+     */
+    public function getVille()
+    {
+        return $this->ville;
     }
 
     /**
@@ -305,49 +393,187 @@ class Inscription
     }
 
     /**
-     * Set telMobile
+     * Set sexe
      *
-     * @param string $telMobile
+     * @param string $sexe
      * @return Inscription
      */
-    public function setTelMobile($telMobile)
+    public function setSexe($sexe)
     {
-        $this->telMobile = $telMobile;
+        $this->sexe = $sexe;
 
         return $this;
     }
 
     /**
-     * Get telMobile
+     * Get sexe
      *
      * @return string 
      */
-    public function getTelMobile()
+    public function getSexe()
     {
-        return $this->telMobile;
+        return $this->sexe;
     }
 
     /**
-     * Set telFixe
+     * Set email
      *
-     * @param string $telFixe
+     * @param string $email
      * @return Inscription
      */
-    public function setTelFixe($telFixe)
+    public function setEmail($email)
     {
-        $this->telFixe = $telFixe;
+        $this->email = $email;
 
         return $this;
     }
 
     /**
-     * Get telFixe
+     * Get email
      *
      * @return string 
      */
-    public function getTelFixe()
+    public function getEmail()
     {
-        return $this->telFixe;
+        return $this->email;
+    }
+
+    /**
+     * Set etablissementOrigine
+     *
+     * @param string $etablissementOrigine
+     * @return Inscription
+     */
+    public function setEtablissementOrigine($etablissementOrigine)
+    {
+        $this->etablissementOrigine = $etablissementOrigine;
+
+        return $this;
+    }
+
+    /**
+     * Get etablissementOrigine
+     *
+     * @return string 
+     */
+    public function getEtablissementOrigine()
+    {
+        return $this->etablissementOrigine;
+    }
+
+    /**
+     * Set typeDiplome
+     *
+     * @param string $typeDiplome
+     * @return Inscription
+     */
+    public function setTypeDiplome($typeDiplome)
+    {
+        $this->typeDiplome = $typeDiplome;
+
+        return $this;
+    }
+
+    /**
+     * Get typeDiplome
+     *
+     * @return string 
+     */
+    public function getTypeDiplome()
+    {
+        return $this->typeDiplome;
+    }
+
+    /**
+     * Set intituleDiplome
+     *
+     * @param string $intituleDiplome
+     * @return Inscription
+     */
+    public function setIntituleDiplome($intituleDiplome)
+    {
+        $this->intituleDiplome = $intituleDiplome;
+
+        return $this;
+    }
+
+    /**
+     * Get intituleDiplome
+     *
+     * @return string 
+     */
+    public function getIntituleDiplome()
+    {
+        return $this->intituleDiplome;
+    }
+
+    /**
+     * Set mention
+     *
+     * @param string $mention
+     * @return Inscription
+     */
+    public function setMention($mention)
+    {
+        $this->mention = $mention;
+
+        return $this;
+    }
+
+    /**
+     * Get mention
+     *
+     * @return string 
+     */
+    public function getMention()
+    {
+        return $this->mention;
+    }
+
+    /**
+     * Set diplomeEtranger
+     *
+     * @param boolean $diplomeEtranger
+     * @return Inscription
+     */
+    public function setDiplomeEtranger($diplomeEtranger)
+    {
+        $this->diplomeEtranger = $diplomeEtranger;
+
+        return $this;
+    }
+
+    /**
+     * Get diplomeEtranger
+     *
+     * @return boolean 
+     */
+    public function getDiplomeEtranger()
+    {
+        return $this->diplomeEtranger;
+    }
+
+    /**
+     * Set anneeObtention
+     *
+     * @param integer $anneeObtention
+     * @return Inscription
+     */
+    public function setAnneeObtention($anneeObtention)
+    {
+        $this->anneeObtention = $anneeObtention;
+
+        return $this;
+    }
+
+    /**
+     * Get anneeObtention
+     *
+     * @return integer 
+     */
+    public function getAnneeObtention()
+    {
+        return $this->anneeObtention;
     }
 
     /**
@@ -489,117 +715,71 @@ class Inscription
     }
 
     /**
-     * Set filiere1
+     * Set filiere
      *
-     * @param string $filiere1
+     * @param string $filiere
      * @return Inscription
      */
-    public function setFiliere1($filiere1)
+    public function setFiliere($filiere)
     {
-        $this->filiere1 = $filiere1;
+        $this->filiere = $filiere;
 
         return $this;
     }
 
     /**
-     * Get filiere1
+     * Get filiere
      *
      * @return string 
      */
-    public function getFiliere1()
+    public function getFiliere()
     {
-        return $this->filiere1;
+        return $this->filiere;
     }
 
     /**
-     * Set filiere2
+     * Set anneeInscription
      *
-     * @param string $filiere2
+     * @param string $anneeInscription
      * @return Inscription
      */
-    public function setFiliere2($filiere2)
+    public function setAnneeInscription($anneeInscription)
     {
-        $this->filiere2 = $filiere2;
+        $this->anneeInscription = $anneeInscription;
 
         return $this;
     }
 
     /**
-     * Get filiere2
+     * Get anneeInscription
      *
      * @return string 
      */
-    public function getFiliere2()
+    public function getAnneeInscription()
     {
-        return $this->filiere2;
+        return $this->anneeInscription;
     }
 
     /**
-     * Set filiere3
+     * Set fosuserId
      *
-     * @param string $filiere3
+     * @param integer $fosuserId
      * @return Inscription
      */
-    public function setFiliere3($filiere3)
+    public function setFosuserId($fosuserId)
     {
-        $this->filiere3 = $filiere3;
+        $this->fosuserId = $fosuserId;
 
         return $this;
     }
 
     /**
-     * Get filiere3
+     * Get fosuserId
      *
-     * @return string 
+     * @return integer 
      */
-    public function getFiliere3()
+    public function getFosuserId()
     {
-        return $this->filiere3;
-    }
-
-    /**
-     * Set filiere4
-     *
-     * @param string $filiere4
-     * @return Inscription
-     */
-    public function setFiliere4($filiere4)
-    {
-        $this->filiere4 = $filiere4;
-
-        return $this;
-    }
-
-    /**
-     * Get filiere4
-     *
-     * @return string 
-     */
-    public function getFiliere4()
-    {
-        return $this->filiere4;
-    }
-
-    /**
-     * Set filiere5
-     *
-     * @param string $filiere5
-     * @return Inscription
-     */
-    public function setFiliere5($filiere5)
-    {
-        $this->filiere5 = $filiere5;
-
-        return $this;
-    }
-
-    /**
-     * Get filiere5
-     *
-     * @return string 
-     */
-    public function getFiliere5()
-    {
-        return $this->filiere5;
+        return $this->fosuserId;
     }
 }

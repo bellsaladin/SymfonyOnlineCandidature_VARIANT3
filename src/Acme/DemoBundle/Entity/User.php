@@ -1,5 +1,4 @@
 <?php
-// src/Acme/UserBundle/Entity/User.php
 
 namespace Acme\DemoBundle\Entity;
 
@@ -24,4 +23,5 @@ class User extends BaseUser
         parent::__construct();
         // your own logic
     }
+
 }

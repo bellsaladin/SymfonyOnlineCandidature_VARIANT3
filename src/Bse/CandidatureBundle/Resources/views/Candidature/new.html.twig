@@ -26,7 +26,8 @@
 								    <div class="form-group">
 								        <label>Choisissez la filière où vous désirez déposer votre candidature</label>
 								        <p>{{ form_errors(form.filiere) }}</p>
-								        <select id="{{ form.filiere.vars.id }}" name="{{ form.filiere.vars.full_name }}" class="form-control input-md">
+								        <select id="{{ form.filiere.vars.id }}" name="{{ form.filiere.vars.full_name }}" class="form-control input-md" required>
+								        	<option value="">Choisissez une filière</option>
 								        	<option value="Qualité du Logiciel">Qualité du Logiciel</option>
 								        	<option value="Energies Renouvelables">Energies Renouvelables</option>
 								        	<option value="Biotechnologies alimentaires et santé">Biotechnologies alimentaires et santé</option>
@@ -131,7 +132,7 @@
 								    <div class="form-group">
 								        <label>{{ form_label(form.intituleDiplome) }}</label>
 								        <p>{{ form_errors(form.intituleDiplome) }}</p>
-								        <input type="text" name="{{ form.intituleDiplome.vars.full_name }}" placeholder="ex : Licence fondamentale SMI" class="form-control input-sm"/>	
+								        <input type="text" name="{{ form.intituleDiplome.vars.full_name }}" placeholder="ex : Licence fondamentale SMI" class="form-control input-sm" required/>	
 								    </div>									
 								</div>
 								<div class="row">
@@ -182,21 +183,21 @@
 									    <div class="form-group">
 									        <label>Semestre 1</label>
 									        <p>{{ form_errors(form.noteS1) }}</p>
-									        <input type="text" name="{{ form.noteS1.vars.full_name }}" placeholder="ex : 13,50" class="form-control input-sm"/>	
+									        <input type="text" id="txt_note_S1" name="{{ form.noteS1.vars.full_name }}" placeholder="ex : 13,50" class="form-control input-sm"/>	
 								        </div>
 									</div>
 									<div class="col-xs-12 col-md-4 col-lg-4">
 										<div class="form-group">
 									        <label>Semestre 2</label>
 									        <p>{{ form_errors(form.noteS2) }}</p>
-									        <input type="text" name="{{ form.noteS2.vars.full_name }}" placeholder="ex : 11,00" class="form-control input-sm"/>	
+									        <input type="text" id="txt_note_S2" name="{{ form.noteS2.vars.full_name }}" placeholder="ex : 11,00" class="form-control input-sm"/>	
 									    </div>
 									</div>
 									<div class="col-xs-12 col-md-4 col-lg-4">
 										<div class="form-group">
 									        <label>Semestre 3</label>
 									        <p>{{ form_errors(form.noteS3) }}</p>
-									        <input type="text" name="{{ form.noteS3.vars.full_name }}" placeholder="ex : 14,00" class="form-control input-sm"/>	
+									        <input type="text" id="txt_note_S3" name="{{ form.noteS3.vars.full_name }}" placeholder="ex : 14,00" class="form-control input-sm"/>	
 								        </div>	    
 									</div>
 								</div>
@@ -205,21 +206,21 @@
 								        <div class="form-group">
 									        <label>Semestre 4</label>
 									        <p>{{ form_errors(form.noteS4) }}</p>
-									        <input type="text" name="{{ form.noteS4.vars.full_name }}" placeholder="ex : 10,00" class="form-control input-sm"/>	
+									        <input type="text" id="txt_note_S4" name="{{ form.noteS4.vars.full_name }}" placeholder="ex : 10,00" class="form-control input-sm"/>	
 									    </div>
 									</div>
 									<div class="col-xs-12 col-md-4 col-lg-4">
 								        <div class="form-group">
 									        <label>Semestre 5</label>
 									        <p>{{ form_errors(form.noteS5) }}</p>
-									        <input type="text" name="{{ form.noteS5.vars.full_name }}" placeholder="ex : 14,00" class="form-control input-sm"/>	
+									        <input type="text" id="txt_note_S5" name="{{ form.noteS5.vars.full_name }}" placeholder="ex : 14,00" class="form-control input-sm"/>	
 								        </div>		    
 									</div>
 									<div class="col-xs-12 col-md-4 col-lg-4">
 								        <div class="form-group">
 									        <label>Semestre 6</label>
 									        <p>{{ form_errors(form.noteS6) }}</p>
-									        <input type="text" name="{{ form.noteS6.vars.full_name }}" placeholder="ex : 10,00"class="form-control input-sm"/>	
+									        <input type="text" id="txt_note_S6" name="{{ form.noteS6.vars.full_name }}" placeholder="ex : 10,00"class="form-control input-sm"/>	
 									    </div>		    
 									</div>
 								</div>
@@ -302,22 +303,11 @@
 
 				return false;
 			},
-			onNext: function(tab, navigation, index) {
-				if(index==2) {
-					// Make sure we entered the name
-					if(!$("#newCandidatureForm").valid()){
-						return false;
-					}
-					/*if(!$('#txt_cin').val()) {
-						alert('Veuillez saisir un cne valid');
-						$('#txt_cin').focus();
-						return false;
-					}*/
-				}
-				
-				// Set the name for the next tab
-				//$('#tab3').html('Hello, ' + $('#name').val());
-			
+			onNext: function(tab, navigation, index) {				
+				// Make sure the values are valid before moving to next step
+				if(!$("#newCandidatureForm").valid()){
+					return false;
+				}												
 			},
 		  	onTabShow: function(tab, navigation, index) {
 				var $total = navigation.find('li').length;
@@ -349,8 +339,14 @@
   		$( "#txt_cin" ).rules( "add", {required: true} );
   		$( "#txt_cne" ).rules( "add", {required: true} );
   		$( "#txt_ville" ).rules( "add", {required: true} );
-  		$( "#txt_adresse" ).rules( "add", {required: true} );
+  		$( "#txt_adresse" ).rules( "add", {required: true} );		
 		
+  		$( "#txt_note_S1" ).rules( "add", {required: true, range:[10, 20]} );
+  		$( "#txt_note_S2" ).rules( "add", {required: true, range:[10, 20]} );
+  		$( "#txt_note_S3" ).rules( "add", {required: true, range:[10, 20]} );
+  		$( "#txt_note_S4" ).rules( "add", {required: true, range:[10, 20]} );
+  		$( "#txt_note_S5" ).rules( "add", {required: true, range:[10, 20]} );
+  		$( "#txt_note_S6" ).rules( "add", {required: true, range:[10, 20]} );
 		{% if first == "first" %} /* validation JS of field that exists only on a new inscription */
 		$( "#txt_email" ).rules( "add", {required: true} );
 		$( "#txt_motDePasse" ).rules( "add", {required: true} );		

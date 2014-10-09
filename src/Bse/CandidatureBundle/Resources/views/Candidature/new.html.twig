@@ -2,7 +2,10 @@
 
 {% block subTitle %}Nouvelle candidature {% endblock %}
 
-{% block content %}    					
+{% block content %}
+		{% if emailAlreadyInUse is defined %}
+		<div class="alert alert-danger"><b>Erreur : </b>l'email {{ emailAlreadyInUse }} renseigné est déjà utilisé !</div>
+		{% endif %}
     	{{ form_start(form, {'method': 'POST', 'attr': {'id': 'newCandidatureForm'}} ) }} 
     		<input type="hidden" name="firstCandidature" value="{{ first }}">
     		<div id="rootwizard" style="margin-top:40px">

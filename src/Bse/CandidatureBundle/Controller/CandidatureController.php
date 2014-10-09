@@ -59,6 +59,17 @@ class CandidatureController extends Controller
         $data = $form->getData();
 
         if($firstCandidature == 'first'){
+            // check if email is already in use            
+            $email = $form->get('email')->getData();
+            $userFoundUsingEmail = $this->get('fos_user.user_manager')->findUserByEmail($email);
+            if($userFoundUsingEmail != null){
+                return $this->render('BseCandidatureBundle:Candidature:new.html.twig', array(
+                    'entity' => $entity,            
+                    'form'   => $form->createView(), 
+                    'first' => 'first',
+                    'emailAlreadyInUse' => $email         
+                ));
+            }
             // create a new user
             $userManager = $this->container->get('fos_user.user_manager');
             $user = $userManager->createUser();

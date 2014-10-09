@@ -14,7 +14,7 @@
         <br/>        
         <ul>
         {% for entity in entities %}
-            <li>
+            <li style="margin-bottom: 15px;">
                 <b class="label label-info" style="font-size:12px">{{ entity.filiere }}</b>  ( <a href="{{ path('inscription_show', { 'id': entity.id }) }}">Voir les détails de cette candidature</a> )
             </li>            
         {% endfor %}

@@ -67,12 +67,12 @@
 								        <label>CNE</label>
 								        <p>{{ form_errors(form.cne) }}</p>
 								        <input type="text" id="txt_cne" name="{{ form.cne.vars.full_name }}" placeholder="ex : 30494800" class="form-control input-sm"/>	
-								    </div>									    
+								    </div>	
 								    <div class="form-group">
-								        <label>{{ form_label(form.email) }}</label>
-								        <p>{{ form_errors(form.email) }}</p>
-								        <input type="email" id="txt_email" name="{{ form.email.vars.full_name }}" placeholder="ex : monemail@gmail.com" class="form-control input-sm"/>									        
-								    </div>		    				    			    
+								        <label>{{ form_label(form.adresse) }}</label>
+								        <p>{{ form_errors(form.adresse) }}</p>
+								        <textarea id="txt_adresse" name="{{ form.adresse.vars.full_name }}" placeholder="ex : " class="form-control input-sm"></textarea>
+								    </div>
 								</div>									
 								<div class="col-xs-12 col-md-6 col-lg-6">									
 								    <div class="form-group">
@@ -100,12 +100,7 @@
 								        <label>{{ form_label(form.ville) }}</label>
 								        <p>{{ form_errors(form.ville) }}</p>
 								        <input type="text" id="txt_ville" name="{{ form.ville.vars.full_name }}" placeholder="ex : Kénitra" class="form-control input-sm"/>	
-								    </div>	
-								    <div class="form-group">
-								        <label>{{ form_label(form.adresse) }}</label>
-								        <p>{{ form_errors(form.adresse) }}</p>
-								        <textarea id="txt_adresse" name="{{ form.adresse.vars.full_name }}" placeholder="ex : " class="form-control input-sm"></textarea>
-								    </div>				        
+								    </div>
 								</div>
 							</div>
 					    </div>
@@ -177,7 +172,7 @@
 									</div>									
 								</div>
 								<div class="row col-xs-12">								    	
-					    			<div class="form-group" style="padding-top:40px">
+					    			<div class="form-group" style="padding: 10px 0;">
 								        <label>Diplôme étranger ? &nbsp;&nbsp;<span>{{ form_widget(form.diplomeEtranger) }}</span></label>
 								    </div>
 								</div>
@@ -189,30 +184,38 @@
 									        <p>{{ form_errors(form.noteS1) }}</p>
 									        <input type="text" name="{{ form.noteS1.vars.full_name }}" placeholder="ex : 13,50" class="form-control input-sm"/>	
 								        </div>
-								        <div class="form-group">
+									</div>
+									<div class="col-xs-12 col-md-4 col-lg-4">
+										<div class="form-group">
 									        <label>Semestre 2</label>
 									        <p>{{ form_errors(form.noteS2) }}</p>
 									        <input type="text" name="{{ form.noteS2.vars.full_name }}" placeholder="ex : 11,00" class="form-control input-sm"/>	
-									    </div>	
+									    </div>
 									</div>
 									<div class="col-xs-12 col-md-4 col-lg-4">
 										<div class="form-group">
 									        <label>Semestre 3</label>
 									        <p>{{ form_errors(form.noteS3) }}</p>
 									        <input type="text" name="{{ form.noteS3.vars.full_name }}" placeholder="ex : 14,00" class="form-control input-sm"/>	
-								        </div>
+								        </div>	    
+									</div>
+								</div>
+								<div class="row">
+							    	<div class="col-xs-12 col-md-4 col-lg-4">
 								        <div class="form-group">
 									        <label>Semestre 4</label>
 									        <p>{{ form_errors(form.noteS4) }}</p>
 									        <input type="text" name="{{ form.noteS4.vars.full_name }}" placeholder="ex : 10,00" class="form-control input-sm"/>	
-									    </div>		    
+									    </div>
 									</div>
 									<div class="col-xs-12 col-md-4 col-lg-4">
-										<div class="form-group">
+								        <div class="form-group">
 									        <label>Semestre 5</label>
 									        <p>{{ form_errors(form.noteS5) }}</p>
 									        <input type="text" name="{{ form.noteS5.vars.full_name }}" placeholder="ex : 14,00" class="form-control input-sm"/>	
-								        </div>
+								        </div>		    
+									</div>
+									<div class="col-xs-12 col-md-4 col-lg-4">
 								        <div class="form-group">
 									        <label>Semestre 6</label>
 									        <p>{{ form_errors(form.noteS6) }}</p>
@@ -232,10 +235,15 @@
 						    	<div class="col-xs-12">
 						    	{% if first == "first" %}	
 								    <div class="form-group">
-								    	<p>Un dossier de candidature vous sera créé avec votre email comme identifiant, au cas où vous voulez faire une autre inscription où modifier une de vos précédentes inscriptions. <br/><br/>
+								    	<p>Un dossier de candidature vous sera créé avec votre email comme identifiant et sera protégé avec un mot de passe. Vous allez pouvoir consulter votre dossier en indiquant votre email et le mot de passe correspondant.<br/><br/>
 								    	<b>Veuillez choisir un mot de passe pour votre dossier.</b></p>
 								    </div>
 								    <div class="col-xs-4">
+								    	<div class="form-group">
+									        <label>{{ form_label(form.email) }}</label>
+									        <p>{{ form_errors(form.email) }}</p>
+									        <input type="email" id="txt_email" name="{{ form.email.vars.full_name }}" placeholder="ex : monemail@gmail.com" class="form-control input-sm"/>
+								    	</div>
 									    <div class="form-group">
 									        <label>Mot de passe</label>								        
 									        <input type="password" id="txt_motDePasse" name="{{ form.motDePasse.vars.full_name }}" class="form-control input-sm"/>	

@@ -73,7 +73,7 @@ class CandidatureController extends Controller
             // create a new user
             $userManager = $this->container->get('fos_user.user_manager');
             $user = $userManager->createUser();
-            $user->setUsername($form->get('prenom')->getData() . " " . $form->get('nom')->getData());
+            $user->setUsername($form->get('email')->getData());
             $user->setEmail($form->get('email')->getData());
             $user->setPlainPassword($form->get('motDePasse')->getData());
             $user->setEnabled(true);

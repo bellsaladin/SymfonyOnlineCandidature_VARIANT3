@@ -335,6 +335,16 @@
 				$( "#newCandidatureForm" ).submit();
 			}				
 		});
+
+		/* ------ BEGIN - ASK JQUERY VALIDATE PLUGIN TO USE COMMA FOR FLOAT DECIMAL ---- */
+		$.validator.methods.range = function (value, element, param) {
+		    var globalizedValue = value.replace(",", ".");
+		    return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
+		}		 
+		$.validator.methods.number = function (value, element) {
+		    return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+		}
+		/* ------ END - ASK JQUERY VALIDATE PLUGIN TO USE COMMA FOR FLOAT DECIMAL ---- */
 		
 		$("#newCandidatureForm").validate();		
   		$( "#txt_nom" ).rules( "add", {required: true} );
@@ -357,7 +367,7 @@
         		return value == $("#txt_motDePasse").val(); 
         }, 'La confirmation du mot de passe ne correspond pas au mot de passe renseigné');
 		$( "#txt_motDePasseConfirmation" ).rules( "add", {required:true, passwordCheck: true} );  	
-		{% endif %}
+		{% endif %}		
 	});
 </script>
 

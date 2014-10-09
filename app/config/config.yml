@@ -60,7 +60,7 @@ doctrine:
         auto_mapping: false
         mappings:
             AcmeDemoBundle: ~
-            BseInscriptionBundle: ~
+            BseCandidatureBundle: ~
             FOSUserBundle: ~
 
 # Swiftmailer Configuration
@@ -72,4 +72,6 @@ swiftmailer:
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
-    user_class: Bse\InscriptionBundle\Entity\User
+    user_class: Bse\CandidatureBundle\Entity\User
+    from_email:        
+        sender_name:    Candidature en ligne - UIT

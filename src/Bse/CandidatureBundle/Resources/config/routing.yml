@@ -1,0 +1,11 @@
+bse_candidature_welcome:
+    pattern:  /
+    defaults: { _controller: BseCandidatureBundle:Default:index }
+
+# bse_candidature_homepage:
+#     path:     /hello/{name}
+#     defaults: { _controller: BseCandidatureBundle:Default:index }
+
+BseCandidatureBundle_candidature:
+        resource: "@BseCandidatureBundle/Resources/config/routing/candidature.yml"
+        prefix:   /candidature

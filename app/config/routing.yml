@@ -1,5 +1,5 @@
-bse_inscription:
-    resource: "@BseInscriptionBundle/Resources/config/routing.yml"
+bse_candidature:
+    resource: "@BseCandidatureBundle/Resources/config/routing.yml"
     prefix:   /
 
 fos_user_security:

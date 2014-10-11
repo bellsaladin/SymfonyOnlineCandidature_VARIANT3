@@ -23,32 +23,59 @@
         </div>        
         <div class="navbar-collapse collapse" id="navbar-main">
           <ul class="nav navbar-nav">
-            <!-- <li class="dropdown">
+            <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Filières <span class="caret"></span></a>
               <ul class="dropdown-menu" aria-labelledby="themes">
-                <li><a href="#">Filière 1</a></li>
+                <li><a href="../default/">Default</a></li>
                 <li class="divider"></li>
-                <li><a href="#">...</a></li>
-                <li><a href="#">...</a></li>
-                <li><a href="#">...</a></li>
-                <li><a href="#">...</a></li>
-                <li><a href="#">...</a></li>
-                <li><a href="#">...</a></li>
-                <li><a href="#">...</a></li>
-                <li><a href="#">...</a></li>
-                <li><a href="#">...</a></li>
+                <li><a href="../cerulean/">Cerulean</a></li>
+                <li><a href="../cosmo/">Cosmo</a></li>
+                <li><a href="../cyborg/">Cyborg</a></li>
+                <li><a href="../darkly/">Darkly</a></li>
+                <li><a href="../flatly/">Flatly</a></li>
+                <li><a href="../journal/">Journal</a></li>
+                <li><a href="../lumen/">Lumen</a></li>
+                <li><a href="../paper/">Paper</a></li>
+                <li><a href="../readable/">Readable</a></li>
+                <li><a href="../sandstone/">Sandstone</a></li>
+                <li><a href="../simplex/">Simplex</a></li>
+                <li><a href="../slate/">Slate</a></li>
+                <li><a href="../spacelab/">Spacelab</a></li>
+                <li><a href="../superhero/">Superhero</a></li>
+                <li><a href="../united/">United</a></li>
+                <li><a href="../yeti/">Yeti</a></li>
               </ul>
             </li>
             <li>
               <a href="{{ url('bse_candidature_welcome') }}">Aide</a>
-            </li> -->            
+            </li>
+            <li>
+              <a href="{{ url('bse_candidature_welcome') }}">A propos</a>
+            </li>            
           </ul>
 
           <ul class="nav navbar-nav navbar-right">            
-            <li>
-              <a href="#" style="background-color: {% if app.user is empty %}#5F6369{% else %} #5B9E9E;{% endif %} ;color:#fff; font-weight:bold;font-size:10px">
-                AIDE
+            <li class="dropdown">
+              <a href="#" data-toggle="dropdown" style="background-color: {% if app.user is empty %}#5F6369{% else %} #5B9E9E;{% endif %} ;color:#fff; font-weight:bold;font-size:10px">
+                {% if app.user is not empty %}
+                  <span>DOSSIER DE CANDIDATURE OUVERT ( {{ app.user.username }} )</span>             
+                {% else %}
+                CONSULTER MON DOSSIER 
+                {% endif %}
               </a>
+              {% if app.user is not empty %}
+              <div class="dropdown-menu" style="padding:17px;">
+                  <a href="{{ url('fos_user_security_logout') }}">Se déconnecter  </a>
+              </div>
+              {% else %}
+              <div class="dropdown-menu" style="padding:17px;">
+                <form class="form" id="formLogin" action="{{ url('fos_user_security_login') }}"> 
+                  <input name="username" id="email" type="text" placeholder="email" class="form-control input-sm"/><br/> <input name="password" id="mot_de_passe" type="password" placeholder="Mot de passe" class="form-control input-sm"><br>
+                  <button type="button" id="btnLogin" class="btn btn-info">Login</button><br/><br/>
+                  <a data-toggle="modal" role="button" href="#forgotPasswordModal">Mot de passe oublié ?</a>
+                </form>
+              </div>
+              {% endif %}
             </li>
           </ul>
           

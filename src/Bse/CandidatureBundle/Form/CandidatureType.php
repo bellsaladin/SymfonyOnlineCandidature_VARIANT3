@@ -21,8 +21,7 @@ class CandidatureType extends AbstractType
             ->add('prenom')
             ->add('email')            
             ->add('dateNaissance', 'birthday',
-                   array( 'empty_value' => array('year' => 'Année', 'month' => 'Mois', 'day' => 'Jour'),
-                          'years'=>range(1980, date('Y') - 14)))
+                   array( 'empty_value' => array('year' => 'Année', 'month' => 'Mois', 'day' => 'Jour')))
             ->add('pays')  
             ->add('ville')
             ->add('adresse')  

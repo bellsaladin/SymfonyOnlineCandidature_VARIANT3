@@ -2,14 +2,8 @@
 
 {% block subTitle %}Dossier de candidatures{% endblock %}
 
-{% block content %}    
-        <a class="btn btn-success btn-sm" href="{{ path('candidature_new') }}">
-            Nouvelle candidature
-        </a>&nbsp;&nbsp;&nbsp;&nbsp;
-        <a class="btn btn-danger btn-sm" href="{{ url('fos_user_security_logout') }}">
-            Deconnexion
-        </a>                    
-        <br/><br/>            
+{% block content %}        
+        <br/>
         <h4>Vous êtes candidat aux filières suivantes :</h4>        
         <br/>        
         <ul>
@@ -19,5 +13,11 @@
             </li>            
         {% endfor %}
         </ul>    
-        <br/>        
+        <br/><hr/>
+        <a class="btn btn-success btn-sm" href="{{ path('candidature_new') }}">
+            Nouvelle candidature
+        </a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="btn btn-danger btn-sm" href="{{ url('fos_user_security_logout') }}">
+            Deconnexion
+        </a>        
 {% endblock %}

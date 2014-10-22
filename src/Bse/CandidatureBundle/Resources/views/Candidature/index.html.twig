@@ -7,16 +7,16 @@
         <h4>Vous êtes candidat aux filières suivantes :</h4>        
         <br/>        
         <ul>
-        {% for entity in entities %}
+        {% for filiere in filieres %}
             <li style="margin-bottom: 15px;">
-                <b class="label label-info" style="font-size:12px">{{ entity.filiere }}</b>  ( <a href="{{ path('candidature_show', { 'id': entity.id }) }}">Voir les détails de cette candidature</a> )
+                <b class="label label-info" style="font-size:12px">{{ filiere }}</b>
             </li>            
         {% endfor %}
         </ul>    
-        <br/><hr/>
-        <a class="btn btn-success btn-sm" href="{{ path('candidature_new') }}">
-            Nouvelle candidature
-        </a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <br/><hr/>        
+        <a class="btn btn-success btn-sm" href="{{ path('candidature_show', { 'id': candidature.id }) }}">
+            Modifier votre candidature
+        </a>
         <a class="btn btn-danger btn-sm" href="{{ url('fos_user_security_logout') }}">
             Deconnexion
         </a>        

@@ -129,9 +129,16 @@ class Candidature
     /**
      * @var integer
      *
-     * @ORM\Column(name="annee_obtention", type="integer", nullable=true)
+     * @ORM\Column(name="annee_obtention_licence", type="integer", nullable=true)
      */
-    private $anneeObtention;
+    private $anneeObtentionLicence;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="annee_obtention_bac", type="integer", nullable=true)
+     */
+    private $anneeObtentionBac;
 
     /**
      * @var float
@@ -196,8 +203,6 @@ class Candidature
      */
     private $fosuserId;
 
-    /* Transcient property */
-    private $motDePasse;
 
 
     /**
@@ -556,26 +561,49 @@ class Candidature
     }
 
     /**
-     * Set anneeObtention
+     * Set anneeObtentionLicence
      *
-     * @param integer $anneeObtention
+     * @param integer $anneeObtentionLicence
      * @return Candidature
      */
-    public function setAnneeObtention($anneeObtention)
+    public function setAnneeObtentionLicence($anneeObtentionLicence)
     {
-        $this->anneeObtention = $anneeObtention;
+        $this->anneeObtentionLicence = $anneeObtentionLicence;
 
         return $this;
     }
 
     /**
-     * Get anneeObtention
+     * Get anneeObtentionLicence
      *
      * @return integer 
      */
-    public function getAnneeObtention()
+    public function getAnneeObtentionLicence()
     {
-        return $this->anneeObtention;
+        return $this->anneeObtentionLicence;
+    }
+
+    /**
+     * Set anneeObtentionBac
+     *
+     * @param integer $anneeObtentionBac
+     * @return Candidature
+     */
+    public function setAnneeObtentionBac($anneeObtentionBac)
+    {
+        $this->anneeObtentionBac = $anneeObtentionBac;
+
+        return $this;
+    }
+
+    /**
+     * Get anneeObtentionBac
+     *
+     * @return integer 
+     */
+    public function getAnneeObtentionBac()
+    {
+        return $this->anneeObtentionBac;
     }
 
     /**
@@ -786,6 +814,27 @@ class Candidature
     }
 
     /**
+     * ####################################################################################
+     * ############################        CUSTOM CODE        #############################
+     * ####################################################################################
+     */
+
+    /**
+     * @var string     
+     */
+    private $motDePasse;
+
+    /**
+     * Get motDePasse
+     *
+     * @return string 
+     */
+    public function getMotDePasse()
+    {
+        return $this->motDePasse;
+    }
+
+    /**
      * Set motDePasse
      *
      * @param string $motDePasse
@@ -797,15 +846,4 @@ class Candidature
 
         return $this;
     }
-
-    /**
-     * Get motDePasse
-     *
-     * @return string 
-     */
-    public function getmotDePasse()
-    {
-        return $this->motDePasse;
-    }
-
 }

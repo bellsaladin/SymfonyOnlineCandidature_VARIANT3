@@ -1,6 +1,6 @@
 {% extends 'BseCandidatureBundle::layout.html.twig' %}
 
-{% block subTitle %}Nouvelle candidature {% endblock %}
+{% block subTitle %}Candidature - <span id="stepTitle" style="color: #D82828;">Etape 1 : Informations générales </span>{% endblock %}
 
 {% block content %}
 		{% if emailAlreadyInUse is defined %}
@@ -8,7 +8,7 @@
 		{% endif %}
     	{{ form_start(form, {'method': 'POST', 'attr': {'id': 'newCandidatureForm'}} ) }} 
     		<input type="hidden" name="firstCandidature" value="{{ first }}">
-    		<div id="rootwizard" style="margin-top:40px">
+    		<div id="rootwizard" class="wizard" style="margin-top:40px">
 			<div class="col-xs-3">
 				<ul class="nav nav-tabs tabs-left" style="height: 580px;">				  	
 					<li class="active"><a href="#tab1" data-toggle="tab">Etape 1 : Informations générales</a></li>
@@ -20,9 +20,7 @@
 			<div class="col-xs-9">
 				<div class="tab-content">
 					    
-					    <div class="tab-pane" id="tab1">
-					        <h3>Candidature - Etape 1 : Informations générales</h3>
-					        <hr style="margin-bottom:30px"/>
+					    <div class="tab-pane active" id="tab1">					        
 					    	
 					    	<div>{{ form_errors(form) }}</div>
 
@@ -85,9 +83,7 @@
 							</div>
 					    </div>
 
-						<div class="tab-pane" id="tab2">
-							<h3>Candidature - Etape 2 : Parcours d'études</h3>
-		    				<hr style="margin-bottom:30px"/>
+						<div class="tab-pane" id="tab2">							
 					    	<div>{{ form_errors(form) }}</div>
 
 					    	<div class="row">
@@ -117,7 +113,42 @@
 								<div class="row">
 									<div class="col-xs-4">
 									    <div class="form-group">
-									        <label>Mention</label>	
+									        <label>Année d'obtention du bac</label>	
+									        <p></p>
+									        <select id="{{ form.anneeObtentionBac.vars.id }}" name="{{ form.anneeObtentionBac.vars.full_name }}" class="form-control input-sm">
+									        	{% for i in 2012..2000 %}
+									        	<option value="{{ i }}">{{ i }}</option><?php } ?>
+									        	{% endfor %}
+									        </select>						        			    
+									    </div>
+									</div>									
+									<div class="col-xs-4">
+									    <div class="form-group">
+									        <label>Année de 1ère inscription à l'université</label>	
+									        <p></p>
+									        <select id="{{ form.anneeInscription.vars.id }}" name="{{ form.anneeInscription.vars.full_name }}" class="form-control input-sm">
+									        	{% for i in 2013..2005 %}
+									        	<option value="{{ i }}">{{ i }}</option><?php } ?>
+									        	{% endfor %}
+									        </select>						        			    
+									    </div>
+									</div>
+									<div class="col-xs-4">
+									    <div class="form-group">
+									        <label>Année d'obtention de la licence</label>	
+									        <p></p>
+									        <select id="{{ form.anneeObtentionLicence.vars.id }}" name="{{ form.anneeObtentionLicence.vars.full_name }}" class="form-control input-sm">
+									        	{% for i in 2013..2005 %}
+									        	<option value="{{ i }}">{{ i }}</option><?php } ?>
+									        	{% endfor %}
+									        </select>						        			    
+									    </div>
+									</div>																		
+								</div>
+								<div class="row">	
+									<div class="col-xs-4">
+									    <div class="form-group">
+									        <label>Mention <small>(Licence)</small></label>	
 									        <p></p>
 									        <select id="{{ form.mention.vars.id }}" name="{{ form.mention.vars.full_name }}" class="form-control input-sm">
 									        	<option value="Passable">Passable</option>
@@ -128,33 +159,11 @@
 									        </select>						        			    
 									    </div>
 									</div>
-									<div class="col-xs-4">
-									    <div class="form-group">
-									        <label>Année d'obtention</label>	
-									        <p></p>
-									        <select id="{{ form.anneeObtention.vars.id }}" name="{{ form.anneeObtention.vars.full_name }}" class="form-control input-sm">
-									        	{% for i in 2013..2005 %}
-									        	<option value="{{ i }}">{{ i }}</option><?php } ?>
-									        	{% endfor %}
-									        </select>						        			    
+									<div class="col-xs-4">												    	
+						    			<div class="form-group" style="margin: 36px 0 0 0;">
+									        <label>Diplôme étranger ? &nbsp;&nbsp;<span>{{ form_widget(form.diplomeEtranger) }}</span></label>
 									    </div>
 									</div>
-									<div class="col-xs-4">
-									    <div class="form-group">
-									        <label>Année d'inscription</label>	
-									        <p></p>
-									        <select id="{{ form.anneeInscription.vars.id }}" name="{{ form.anneeInscription.vars.full_name }}" class="form-control input-sm">
-									        	{% for i in 2013..2005 %}
-									        	<option value="{{ i }}">{{ i }}</option><?php } ?>
-									        	{% endfor %}
-									        </select>						        			    
-									    </div>
-									</div>									
-								</div>
-								<div class="row col-xs-12">								    	
-					    			<div class="form-group" style="padding: 10px 0;">
-								        <label>Diplôme étranger ? &nbsp;&nbsp;<span>{{ form_widget(form.diplomeEtranger) }}</span></label>
-								    </div>
 								</div>
 								<h4>Notes :</h4>
 								<div class="row">
@@ -199,16 +208,15 @@
 								        <div class="form-group">
 									        <label>Semestre 6</label>
 									        <p>{{ form_errors(form.noteS6) }}</p>
-									        <input type="text" id="txt_note_S6" name="{{ form.noteS6.vars.full_name }}" placeholder="ex : 10,00"class="form-control input-sm"/>	
+									        <input type="text" id="txt_note_S6" name="{{ form.noteS6.vars.full_name }}" placeholder="ex : 10,00" class="form-control input-sm"/>	
 									    </div>		    
 									</div>
 								</div>
 							</div>	
 						</div>	 
 
-						<div class="tab-pane active" id="tab3">
-					      	<h3>Candidature - Etape 3 : Choix de la filière </h3>
-					      	<hr style="margin-bottom:30px"/>
+						<div class="tab-pane" id="tab3">
+					      	
 					    	<div>{{ form_errors(form) }}</div>
 
 					    	<div class="row">
@@ -228,14 +236,14 @@
 								    </div>	
 								    <div>
   										<button type="button" id="btnAddFiliere" class="btn btn-info btn-xs">Ajouter une autre filière</button>
+  										<button type="button" id="btnRemoveLastFiliere" class="btn btn-danger btn-xs">Supprimer la dernière filière</button>
 									</div>			    				    			    
 								</div>
 							</div>
 					    </div>
 
 						<div class="tab-pane" id="tab4">
-							<h3>Candidature - Etape 4 : Validation de la demande de candidature</h3>
-		    				<hr style="margin-bottom:30px"/>
+							
 					    	<div>{{ form_errors(form) }}</div>
 
 					    	<div class="row">
@@ -309,7 +317,10 @@
 
 				return false;
 			},
-			onNext: function(tab, navigation, index) {				
+			onNext: function(tab, navigation, index) {	
+				var stepTitle = tab.children().first().html();
+				$('#stepTitle').html(stepTitle);
+
 				// Make sure the values are valid before moving to next step
 				if(!$("#newCandidatureForm").valid()){
 					return false;
@@ -350,7 +361,7 @@
 		/* ------ END - ASK JQUERY VALIDATE PLUGIN TO USE COMMA FOR FLOAT DECIMAL ---- */
 		
 		$("#newCandidatureForm").validate();		
-  		$( "#txt_nom" ).rules( "add", {required: true} );
+  		/* $( "#txt_nom" ).rules( "add", {required: true} );
   		$( "#txt_prenom" ).rules( "add", {required: true} );
   		$( "#txt_cin" ).rules( "add", {required: true} );
   		$( "#txt_cne" ).rules( "add", {required: true} );
@@ -362,10 +373,14 @@
   		$( "#txt_note_S3" ).rules( "add", {required: true, range:[10, 20]} );
   		$( "#txt_note_S4" ).rules( "add", {required: true, range:[10, 20]} );
   		$( "#txt_note_S5" ).rules( "add", {required: true, range:[10, 20]} );
-  		$( "#txt_note_S6" ).rules( "add", {required: true, range:[10, 20]} );
-		{% if first == "first" %} /* validation JS of field that exists only on a new inscription */
+  		$( "#txt_note_S6" ).rules( "add", {required: true, range:[10, 20]} );*/	
+		
+		
+		{# --------------- validation JS of field that exists only on a new inscription ---------------  #}
+		
+		{% if first == "first" %} 
 		$( "#txt_email" ).rules( "add", {required: true} );
-		$( "#txt_motDePasse" ).rules( "add", {required: true} );		
+		$( "#txt_motDePasse" ).rules( "add", {required: true} ); 	
 		$.validator.addMethod("passwordCheck", function (value, element) {
         		return value == $("#txt_motDePasse").val(); 
         }, 'La confirmation du mot de passe ne correspond pas au mot de passe renseigné');
@@ -381,24 +396,31 @@
 		bindChangeEventToFiliereSelectElements();
 
 		$('#btnAddFiliere').click(function(){
-			//alert('test');						
-			$('<select class="form-control input-md '+ filiereElementClass +'" name="filieres[]" required/>').append(filieresOptions.join('')).appendTo('#filieresContainer');
+			//alert('test');
+			$('<select style="margin: 10px 0" class="form-control input-md '+ filiereElementClass +'" name="filieres[]" required/>').append(filieresOptions).appendTo('#filieresContainer');
 			// renbind change event so that the new one will it's own also
-			bindChangeEventToFiliereSelectElements();			
+			bindChangeEventToFiliereSelectElements();
 		});
+		$('#btnRemoveLastFiliere').click(function(){
+			alert('remove code');			
+		});
+
 
 
 		function bindChangeEventToFiliereSelectElements(){
 			// make sure the elements have only one change event
-			$(('.' + filiereElementClass)).unbind('change');
+			$(('.' + filiereElementClass)).unbind('change');			
 
 			$(('.' + filiereElementClass)).change(function(){
-				alert('The easiest method : on change update the hidden input filiere by all the choosen values');
+				// alert('The easiest method : on change update the hidden input filiere by all the choosen values');
 				filierePropertyValue = '';
-				$(('.' + filiereElementClass)).each(function() {
-				  filierePropertyValue += $(this).val() + '//';
-				});
-				alert('Liste des filieres : ' + filierePropertyValue);
+				var nbrOfFilieresElements = $(('.' + filiereElementClass)).length;
+				$(('.' + filiereElementClass)).each(function(index, element) {
+				  filierePropertyValue += (index != nbrOfFilieresElements - 1)? $(this).val() + '//': $(this).val();
+				});				
+				// alert('Liste des filieres : ' + filierePropertyValue);
+
+				$("#{{ form.filiere.vars.id }}").val(filierePropertyValue);
 			});
 		}
 

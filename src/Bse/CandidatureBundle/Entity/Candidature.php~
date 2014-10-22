@@ -129,9 +129,16 @@ class Candidature
     /**
      * @var integer
      *
-     * @ORM\Column(name="annee_obtention", type="integer", nullable=true)
+     * @ORM\Column(name="annee_obtention_licence", type="integer", nullable=true)
      */
-    private $anneeObtention;
+    private $anneeObtentionLicence;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="annee_obtention_bac", type="integer", nullable=true)
+     */
+    private $anneeObtentionBac;
 
     /**
      * @var float
@@ -185,9 +192,9 @@ class Candidature
     /**
      * @var integer
      *
-     * @ORM\Column(name="annee_candidature", type="integer", nullable=true)
+     * @ORM\Column(name="annee_inscription", type="integer", nullable=true)
      */
-    private $anneeCandidature;
+    private $anneeInscription;
 
     /**
      * @var integer

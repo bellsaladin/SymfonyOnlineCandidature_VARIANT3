@@ -102,12 +102,18 @@ Candidature:
             nullable: true
             comment: ''
             column: diplome_etranger
-        anneeObtention:
+        anneeObtentionLicence:
             type: integer
             nullable: true
             unsigned: false
             comment: ''
-            column: annee_obtention
+            column: annee_obtention_licence
+        anneeObtentionBac:
+            type: integer
+            nullable: true
+            unsigned: false
+            comment: ''
+            column: annee_obtention_bac
         noteS1:
             type: float
             nullable: true
@@ -156,12 +162,12 @@ Candidature:
             length: 150
             fixed: false
             comment: ''
-        anneeCandidature:
+        anneeInscription:
             type: integer
             nullable: true
             unsigned: false
             comment: ''
-            column: annee_candidature
+            column: annee_inscription
         fosuserId:
             type: integer
             nullable: true

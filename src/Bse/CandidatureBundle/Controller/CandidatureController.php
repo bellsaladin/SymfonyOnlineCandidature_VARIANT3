@@ -33,15 +33,13 @@ class CandidatureController extends Controller
 
         $user = $this->get('security.context')->getToken()->getUser();
 
-        if($user instanceof FOSUserEntity){
-            $entities = $em->getRepository('BseCandidatureBundle:Candidature')->findBy(array(
-                'fosuserId' => $user->getId(),    
-            ));
-        }else{
-            $entities = array();
-        }
+        
+        $candidature = $em->getRepository('BseCandidatureBundle:Candidature')->findOneBy(array(
+                'fosuserId' => $user->getId() ));
+        
+        $filieres = explode("//", $candidature->getFiliere());
         return $this->render('BseCandidatureBundle:Candidature:index.html.twig', array(
-            'entities' => $entities, 'user' => $user
+            'candidature' => $candidature, 'user' => $user , 'filieres' => $filieres
         ));
     }
 

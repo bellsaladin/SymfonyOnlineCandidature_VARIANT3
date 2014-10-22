@@ -32,7 +32,8 @@ class CandidatureType extends AbstractType
             ->add('intituleDiplome')
             ->add('diplomeEtranger')
             ->add('mention')
-            ->add('anneeObtention')
+            ->add('anneeObtentionLicence')
+            ->add('anneeObtentionBac')
             ->add('anneeInscription')
             ->add('noteS1')
             ->add('noteS2')
@@ -51,7 +52,7 @@ class CandidatureType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Bse\CandidatureBundle\Entity\Candidature'
+            'data_class' => 'Bse\CandidatureBundle\Entity\Candidature'            
         ));
     }
 

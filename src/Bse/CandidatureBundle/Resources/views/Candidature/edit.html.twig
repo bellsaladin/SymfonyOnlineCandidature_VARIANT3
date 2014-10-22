@@ -1,0 +1,411 @@
+{% extends 'BseCandidatureBundle::layout.html.twig' %}
+
+{% block subTitle %}Modification de candidature - <span id="stepTitle" style="color: #D82828;">Etape 1 : Informations générales </span>{% endblock %}
+
+{% block content %}
+		{% if emailAlreadyInUse is defined %}
+		<div class="alert alert-danger"><b>Erreur : </b>l'email {{ emailAlreadyInUse }} renseigné est déjà utilisé !</div>
+		{% endif %}
+    	{{ form_start(edit_form, {'method': 'POST', 'attr': {'id': 'editCandidatureForm'}} ) }}   
+    		<input type="hidden" name="_method" value="PUT">  		
+    		<div id="rootwizard" class="wizard" style="margin-top:40px">
+			<div class="col-xs-3">
+				<ul class="nav nav-tabs tabs-left" style="height: 580px;">				  	
+					<li class="active"><a href="#tab1" data-toggle="tab">Etape 1 : Informations générales</a></li>
+					<li><a href="#tab2" data-toggle="tab">Etape 2 : Parcours d'études</a></li>		
+					<li><a href="#tab3" data-toggle="tab">Etape 3 : Choix de la filière</a></li>
+					<li><a href="#tab4" data-toggle="tab">Etape 4 : Validation</a></li>					
+				</ul>
+			</div>
+			<div class="col-xs-9">
+				<div class="tab-content">
+					    
+					    <div class="tab-pane active" id="tab1">					        
+					    	
+					    	<div>{{ form_errors(edit_form) }}</div>
+
+					    	<div class="row">
+						    	<div class="col-xs-12 col-md-6 col-lg-6">								    
+								    <div class="form-group">
+								        <label>Prénom</label>
+								        <p>{{ form_errors(edit_form.prenom) }}</p>
+								        <input type="text" id="txt_prenom" name="{{ edit_form.prenom.vars.full_name }}" placeholder="ex : Ahmed" value="{{ entity.prenom}}" class="form-control input-sm"/>	
+								    </div>
+								    <div class="form-group">
+								        <label>Nom</label>
+								        <p>{{ form_errors(edit_form.nom) }}</p>
+								        <input type="text" id="txt_nom" name="{{ edit_form.nom.vars.full_name }}" placeholder="ex : Talal" value="{{ entity.nom}}" class="form-control input-sm"/>	
+								    </div>
+								    <div class="form-group">
+								        <label>CIN</label>
+								        <p>{{ form_errors(edit_form.cin) }}</p>
+								        <input type="text" id="txt_cin" name="{{ edit_form.cin.vars.full_name }}" placeholder="ex : G 42402" value="{{ entity.cin}}" class="form-control input-sm"/>	
+								    </div>
+								    <div class="form-group">
+								        <label>CNE</label>
+								        <p>{{ form_errors(edit_form.cne) }}</p>
+								        <input type="text" id="txt_cne" name="{{ edit_form.cne.vars.full_name }}" placeholder="ex : 30494800" value="{{ entity.cne}}" class="form-control input-sm"/>	
+								    </div>	
+								    <div class="form-group">
+								        <label>{{ form_label(edit_form.adresse) }}</label>
+								        <p>{{ form_errors(edit_form.adresse) }}</p>
+								        <textarea id="txt_adresse" name="{{ edit_form.adresse.vars.full_name }}" placeholder="ex : " class="form-control input-sm">{{ entity.adresse }}</textarea>
+								    </div>
+								</div>									
+								<div class="col-xs-12 col-md-6 col-lg-6">									
+								    <div class="form-group">
+								        <label>Sexe</label>	
+								        <p></p>
+								        <select id="{{ edit_form.sexe.vars.id }}" name="{{ edit_form.sexe.vars.full_name }}" class="form-control input-sm">
+								        	<option value="M">Masculin</option>
+								        	<option value="F">Féminin</option>
+								        </select>							        			    
+								    </div>
+									<div class="form-group">
+								        <label>{{ form_label(edit_form.dateNaissance) }}</label>
+								        <p>{{ form_errors(edit_form.dateNaissance) }}</p>
+								        {{ form_widget(edit_form.dateNaissance) }}
+							        </div>
+							        <div class="form-group">
+								        <label>Pays</label>	
+								        <p></p>
+								        <select id="{{ edit_form.pays.vars.id }}" name="{{ edit_form.pays.vars.full_name }}" class="form-control input-sm">
+								        	<option value="Maroc">Maroc</option>
+								        	<option value="Autre">Autre</option>
+								        </select>						        			    
+								    </div>
+								    <div class="form-group">
+								        <label>{{ form_label(edit_form.ville) }}</label>
+								        <p>{{ form_errors(edit_form.ville) }}</p>
+								        <input type="text" id="txt_ville" name="{{ edit_form.ville.vars.full_name }}" placeholder="ex : Kénitra" value="{{ entity.ville}}" class="form-control input-sm"/>	
+								    </div>
+								</div>
+							</div>
+					    </div>
+
+						<div class="tab-pane" id="tab2">							
+					    	<div>{{ form_errors(edit_form) }}</div>
+
+					    	<div class="row">
+					    		<div class="row col-xs-12">
+					    			<div class="form-group">
+								        <label>Etablissement d'origine</label>
+								        <p>{{ form_errors(edit_form.filiere) }}</p>
+								        <select id="{{ edit_form.etablissementOrigine.vars.id }}" name="{{ edit_form.etablissementOrigine.vars.full_name }}" class="form-control input-sm">
+								        	<option value="Université Ibn Tofail">Université Ibn Tofail</option>
+								        	<option value="...">...</option>								        	
+								        </select>							        			    
+								    </div>
+					    			<div class="form-group">
+								        <label>Type du diplôme</label>
+								        <p>{{ form_errors(edit_form.typeDiplome) }}</p>
+								        <select id="{{ edit_form.typeDiplome.vars.id }}" name="{{ edit_form.typeDiplome.vars.full_name }}" class="form-control input-md">
+								        	<option value="LF">Licence fondamentale</option>
+								        	<option value="LP">Licence professionnelle</option>
+								        </select>							        			    
+								    </div>
+								    <div class="form-group">
+								        <label>{{ form_label(edit_form.intituleDiplome) }}</label>
+								        <p>{{ form_errors(edit_form.intituleDiplome) }}</p>
+								        <input type="text" name="{{ edit_form.intituleDiplome.vars.full_name }}" placeholder="ex : Licence fondamentale SMI" class="form-control input-sm"
+								        value="{{ entity.intituleDiplome}}" required/>	
+								    </div>									
+								</div>
+								<div class="row">
+									<div class="col-xs-4">
+									    <div class="form-group">
+									        <label>Année d'obtention du bac</label>	
+									        <p></p>
+									        <select id="{{ edit_form.anneeObtentionBac.vars.id }}" name="{{ edit_form.anneeObtentionBac.vars.full_name }}" class="form-control input-sm">
+									        	{% for i in 2012..2000 %}
+									        	<option value="{{ i }}">{{ i }}</option><?php } ?>
+									        	{% endfor %}
+									        </select>						        			    
+									    </div>
+									</div>									
+									<div class="col-xs-4">
+									    <div class="form-group">
+									        <label>Année de 1ère inscription à l'université</label>	
+									        <p></p>
+									        <select id="{{ edit_form.anneeInscription.vars.id }}" name="{{ edit_form.anneeInscription.vars.full_name }}" class="form-control input-sm">
+									        	{% for i in 2013..2005 %}
+									        	<option value="{{ i }}">{{ i }}</option><?php } ?>
+									        	{% endfor %}
+									        </select>						        			    
+									    </div>
+									</div>
+									<div class="col-xs-4">
+									    <div class="form-group">
+									        <label>Année d'obtention de la licence</label>	
+									        <p></p>
+									        <select id="{{ edit_form.anneeObtentionLicence.vars.id }}" name="{{ edit_form.anneeObtentionLicence.vars.full_name }}" class="form-control input-sm">
+									        	{% for i in 2013..2005 %}
+									        	<option value="{{ i }}">{{ i }}</option><?php } ?>
+									        	{% endfor %}
+									        </select>						        			    
+									    </div>
+									</div>																		
+								</div>
+								<div class="row">	
+									<div class="col-xs-4">
+									    <div class="form-group">
+									        <label>Mention <small>(Licence)</small></label>	
+									        <p></p>
+									        <select id="{{ edit_form.mention.vars.id }}" name="{{ edit_form.mention.vars.full_name }}" class="form-control input-sm">
+									        	<option value="Passable">Passable</option>
+									        	<option value="Assez bien">Assez bien</option>
+									        	<option value="Bien">Bien</option>
+									        	<option value="Très bien">Passable</option>
+									        	<option value="Excellent">Passable</option>
+									        </select>						        			    
+									    </div>
+									</div>
+									<div class="col-xs-4">												    	
+						    			<div class="form-group" style="margin: 36px 0 0 0;">
+									        <label>Diplôme étranger ? &nbsp;&nbsp;<span>{{ form_widget(edit_form.diplomeEtranger) }}</span></label>
+									    </div>
+									</div>
+								</div>
+								<h4>Notes :</h4>
+								<div class="row">
+							    	<div class="col-xs-12 col-md-4 col-lg-4">
+									    <div class="form-group">
+									        <label>Semestre 1</label>
+									        <p>{{ form_errors(edit_form.noteS1) }}</p>
+									        <input type="text" id="txt_note_S1" name="{{ edit_form.noteS1.vars.full_name }}" value="{{ entity.noteS1}}" placeholder="ex : 13,50" class="form-control input-sm"/>	
+								        </div>
+									</div>
+									<div class="col-xs-12 col-md-4 col-lg-4">
+										<div class="form-group">
+									        <label>Semestre 2</label>
+									        <p>{{ form_errors(edit_form.noteS2) }}</p>
+									        <input type="text" id="txt_note_S2" name="{{ edit_form.noteS2.vars.full_name }}" value="{{ entity.noteS2}}" placeholder="ex : 11,00" class="form-control input-sm"/>	
+									    </div>
+									</div>
+									<div class="col-xs-12 col-md-4 col-lg-4">
+										<div class="form-group">
+									        <label>Semestre 3</label>
+									        <p>{{ form_errors(edit_form.noteS3) }}</p>
+									        <input type="text" id="txt_note_S3" name="{{ edit_form.noteS3.vars.full_name }}" value="{{ entity.noteS3 }}" placeholder="ex : 14,00" class="form-control input-sm"/>	
+								        </div>	    
+									</div>
+								</div>
+								<div class="row">
+							    	<div class="col-xs-12 col-md-4 col-lg-4">
+								        <div class="form-group">
+									        <label>Semestre 4</label>
+									        <p>{{ form_errors(edit_form.noteS4) }}</p>
+									        <input type="text" id="txt_note_S4" name="{{ edit_form.noteS4.vars.full_name }}" value="{{ entity.noteS4}}" placeholder="ex : 10,00" class="form-control input-sm"/>	
+									    </div>
+									</div>
+									<div class="col-xs-12 col-md-4 col-lg-4">
+								        <div class="form-group">
+									        <label>Semestre 5</label>
+									        <p>{{ form_errors(edit_form.noteS5) }}</p>
+									        <input type="text" id="txt_note_S5" name="{{ edit_form.noteS5.vars.full_name }}" value="{{ entity.noteS5}}" placeholder="ex : 14,00" class="form-control input-sm"/>	
+								        </div>		    
+									</div>
+									<div class="col-xs-12 col-md-4 col-lg-4">
+								        <div class="form-group">
+									        <label>Semestre 6</label>
+									        <p>{{ form_errors(edit_form.noteS6) }}</p>
+									        <input type="text" id="txt_note_S6" name="{{ edit_form.noteS6.vars.full_name }}" value="{{ entity.noteS6}}" placeholder="ex : 10,00" class="form-control input-sm"/>	
+									    </div>		    
+									</div>
+								</div>
+							</div>	
+						</div>	 
+
+						<div class="tab-pane" id="tab3">
+					      	
+					    	<div>{{ form_errors(edit_form) }}</div>
+
+					    	<div class="row">
+						    	<div class="col-xs-12 col-md-12 col-lg-12">
+						    		<div>
+						    			<input type="hidden" id="{{ edit_form.filiere.vars.id }}" name="{{ edit_form.filiere.vars.full_name }} value="{{ entity.filiere }}"/>
+						    		</div>
+								    <div class="form-group" id="filieresContainer">
+								        <label>Choisissez la filière où vous désirez déposer votre candidature</label>	
+								        <select class="form-control input-md filiereSelect" name="filieres[]" required>
+								        	<option value="">Choisissez une filière</option>
+								        	<option value="Qualité du Logiciel">Qualité du Logiciel</option>
+								        	<option value="Energies Renouvelables">Energies Renouvelables</option>
+								        	<option value="Biotechnologies alimentaires et santé">Biotechnologies alimentaires et santé</option>
+								        	<option value="...">...</option>
+								        </select>							        			    
+								    </div>	
+								    <div>
+  										<button type="button" id="btnAddFiliere" class="btn btn-info btn-xs">Ajouter une autre filière</button>
+  										<button type="button" id="btnRemoveLastFiliere" class="btn btn-danger btn-xs">Supprimer la dernière filière</button>
+									</div>			    				    			    
+								</div>
+							</div>
+					    </div>
+
+						<div class="tab-pane" id="tab4">
+							
+					    	<div>{{ form_errors(edit_form) }}</div>
+
+					    	<div class="row">
+						    	<div class="col-xs-12">
+						    	
+								    <div class="form-group">
+								    	<p>Voulez-vous valider les modifications apportés à votre candidature ?</b></p>
+								    </div>								    								
+								</div>
+							</div>
+						</div>
+					    <div class="form-group">		        
+					        {{ form_row(edit_form._token) }}
+					        <!-- <input type="submit" class="btn btn-primary" value="Enregistrer"/> -->
+				    	</div>	
+				    </div>
+
+				    <div class="pager wizard">					
+						<li class="previous" style="background-color: #83A29A;color:#fff"><a href="javascript:;">Etape précedente</a></li>					
+					  	<li class="next"><a href="javascript:;">Etape suivante</a></li>
+						<li class="next finish" style="display:none;"><a href="javascript:;" style="background-color:#2A2; border:0; color:#fff">Envoyer la demande de candidateure</a></li>
+					</div>
+
+				</div>					
+			</div>	
+			<ul class="record_actions hide">
+			    <li>
+			        <a href="{{ path('candidature') }}">
+			            Back to the list
+			        </a>
+			    </li>
+			</ul>
+		</div>
+
+	    		    				    	
+    	{{ form_end(edit_form,{'render_rest': false}) }}
+
+
+
+<script type="text/javascript">  
+
+	$(document).ready(function() {
+	  	$('#rootwizard').bootstrapWizard({
+	  		'tabClass': 'nav nav-tabs',
+	  		onTabClick: function(tab, navigation, index) {	
+				//var current = index+1;
+	  			// var indexOfClickedTab = tab.att('');
+	  			// alert(tab.attr('href') + tab.html());
+
+				return false;
+			},
+			onNext: function(tab, navigation, index) {	
+				var stepTitle = tab.children().first().html();
+				$('#stepTitle').html(stepTitle);
+
+				// Make sure the values are valid before moving to next step
+				if(!$("#editCandidatureForm").valid()){
+					return false;
+				}												
+			},
+		  	onTabShow: function(tab, navigation, index) {
+				var $total = navigation.find('li').length;
+				var $current = index+1;
+				var $percent = ($current/$total) * 100;
+				$('#rootwizard').find('.bar').css({width:$percent+'%'});
+				
+				// If it's the last tab then hide the last button and show the finish instead
+				if($current >= $total) {
+					$('#rootwizard').find('.pager .next').hide();
+					$('#rootwizard').find('.pager .finish').show();
+					$('#rootwizard').find('.pager .finish').removeClass('disabled');
+				} else {
+					$('#rootwizard').find('.pager .next').show();
+					$('#rootwizard').find('.pager .finish').hide();
+				}		
+			}
+		});
+
+	  	$('#rootwizard .finish').click(function() {			
+			if($("#editCandidatureForm").valid()){
+				$( "#editCandidatureForm" ).submit();
+			}				
+		});
+
+		/* ------ BEGIN - ASK JQUERY VALIDATE PLUGIN TO USE COMMA FOR FLOAT DECIMAL ---- */
+		$.validator.methods.range = function (value, element, param) {
+		    var globalizedValue = value.replace(",", ".");
+		    return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
+		}		 
+		$.validator.methods.number = function (value, element) {
+		    return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+		}
+		/* ------ END - ASK JQUERY VALIDATE PLUGIN TO USE COMMA FOR FLOAT DECIMAL ---- */
+		
+		$("#editCandidatureForm").validate();		
+  		/* $( "#txt_nom" ).rules( "add", {required: true} );
+  		$( "#txt_prenom" ).rules( "add", {required: true} );
+  		$( "#txt_cin" ).rules( "add", {required: true} );
+  		$( "#txt_cne" ).rules( "add", {required: true} );
+  		$( "#txt_ville" ).rules( "add", {required: true} );
+  		$( "#txt_adresse" ).rules( "add", {required: true} );		
+		
+  		$( "#txt_note_S1" ).rules( "add", {required: true, range:[10, 20]} );
+  		$( "#txt_note_S2" ).rules( "add", {required: true, range:[10, 20]} );
+  		$( "#txt_note_S3" ).rules( "add", {required: true, range:[10, 20]} );
+  		$( "#txt_note_S4" ).rules( "add", {required: true, range:[10, 20]} );
+  		$( "#txt_note_S5" ).rules( "add", {required: true, range:[10, 20]} );
+  		$( "#txt_note_S6" ).rules( "add", {required: true, range:[10, 20]} );*/			
+
+		// ####################### BEGIN - HANDLING THE DYNAMIC CREATION OF SELECT ELEMENTS #######################
+		var filiereElementClass = 'filiereSelect';
+		var filierePropertyValue = '';
+		var data = new Array('Filière 1', 'Filière 2' , 'Filière 3');
+		var filieresOptions = getOptionsForSelectElement(data);				
+
+		bindChangeEventToFiliereSelectElements();
+
+		$('#btnAddFiliere').click(function(){
+			//alert('test');
+			$('<select style="margin: 10px 0" class="form-control input-md '+ filiereElementClass +'" name="filieres[]" required/>').append(filieresOptions).appendTo('#filieresContainer');
+			// renbind change event so that the new one will it's own also
+			bindChangeEventToFiliereSelectElements();
+		});
+		$('#btnRemoveLastFiliere').click(function(){
+			alert('remove code');			
+		});
+
+		function bindChangeEventToFiliereSelectElements(){
+			// make sure the elements have only one change event
+			$(('.' + filiereElementClass)).unbind('change');			
+
+			$(('.' + filiereElementClass)).change(function(){
+				// alert('The easiest method : on change update the hidden input filiere by all the choosen values');
+				filierePropertyValue = '';
+				var nbrOfFilieresElements = $(('.' + filiereElementClass)).length;
+				$(('.' + filiereElementClass)).each(function(index, element) {
+				  filierePropertyValue += (index != nbrOfFilieresElements - 1)? $(this).val() + '//': $(this).val();
+				});				
+				// alert('Liste des filieres : ' + filierePropertyValue);
+
+				$("#{{ edit_form.filiere.vars.id }}").val(filierePropertyValue);
+			});
+		}
+
+		function getOptionsForSelectElement(data){
+			var options = new Array();
+			$.each(data, function(index, option) {
+			    options.push('<option value="' + option + '">'+ option +'</option>');
+			});
+			return options;
+		}
+		// ####################### END - HANDLING THE DYNAMIC CREATION OF SELECT ELEMENTS #######################
+
+	});
+</script>
+
+
+<script src="{{ asset('bundles/bsecandidature/js/jquery.bootstrap.wizard.min.js') }}"></script>
+<script src="{{ asset('bundles/bsecandidature/js/jquery-validate.bootstrap-tooltip.min.js') }}"></script>
+<script src="{{ asset('bundles/bsecandidature/js/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('bundles/bsecandidature/js/jquery-validate.bootstrap-tooltip.min.js') }}"></script>
+
+
+{% endblock %}

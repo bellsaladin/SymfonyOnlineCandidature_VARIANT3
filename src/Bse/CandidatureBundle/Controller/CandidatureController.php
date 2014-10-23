@@ -3,6 +3,8 @@
 namespace Bse\CandidatureBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\UserBundle\Model\UserManager;
 use Bse\CandidatureBundle\Entity\Candidature;
@@ -297,23 +299,24 @@ class CandidatureController extends Controller
         ;
     }
 
-    public function pdfAction(Request $request) {
+    public function generatePdfAction(Request $request) {
 
-        //grab from database
+        $pdfObj = $this->container->get("white_october.tcpdf")->create();
 
-        $pdf = new \FPDF;
+        $html = '<h1>Test custom bullet image for list items</h1>';
 
-        for($i = 0; $i < count($entities); $i++) {
-            //manipulate data
+        $pdfObj->addPage();
+        // output the HTML content
+        $pdfObj->writeHTML($html);
 
-           $pdf->AddPage();
-           $pdf->SetFont("Helvetica","","14");
-           $pdf->SetTextColor(255, 255, 255);
-        }
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        $pdf->Output();
+        // reset pointer to the last page
+        // $pdfObj->lastPage();
 
-        return new Response($pdf->Output(), 200, array(
+        // ---------------------------------------------------------
+        
+        return new Response($pdfObj->Output('example_006.pdf', 'I'), 200, array(
                             'Content-Type' => 'application/pdf'));
 
     }

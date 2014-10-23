@@ -70,14 +70,17 @@
 								        <label>Pays</label>	
 								        <p></p>
 								        <select id="{{ edit_form.pays.vars.id }}" name="{{ edit_form.pays.vars.full_name }}" class="form-control input-sm">
-								        	<option value="Maroc">Maroc</option>
-								        	<option value="Autre">Autre</option>
+								        	{% for paysValue in paysData %}
+								        	<option value="{{ paysValue }}" {% if  paysValue == entity.pays %} selected {% endif %} >
+								        		{{ paysValue }}
+								        	</option>
+								        	{% endfor %}
 								        </select>						        			    
 								    </div>
 								    <div class="form-group">
 								        <label>{{ form_label(edit_form.ville) }}</label>
 								        <p>{{ form_errors(edit_form.ville) }}</p>
-								        <input type="text" id="txt_ville" name="{{ edit_form.ville.vars.full_name }}" placeholder="ex : Kénitra" value="{{ entity.ville}}" class="form-control input-sm"/>	
+								        <input type="text" id="txt_ville" name="{{ edit_form.ville.vars.full_name }}" placeholder="ex : Kénitra" value="{{ entity.ville }}" class="form-control input-sm"/>	
 								    </div>
 								</div>
 							</div>
@@ -92,16 +95,22 @@
 								        <label>Etablissement d'origine</label>
 								        <p>{{ form_errors(edit_form.filiere) }}</p>
 								        <select id="{{ edit_form.etablissementOrigine.vars.id }}" name="{{ edit_form.etablissementOrigine.vars.full_name }}" class="form-control input-sm">
-								        	<option value="Université Ibn Tofail">Université Ibn Tofail</option>
-								        	<option value="...">...</option>								        	
+								        	{% for etablissementValue in etablissementsData %}
+									        	<option value="{{ etablissementValue }}" {% if  etablissementValue == entity.etablissementOrigine %} selected {% endif %} >
+									        		{{ etablissementValue }}
+									        	</option>
+									        {% endfor %}	
 								        </select>							        			    
 								    </div>
 					    			<div class="form-group">
 								        <label>Type du diplôme</label>
 								        <p>{{ form_errors(edit_form.typeDiplome) }}</p>
-								        <select id="{{ edit_form.typeDiplome.vars.id }}" name="{{ edit_form.typeDiplome.vars.full_name }}" class="form-control input-md">
-								        	<option value="LF">Licence fondamentale</option>
-								        	<option value="LP">Licence professionnelle</option>
+								        <select id="{{ edit_form.typeDiplome.vars.id }}" name="{{ edit_form.typeDiplome.vars.full_name }}" class="form-control input-md">        	
+								        	{% for typeDiplomeValue in typesDiplomeData %}
+									        	<option value="{{ typeDiplomeValue }}" {% if  typeDiplomeValue == entity.typeDiplome %} selected {% endif %} >
+									        		{{ typeDiplomeValue }}
+									        	</option>
+									        {% endfor %}	
 								        </select>							        			    
 								    </div>
 								    <div class="form-group">
@@ -118,7 +127,7 @@
 									        <p></p>
 									        <select id="{{ edit_form.anneeObtentionBac.vars.id }}" name="{{ edit_form.anneeObtentionBac.vars.full_name }}" class="form-control input-sm">
 									        	{% for i in 2012..2000 %}
-									        	<option value="{{ i }}">{{ i }}</option><?php } ?>
+									        	<option value="{{ i }}" {% if  i == entity.anneeObtentionBac %} selected {% endif %}>{{ i }}</option><?php } ?>
 									        	{% endfor %}
 									        </select>						        			    
 									    </div>
@@ -129,7 +138,7 @@
 									        <p></p>
 									        <select id="{{ edit_form.anneeInscription.vars.id }}" name="{{ edit_form.anneeInscription.vars.full_name }}" class="form-control input-sm">
 									        	{% for i in 2013..2005 %}
-									        	<option value="{{ i }}">{{ i }}</option><?php } ?>
+									        	<option value="{{ i }}" {% if  i == entity.anneeInscription %} selected {% endif %}>{{ i }}</option><?php } ?>
 									        	{% endfor %}
 									        </select>						        			    
 									    </div>
@@ -140,7 +149,7 @@
 									        <p></p>
 									        <select id="{{ edit_form.anneeObtentionLicence.vars.id }}" name="{{ edit_form.anneeObtentionLicence.vars.full_name }}" class="form-control input-sm">
 									        	{% for i in 2013..2005 %}
-									        	<option value="{{ i }}">{{ i }}</option><?php } ?>
+									        	<option value="{{ i }}" {% if  i == entity.anneeObtentionLicence %} selected {% endif %}>{{ i }}</option><?php } ?>
 									        	{% endfor %}
 									        </select>						        			    
 									    </div>
@@ -152,11 +161,11 @@
 									        <label>Mention <small>(Licence)</small></label>	
 									        <p></p>
 									        <select id="{{ edit_form.mention.vars.id }}" name="{{ edit_form.mention.vars.full_name }}" class="form-control input-sm">
-									        	<option value="Passable">Passable</option>
-									        	<option value="Assez bien">Assez bien</option>
-									        	<option value="Bien">Bien</option>
-									        	<option value="Très bien">Passable</option>
-									        	<option value="Excellent">Passable</option>
+									        	{% for mentionValue in mentionsData %}
+									        	<option value="{{ mentionValue }}" {% if  mentionValue == entity.mention %} selected {% endif %} >
+									        		{{ mentionValue }}
+									        	</option>
+									        	{% endfor %}
 									        </select>						        			    
 									    </div>
 									</div>
@@ -223,17 +232,23 @@
 					    	<div class="row">
 						    	<div class="col-xs-12 col-md-12 col-lg-12">
 						    		<div>
-						    			<input type="hidden" id="{{ edit_form.filiere.vars.id }}" name="{{ edit_form.filiere.vars.full_name }} value="{{ entity.filiere }}"/>
+						    			<input type="hidden" id="{{ edit_form.filiere.vars.id }}" name="{{ edit_form.filiere.vars.full_name }}" value="{{ entity.filiere }}"/>
 						    		</div>
 								    <div class="form-group" id="filieresContainer">
-								        <label>Choisissez la filière où vous désirez déposer votre candidature</label>	
+								        <label>Choisissez la filière où vous désirez déposer votre candidature</label>
+
+								        {% for filiereChoosed in filieresChoosed %}								        
 								        <select class="form-control input-md filiereSelect" name="filieres[]" required>
-								        	<option value="">Choisissez une filière</option>
-								        	<option value="Qualité du Logiciel">Qualité du Logiciel</option>
-								        	<option value="Energies Renouvelables">Energies Renouvelables</option>
-								        	<option value="Biotechnologies alimentaires et santé">Biotechnologies alimentaires et santé</option>
-								        	<option value="...">...</option>
-								        </select>							        			    
+								        	
+								        	{% for filiereValue in filieresData %}
+								        	<option value="{{ filiereValue }}" {% if  filiereValue == filiereChoosed %} selected {% endif %} >
+								        		{{ filiereValue }}
+								        	</option>
+								        	{% endfor %}
+
+								        </select>
+								        <br />
+								        {% endfor %}							        			    
 								    </div>	
 								    <div>
   										<button type="button" id="btnAddFiliere" class="btn btn-info btn-xs">Ajouter une autre filière</button>
@@ -251,7 +266,7 @@
 						    	<div class="col-xs-12">
 						    	
 								    <div class="form-group">
-								    	<p>Voulez-vous valider les modifications apportés à votre candidature ?</b></p>
+								    	<p>Voulez-vous valider les modifications apportées à votre candidature ?</b></p>
 								    </div>								    								
 								</div>
 							</div>
@@ -296,9 +311,7 @@
 
 				return false;
 			},
-			onNext: function(tab, navigation, index) {	
-				var stepTitle = tab.children().first().html();
-				$('#stepTitle').html(stepTitle);
+			onNext: function(tab, navigation, index) {									
 
 				// Make sure the values are valid before moving to next step
 				if(!$("#editCandidatureForm").valid()){
@@ -306,6 +319,9 @@
 				}												
 			},
 		  	onTabShow: function(tab, navigation, index) {
+		  		var stepTitle = navigation.children().eq(index).children().first().html();
+				$('#stepTitle').html(stepTitle);
+
 				var $total = navigation.find('li').length;
 				var $current = index+1;
 				var $percent = ($current/$total) * 100;
@@ -361,7 +377,7 @@
 		var filieresOptions = getOptionsForSelectElement(data);				
 
 		bindChangeEventToFiliereSelectElements();
-
+		
 		$('#btnAddFiliere').click(function(){
 			//alert('test');
 			$('<select style="margin: 10px 0" class="form-control input-md '+ filiereElementClass +'" name="filieres[]" required/>').append(filieresOptions).appendTo('#filieresContainer');
@@ -371,6 +387,7 @@
 		$('#btnRemoveLastFiliere').click(function(){
 			alert('remove code');			
 		});
+
 
 		function bindChangeEventToFiliereSelectElements(){
 			// make sure the elements have only one change event

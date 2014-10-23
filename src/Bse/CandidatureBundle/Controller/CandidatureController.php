@@ -6,9 +6,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\UserBundle\Model\UserManager;
 use Bse\CandidatureBundle\Entity\Candidature;
-use Bse\CandidatureBundle\Form\CandidatureType;
 use Bse\CandidatureBundle\Entity\User as FOSUserEntity;
+use Bse\CandidatureBundle\Form\CandidatureType;
 
+use Bse\CandidatureBundle\Data\ArrayData;
 
 /**
  * Candidature controller.
@@ -37,9 +38,9 @@ class CandidatureController extends Controller
         $candidature = $em->getRepository('BseCandidatureBundle:Candidature')->findOneBy(array(
                 'fosuserId' => $user->getId() ));
         
-        $filieres = explode("//", $candidature->getFiliere());
+        $filieresChoosed = explode("//", $candidature->getFiliere());
         return $this->render('BseCandidatureBundle:Candidature:index.html.twig', array(
-            'candidature' => $candidature, 'user' => $user , 'filieres' => $filieres
+            'candidature' => $candidature, 'user' => $user , 'filieresChoosed' => $filieresChoosed
         ));
     }
 
@@ -171,7 +172,7 @@ class CandidatureController extends Controller
 
         return $this->render('BseCandidatureBundle:Candidature:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'delete_form' => $deleteForm->createView(),            
         ));
     }
 
@@ -192,10 +193,18 @@ class CandidatureController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
+        $filieresChoosed = explode("//", $entity->getFiliere());
+
         return $this->render('BseCandidatureBundle:Candidature:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'filieresChoosed' => $filieresChoosed,
+            'filieresData' => (new ArrayData())->getFilieresData(),
+            'paysData' => (new ArrayData())->getPaysData(),
+            'mentionsData' => (new ArrayData())->getMentionsData(),
+            'etablissementsData' => (new ArrayData())->getEtablissementsData(),
+            'typesDiplomeData' => (new ArrayData())->getTypesDiplomeData()
         ));
     }
 
@@ -286,5 +295,26 @@ class CandidatureController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+    public function pdfAction(Request $request) {
+
+        //grab from database
+
+        $pdf = new \FPDF;
+
+        for($i = 0; $i < count($entities); $i++) {
+            //manipulate data
+
+           $pdf->AddPage();
+           $pdf->SetFont("Helvetica","","14");
+           $pdf->SetTextColor(255, 255, 255);
+        }
+
+        $pdf->Output();
+
+        return new Response($pdf->Output(), 200, array(
+                            'Content-Type' => 'application/pdf'));
+
     }
 }

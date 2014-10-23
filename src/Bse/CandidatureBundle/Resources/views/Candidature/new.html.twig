@@ -317,9 +317,7 @@
 
 				return false;
 			},
-			onNext: function(tab, navigation, index) {	
-				var stepTitle = tab.children().first().html();
-				$('#stepTitle').html(stepTitle);
+			onNext: function(tab, navigation, index) {					
 
 				// Make sure the values are valid before moving to next step
 				if(!$("#newCandidatureForm").valid()){
@@ -327,6 +325,9 @@
 				}												
 			},
 		  	onTabShow: function(tab, navigation, index) {
+		  		var stepTitle = tab.children().first().html();
+				$('#stepTitle').html(stepTitle);
+
 				var $total = navigation.find('li').length;
 				var $current = index+1;
 				var $percent = ($current/$total) * 100;

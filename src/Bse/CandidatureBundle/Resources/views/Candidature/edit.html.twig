@@ -384,8 +384,13 @@
 			// renbind change event so that the new one will it's own also
 			bindChangeEventToFiliereSelectElements();
 		});
+		
 		$('#btnRemoveLastFiliere').click(function(){
-			alert('remove code');			
+			var filieresElements = $(('.' + filiereElementClass));
+			if(filieresElements.length > 1){
+				filieresElements.last().remove();
+				updateFilierePropertyValue();				
+			}
 		});
 
 
@@ -394,15 +399,16 @@
 			$(('.' + filiereElementClass)).unbind('change');			
 
 			$(('.' + filiereElementClass)).change(function(){
-				// alert('The easiest method : on change update the hidden input filiere by all the choosen values');
-				filierePropertyValue = '';
-				var nbrOfFilieresElements = $(('.' + filiereElementClass)).length;
-				$(('.' + filiereElementClass)).each(function(index, element) {
-				  filierePropertyValue += (index != nbrOfFilieresElements - 1)? $(this).val() + '//': $(this).val();
-				});				
-				// alert('Liste des filieres : ' + filierePropertyValue);
-
+				updateFilierePropertyValue();
 				$("#{{ edit_form.filiere.vars.id }}").val(filierePropertyValue);
+			});
+		}
+
+		function updateFilierePropertyValue(){
+			filierePropertyValue = '';
+			var nbrOfFilieresElements = $(('.' + filiereElementClass)).length;
+			$(('.' + filiereElementClass)).each(function(index, element) {
+			  filierePropertyValue += (index != nbrOfFilieresElements - 1)? $(this).val() + '//': $(this).val();
 			});
 		}
 

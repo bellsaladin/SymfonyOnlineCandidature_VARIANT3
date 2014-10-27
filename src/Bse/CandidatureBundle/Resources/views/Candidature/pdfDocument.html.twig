@@ -1,0 +1,35 @@
+<table style="font-size:10px">	
+	<tr style="line-height:50px"><td colspan="4"><h2>Informations générales</h2></td></tr>
+	<tr>
+	    <td><b>Prénom : </b></td>
+	    <td>{{ candidature.prenom}}</td>
+	    <td><b>Nom :</b></td>
+	    <td>{{ candidature.nom}}</td>
+    </tr>    
+    <tr>
+    	<td><b>Pays : </b></td>
+	    <td>{{ candidature.pays}}</td>
+	    <td><b>Ville : </b></td>
+	    <td>{{ candidature.ville}}</td>
+    </tr>
+    <tr>
+    	<td><b>Sexe : </b></td>
+	    <td>{{ candidature.sexe}}</td>
+	    <td><b>Date de naissance : </b></td>
+	    <td>{{ candidature.dateNaissance|date("d/m/Y")}}</td>
+    </tr>
+    <tr>
+    	<td><b>Adresse : </b></td>
+	    <td colspan="3">{{ candidature.adresse}}</td>	    
+    </tr>
+    <tr style="line-height:50px"><td colspan="4"><h2>Filières choisies</h2></td></tr>
+    <tr>    	
+	    <td colspan="4">
+	    	<ul>
+		    {% for filiereChoosed in filieresChoosed %}
+		    <li>{{ filiereChoosed}}</li>
+		    {% endfor %}
+		    </ul>
+    	</td>	    
+    </tr>
+</table>		

@@ -19,7 +19,11 @@
                 <b class="label label-info" style="font-size:12px">{{ filiere }}</b>
             </li>            
         {% endfor %}
-        </ul>    
+        </ul>  
+        <br/>
+        <a href="{{ path('bse_candidature_generatePdf') }}">
+            Télécharger en PDF
+        </a>  
         <br/><hr/>        
         <a class="btn btn-success btn-sm" href="{{ path('candidature_edit', { 'id': candidature.id }) }}">
             Modifier votre candidature

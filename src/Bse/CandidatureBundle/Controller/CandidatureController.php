@@ -35,7 +35,6 @@ class CandidatureController extends Controller
         }
 
         $user = $this->get('security.context')->getToken()->getUser();
-
         
         $candidature = $em->getRepository('BseCandidatureBundle:Candidature')->findOneBy(array(
                 'fosuserId' => $user->getId() ));
@@ -315,25 +314,40 @@ class CandidatureController extends Controller
         ;
     }
 
-    public function generatePdfAction(Request $request) {
+    public function generatePdfAction(Request $request)
+    {
+        // ###################### Load candidature data ######################        
+
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        if(!$user instanceof FOSUserEntity){
+            return $this->redirect($this->generateUrl('bse_candidature_welcome'));
+        }
+
+        $user = $this->get('security.context')->getToken()->getUser();
+        
+        $candidature = $em->getRepository('BseCandidatureBundle:Candidature')->findOneBy(array(
+                'fosuserId' => $user->getId() ));
+        
+        $filieresChoosed = explode("//", $candidature->getFiliere());
+
+        // ###################### generate PDF ######################        
 
         $pdfObj = $this->container->get("white_october.tcpdf")->create();
 
         $html = '<h1>Test custom bullet image for list items</h1>';
 
         $pdfObj->addPage();
+        $html = $this->renderView('BseCandidatureBundle:Candidature:pdfDocument.html.twig', array(
+            'candidature'      => $candidature,            
+            'filieresChoosed' => $filieresChoosed,
+        ));
         // output the HTML content
         $pdfObj->writeHTML($html);
-
-        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        // reset pointer to the last page
-        // $pdfObj->lastPage();
-
-        // ---------------------------------------------------------
         
-        return new Response($pdfObj->Output('example_006.pdf', 'I'), 200, array(
-                            'Content-Type' => 'application/pdf'));
-
+        
+        return new Response($pdfObj->Output('document.pdf', 'I'), 200, array('Content-Type' => 'application/pdf'));
     }
 }

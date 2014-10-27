@@ -2,11 +2,7 @@
 
 {% block subTitle %}Candidature - <span id="stepTitle" style="color: #D82828;">Etape 1 : Informations générales </span>{% endblock %}
 
-{% block content %}
-	
-		<a class="btn btn-success btn-sm" href="{{ path('bse_candidature_generatePdf') }}">
-            Générer PDF
-        </a>
+{% block content %}		
 
 		{% if emailAlreadyInUse is defined %}
 		<div class="alert alert-danger"><b>Erreur : </b>l'email {{ emailAlreadyInUse }} renseigné est déjà utilisé !</div>

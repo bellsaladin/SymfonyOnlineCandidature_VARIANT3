@@ -4,7 +4,7 @@ namespace Bse\CandidatureBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\UserBundle\Model\UserManager;
 use Bse\CandidatureBundle\Entity\Candidature;
@@ -102,6 +102,8 @@ class CandidatureController extends Controller
                 // checker (not enabled, expired, etc.).
             }
 
+            $this->get('session')->getFlashBag()->add('notice', 'Votre candidature a été créée correctement !');
+
             return $this->redirect($this->generateUrl('candidature'));
         }
         
@@ -185,8 +187,15 @@ class CandidatureController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('BseCandidatureBundle:Candidature')->find($id);
+
+        // Check if the current the user is allowed to edit this entity
+        $user = $this->get('security.context')->getToken()->getUser();        
+        // force going to second candidature if user is connect and is asking a to make candidature as his first one
+        if($user instanceof FOSUserEntity){ 
+            if($entity->getFosUserId() != $user->getId())
+            return $this->redirect($this->generateUrl('bse_candidature_welcome'));
+        }        
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Candidature entity.');
@@ -249,7 +258,9 @@ class CandidatureController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('candidature_edit', array('id' => $id)));
+            $this->get('session')->getFlashBag()->add('notice',  'Votre candidature a bien été modifiée !');
+
+            return $this->redirect($this->generateUrl('bse_candidature_welcome'));
         }
 
         return $this->render('BseCandidatureBundle:Candidature:edit.html.twig', array(

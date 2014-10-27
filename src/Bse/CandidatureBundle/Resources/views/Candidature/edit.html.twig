@@ -380,7 +380,7 @@
 		// ####################### BEGIN - HANDLING THE DYNAMIC CREATION OF SELECT ELEMENTS #######################
 		var filiereElementClass = 'filiereSelect';
 		var filierePropertyValue = '';
-		var data = new Array('Filière 1', 'Filière 2' , 'Filière 3');
+		var data = new Array({% for filiereValue in filieresData %} '{{ filiereValue }}' {% if not loop.last %}, {% endif %} {% endfor %});
 		var filieresOptions = getOptionsForSelectElement(data);				
 
 		bindChangeEventToFiliereSelectElements();

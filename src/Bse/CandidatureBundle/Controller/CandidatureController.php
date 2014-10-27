@@ -337,7 +337,9 @@ class CandidatureController extends Controller
 
         $pdfObj = $this->container->get("white_october.tcpdf")->create();
 
-        $html = '<h1>Test custom bullet image for list items</h1>';
+        $pdfObj->setPrintHeader(false);
+        $pdfObj->setPrintFooter(false);
+
 
         $pdfObj->addPage();
         $html = $this->renderView('BseCandidatureBundle:Candidature:pdfDocument.html.twig', array(

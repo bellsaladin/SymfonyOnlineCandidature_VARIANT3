@@ -25,7 +25,7 @@
 			<div class="col-xs-9">
 				<div class="tab-content">
 					    
-					    <div class="tab-pane active" id="tab1">					        
+					    <div class="tab-pane" id="tab1">					        
 					    	
 					    	<div>{{ form_errors(form) }}</div>
 
@@ -220,7 +220,7 @@
 							</div>	
 						</div>	 
 
-						<div class="tab-pane" id="tab3">
+						<div class="tab-pane active" id="tab3">
 					      	
 					    	<div>{{ form_errors(form) }}</div>
 
@@ -230,13 +230,15 @@
 						    			<input type="hidden" id="{{ form.filiere.vars.id }}" name="{{ form.filiere.vars.full_name }}"/>
 						    		</div>
 								    <div class="form-group" id="filieresContainer">
-								        <label>Choisissez la filière où vous désirez déposer votre candidature</label>	
+								        <label>Choisissez la filière où vous désirez déposer votre candidature</label>
+								        <div id="filieresDupliqueErrorMsg" class="alert alert-danger" style="display:none">Vous ne devez pas choisir une filière plus d'une fois</div>
 								        <select class="form-control input-md filiereSelect" name="filieres[]" required>
 								        	<option value="">Choisissez une filière</option>
-								        	<option value="Qualité du Logiciel">Qualité du Logiciel</option>
-								        	<option value="Energies Renouvelables">Energies Renouvelables</option>
-								        	<option value="Biotechnologies alimentaires et santé">Biotechnologies alimentaires et santé</option>
-								        	<option value="...">...</option>
+								        	{% for filiereValue in filieresData %}
+								        	<option value="{{ filiereValue }}">
+								        		{{ filiereValue }}
+								        	</option>
+								        	{% endfor %}
 								        </select>							        			    
 								    </div>	
 								    <div>
@@ -327,7 +329,15 @@
 				// Make sure the values are valid before moving to next step
 				if(!$("#newCandidatureForm").valid()){
 					return false;
-				}												
+				}
+
+				
+				if(filiereChoosedMoreThanOnce()){
+		  			$('#filieresDupliqueErrorMsg').show();
+		  			return false;
+		  		}else{
+		  			$('#filieresDuplique').hide();
+		  		}			
 			},
 		  	onTabShow: function(tab, navigation, index) {
 		  		var stepTitle = tab.children().first().html();
@@ -388,24 +398,27 @@
 		$( "#txt_email" ).rules( "add", {required: true} );
 		$( "#txt_motDePasse" ).rules( "add", {required: true} ); 	
 		$.validator.addMethod("passwordCheck", function (value, element) {
-        		return value == $("#txt_motDePasse").val(); 
+        	return value == $("#txt_motDePasse").val(); 
         }, 'La confirmation du mot de passe ne correspond pas au mot de passe renseigné');
-		$( "#txt_motDePasseConfirmation" ).rules( "add", {required:true, passwordCheck: true} );  	
-		{% endif %}		
 
-		// ####################### BEGIN - HANDLING THE DYNAMIC CREATION OF SELECT ELEMENTS #######################
+		$( "#txt_motDePasseConfirmation" ).rules( "add", {required:true, passwordCheck: true} );  	
+		{% endif %}	
+			
+		//#################### BEGIN - HANDLING THE DYNAMIC CREATION & VALIDATION OF SELECT ELEMENTS ##################
+
 		var filiereElementClass = 'filiereSelect';
 		var filierePropertyValue = '';
-		var data = new Array('Filière 1', 'Filière 2' , 'Filière 3');
+		var data = new Array({% for filiereValue in filieresData %} '{{ filiereValue }}' {% if not loop.last %}, {% endif %} {% endfor %});
 		var filieresOptions = getOptionsForSelectElement(data);				
 
 		bindChangeEventToFiliereSelectElements();
 
 		$('#btnAddFiliere').click(function(){
 			//alert('test');
-			$('<select style="margin: 10px 0" class="form-control input-md '+ filiereElementClass +'" name="filieres[]" required/>').append(filieresOptions).appendTo('#filieresContainer');
+			var newSelectElement = $('<select style="margin: 10px 0" class="form-control input-md '+ filiereElementClass +'" name="filieres[]" />');
+			newSelectElement.append(filieresOptions).appendTo('#filieresContainer');			
 			// renbind change event so that the new one will it's own also
-			bindChangeEventToFiliereSelectElements();
+			bindChangeEventToFiliereSelectElements();			
 		});
 
 		$('#btnRemoveLastFiliere').click(function(){
@@ -413,7 +426,7 @@
 			if(filieresElements.length > 1){
 				filieresElements.last().remove();
 				updateFilierePropertyValue();
-			}
+			}			
 		});
 
 		function bindChangeEventToFiliereSelectElements(){
@@ -423,7 +436,7 @@
 			$(('.' + filiereElementClass)).change(function(){				
 				updateFilierePropertyValue();
 				$("#{{ form.filiere.vars.id }}").val(filierePropertyValue);
-			});
+			});			  	
 		}
 
 		function updateFilierePropertyValue(){
@@ -441,6 +454,25 @@
 			});
 			return options;
 		}
+
+		function filiereChoosedMoreThanOnce(){
+			var flag = false;
+			var filieresElements = $(('.' + filiereElementClass));				
+			filieresElements.each(function(index, element) {
+				var comparedValue = $(this).val();
+				var occurrencesOfValue = 0;
+		  		filieresElements.each(function(index, element) {
+		  			if(comparedValue == $(this).val())
+		  				occurrencesOfValue++;
+		  		});			  		
+		  		if(occurrencesOfValue > 1){
+		  			flag = true;			  			
+		  			return;			  			
+		  		}		  		
+			});
+			return flag;
+		}
+
 		// ####################### END - HANDLING THE DYNAMIC CREATION OF SELECT ELEMENTS #######################
 
 	});

@@ -154,7 +154,12 @@ class CandidatureController extends Controller
         return $this->render('BseCandidatureBundle:Candidature:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
-            'first'  => $first
+            'first'  => $first,
+            'filieresData' => (new ArrayData())->getFilieresData(),
+            'paysData' => (new ArrayData())->getPaysData(),
+            'mentionsData' => (new ArrayData())->getMentionsData(),
+            'etablissementsData' => (new ArrayData())->getEtablissementsData(),
+            'typesDiplomeData' => (new ArrayData())->getTypesDiplomeData()
         ));
     }
 

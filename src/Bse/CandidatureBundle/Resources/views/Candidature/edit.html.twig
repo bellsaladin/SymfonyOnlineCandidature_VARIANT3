@@ -236,7 +236,7 @@
 						    		</div>
 								    <div class="form-group" id="filieresContainer">
 								        <label>Choisissez la filière où vous désirez déposer votre candidature</label>
-
+								        <div id="filieresDupliqueErrorMsg" class="alert alert-danger" style="display:none">Vous ne devez pas choisir une filière plus d'une fois</div>s
 								        {% for filiereChoosed in filieresChoosed %}								        
 								        <select class="form-control input-md filiereSelect" name="filieres[]" required>
 								        	
@@ -316,7 +316,14 @@
 				// Make sure the values are valid before moving to next step
 				if(!$("#editCandidatureForm").valid()){
 					return false;
-				}												
+				}
+				
+				if(filiereChoosedMoreThanOnce()){
+		  			$('#filieresDupliqueErrorMsg').show();
+		  			return false;
+		  		}else{
+		  			$('#filieresDuplique').hide();
+		  		}													
 			},
 		  	onTabShow: function(tab, navigation, index) {
 		  		var stepTitle = navigation.children().eq(index).children().first().html();
@@ -419,6 +426,25 @@
 			});
 			return options;
 		}
+
+		function filiereChoosedMoreThanOnce(){
+			var flag = false;
+			var filieresElements = $(('.' + filiereElementClass));				
+			filieresElements.each(function(index, element) {
+				var comparedValue = $(this).val();
+				var occurrencesOfValue = 0;
+		  		filieresElements.each(function(index, element) {
+		  			if(comparedValue == $(this).val())
+		  				occurrencesOfValue++;
+		  		});			  		
+		  		if(occurrencesOfValue > 1){
+		  			flag = true;			  			
+		  			return;			  			
+		  		}		  		
+			});
+			return flag;
+		}
+
 		// ####################### END - HANDLING THE DYNAMIC CREATION OF SELECT ELEMENTS #######################
 
 	});

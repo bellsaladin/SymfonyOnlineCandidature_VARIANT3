@@ -75,8 +75,11 @@
 								        <label>Pays</label>	
 								        <p></p>
 								        <select id="{{ form.pays.vars.id }}" name="{{ form.pays.vars.full_name }}" class="form-control input-sm">
-								        	<option value="Maroc">Maroc</option>
-								        	<option value="Autre">Autre</option>
+								        	{% for paysValue in paysData %}
+								        	<option value="{{ paysValue }}">
+								        		{{ paysValue }}
+								        	</option>
+								        	{% endfor %}
 								        </select>						        			    
 								    </div>
 								    <div class="form-group">
@@ -97,16 +100,22 @@
 								        <label>Etablissement d'origine</label>
 								        <p>{{ form_errors(form.filiere) }}</p>
 								        <select id="{{ form.etablissementOrigine.vars.id }}" name="{{ form.etablissementOrigine.vars.full_name }}" class="form-control input-sm">
-								        	<option value="Université Ibn Tofail">Université Ibn Tofail</option>
-								        	<option value="...">...</option>								        	
+								        	{% for etablissementValue in etablissementsData %}
+									        	<option value="{{ etablissementValue }}">
+									        		{{ etablissementValue }}
+									        	</option>
+									        {% endfor %}	
 								        </select>							        			    
 								    </div>
 					    			<div class="form-group">
 								        <label>Type du diplôme</label>
 								        <p>{{ form_errors(form.typeDiplome) }}</p>
 								        <select id="{{ form.typeDiplome.vars.id }}" name="{{ form.typeDiplome.vars.full_name }}" class="form-control input-md">
-								        	<option value="LF">Licence fondamentale</option>
-								        	<option value="LP">Licence professionnelle</option>
+								        	{% for typeDiplomeValue in typesDiplomeData %}
+									        	<option value="{{ typeDiplomeValue }}">
+									        		{{ typeDiplomeValue }}
+									        	</option>
+									        {% endfor %}
 								        </select>							        			    
 								    </div>
 								    <div class="form-group">
@@ -156,11 +165,11 @@
 									        <label>Mention <small>(Licence)</small></label>	
 									        <p></p>
 									        <select id="{{ form.mention.vars.id }}" name="{{ form.mention.vars.full_name }}" class="form-control input-sm">
-									        	<option value="Passable">Passable</option>
-									        	<option value="Assez bien">Assez bien</option>
-									        	<option value="Bien">Bien</option>
-									        	<option value="Très bien">Passable</option>
-									        	<option value="Excellent">Passable</option>
+									        	{% for mentionValue in mentionsData %}
+									        	<option value="{{ mentionValue }}">
+									        		{{ mentionValue }}
+									        	</option>
+									        	{% endfor %}
 									        </select>						        			    
 									    </div>
 									</div>
@@ -434,8 +443,7 @@
 			$(('.' + filiereElementClass)).unbind('change');			
 
 			$(('.' + filiereElementClass)).change(function(){				
-				updateFilierePropertyValue();
-				$("#{{ form.filiere.vars.id }}").val(filierePropertyValue);
+				updateFilierePropertyValue();				
 			});			  	
 		}
 
@@ -445,6 +453,7 @@
 			$(('.' + filiereElementClass)).each(function(index, element) {
 			  filierePropertyValue += (index != nbrOfFilieresElements - 1)? $(this).val() + '//': $(this).val();
 			});
+			$("#{{ form.filiere.vars.id }}").val(filierePropertyValue);
 		}
 
 		function getOptionsForSelectElement(data){

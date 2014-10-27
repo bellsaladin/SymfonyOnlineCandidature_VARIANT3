@@ -110,7 +110,7 @@
 									        	<option value="{{ typeDiplomeValue }}" {% if  typeDiplomeValue == entity.typeDiplome %} selected {% endif %} >
 									        		{{ typeDiplomeValue }}
 									        	</option>
-									        {% endfor %}	
+									        {% endfor %}
 								        </select>							        			    
 								    </div>
 								    <div class="form-group">
@@ -317,7 +317,7 @@
 				if(!$("#editCandidatureForm").valid()){
 					return false;
 				}
-				
+
 				if(filiereChoosedMoreThanOnce()){
 		  			$('#filieresDupliqueErrorMsg').show();
 		  			return false;
@@ -406,8 +406,7 @@
 			$(('.' + filiereElementClass)).unbind('change');			
 
 			$(('.' + filiereElementClass)).change(function(){
-				updateFilierePropertyValue();
-				$("#{{ edit_form.filiere.vars.id }}").val(filierePropertyValue);
+				updateFilierePropertyValue();				
 			});
 		}
 
@@ -417,6 +416,7 @@
 			$(('.' + filiereElementClass)).each(function(index, element) {
 			  filierePropertyValue += (index != nbrOfFilieresElements - 1)? $(this).val() + '//': $(this).val();
 			});
+			$("#{{ edit_form.filiere.vars.id }}").val(filierePropertyValue);
 		}
 
 		function getOptionsForSelectElement(data){

@@ -158,7 +158,8 @@ class CandidatureController extends Controller
             'paysData' => (new ArrayData())->getPaysData(),
             'mentionsData' => (new ArrayData())->getMentionsData(),
             'etablissementsData' => (new ArrayData())->getEtablissementsData(),
-            'typesDiplomeData' => (new ArrayData())->getTypesDiplomeData()
+            'typesDiplomeData' => (new ArrayData())->getTypesDiplomeData(),
+            'facultesData' => (new ArrayData())->getFacultesData()
         ));
     }
 

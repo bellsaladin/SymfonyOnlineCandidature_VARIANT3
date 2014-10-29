@@ -9,9 +9,9 @@ class ArrayData
     {
     	$data =array(
 			'Qualité du logiciel',
-			'Energies Renouvelables',
-			'Qualité du logiciel',
+			'Energies Renouvelables',			
 			'Biotechnologies Alimentaires',
+			'Autre'
 		);
 		return $data;
 
@@ -55,6 +55,17 @@ class ArrayData
     	$data =array(
 			'Maroc',
 			'Autre',			
+		);
+		return $data;
+
+    }
+
+    public function getFacultesData()
+    {
+    	$data =array(
+			'FS'=>'Faculté des sciences',
+			'FL'=>'Faculté des lettres',
+			'FE'=>'Faculté d\'economie',			
 		);
 		return $data;
 

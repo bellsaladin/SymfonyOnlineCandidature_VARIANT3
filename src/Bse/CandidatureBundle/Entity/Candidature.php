@@ -185,7 +185,7 @@ class Candidature
     /**
      * @var string
      *
-     * @ORM\Column(name="filiere", type="string", length=150, nullable=true)
+     * @ORM\Column(name="filiere", type="text", nullable=true)
      */
     private $filiere;
 

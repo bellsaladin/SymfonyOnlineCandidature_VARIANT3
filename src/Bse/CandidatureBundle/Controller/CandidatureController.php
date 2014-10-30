@@ -341,7 +341,15 @@ class CandidatureController extends Controller
         $pdfObj->setPrintHeader(false);
         $pdfObj->setPrintFooter(false);
 
-
+        // set some language dependent data:
+        $lg = Array();
+        $lg['a_meta_charset'] = 'UTF-8';        
+        $lg['a_meta_language'] = 'ar';
+        $lg['w_page'] = 'page';
+        
+        // set some language-dependent strings (optional)
+        $pdfObj->setLanguageArray($lg);
+        $pdfObj->SetFont('dejavusans', '', 12);
         $pdfObj->addPage();
         $html = $this->renderView('BseCandidatureBundle:Candidature:pdfDocument.html.twig', array(
             'candidature'      => $candidature,            
@@ -350,7 +358,9 @@ class CandidatureController extends Controller
         // output the HTML content
         $pdfObj->writeHTML($html);
         
+        $response = new Response($pdfObj->Output('document.pdf', 'I'), 200, array('Content-Type' => 'application/pdf; charset=utf-8'));
+        //$response->setCharset('UTF-8');
         
-        return new Response($pdfObj->Output('document.pdf', 'I'), 200, array('Content-Type' => 'application/pdf'));
+        return $response;
     }
 }

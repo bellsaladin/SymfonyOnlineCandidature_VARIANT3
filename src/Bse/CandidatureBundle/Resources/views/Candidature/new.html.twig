@@ -236,21 +236,20 @@
 						    		</div>
 								    <div class="form-group" id="filieresContainer">
 								        <p>Choisissez la filière où vous désirez déposer votre candidature</label>
-								        <div id="filieresDupliqueErrorMsg" class="alert alert-danger" style="display:none">Vous ne devez pas choisir une filière plus d'une fois</div>
+								        <p>(Faites le choix par ordre décroissant de préférence)</p>
+								        <div id="filieresDupliqueErrorMsg" class="alert alert-danger" style="display:none">Vous ne devez pas choisir une filière plus d'une fois</div>								        
 								        <div class="row filiere_control" id="filiere_control_model">
 								        	<div class="col-md-4">
-										        <select class="form-control input-md" name="facultes[]" required>								        	
+										        <select class="form-control input-md faculteInput" name="facultes[]" required>
 										        	{% for faculteKey, faculteValue in facultesData %}
-										        	<option value="{{ faculteKey }}">
-										        		{{ faculteValue }}
-										        	</option>
+										        	<option value="{{ faculteKey }}">{{ faculteValue }}</option>
 										        	{% endfor %}
 										        </select>
 								        	</div>
 								        	<div class="col-md-8">
 										        <select class="col-xs-8 form-control input-md filiereInput" name="filieres[]" required>
 										        	<option value="">Choisissez une filière</option>
-										        	{% for filiereValue in filieresData %}
+										        	{% for filiereValue in filieresData['FS'] %}
 										        	<option value="{{ filiereValue }}">
 										        		{{ filiereValue }}
 										        	</option>
@@ -427,14 +426,22 @@
 		var filiereControlClass = 'filiere_control';
 		var filiereInputClass = 'filiereInput';
 		var filierePropertyValue = '';
-		var data = new Array({% for filiereValue in filieresData %} '{{ filiereValue }}' {% if not loop.last %}, {% endif %} {% endfor %});		
+		var filieresArray = {
+			'FS' : [ {% for filiereValue in filieresData['FS'] %} "{{ filiereValue }}" {% if not loop.last %}, {% endif %} {% endfor %} ],
+			'FL' : [ {% for filiereValue in filieresData['FL'] %} "{{ filiereValue }}" {% if not loop.last %}, {% endif %} {% endfor %} ]
+		};		
+
+		bindChangeEventToFaculteSelectElements();
 
 		bindChangeEventToFiliereSelectElements();
 
 		$('#btnAddFiliere').click(function(){
-			$('#filiere_control_model').clone().appendTo('#filieresContainer');			
+			var newFiliereControl = $('#filiere_control_model').clone();
+			newFiliereControl.appendTo('#filieresContainer');			
+			reloadSelectOptions(newFiliereControl.find('.faculteInput')); // update options of filiere 
 			// renbind change event so that the new one will it's own also
-			bindChangeEventToFiliereSelectElements();			
+			bindChangeEventToFiliereSelectElements();	
+			bindChangeEventToFaculteSelectElements();				
 		});
 
 		$('#btnRemoveLastFiliere').click(function(){
@@ -451,12 +458,22 @@
 			// make sure the elements have only one change event
 			$(('.' + filiereInputClass)).unbind('change');			
 
-			$(('.' + filiereInputClass)).change(function(){				
-				updateFilierePropertyValue();				
+			$(('.' + filiereInputClass)).change(function(){					
+				updateFilierePropertyValue();
 			});			  	
 		}
 
-		function updateFilierePropertyValue(){
+		function bindChangeEventToFaculteSelectElements(){
+			// make sure the elements have only one change event
+			$('.faculteInput').unbind('change');
+
+
+			$('.faculteInput').change(function(){
+				reloadSelectOptions( $(this) );
+			});			  	
+		}
+
+		function updateFilierePropertyValue(){			
 			filierePropertyValue = '';
 			var filieresElements = $(('.' + filiereInputClass));
 			var nbrOfFilieresElements = filieresElements.length;
@@ -484,9 +501,22 @@
 			return flag;
 		}
 
+		function reloadSelectOptions(selectInput){
+			//var value = $(this).find("option:selected").val();
+			var codeFiliere = selectInput.val();
+		    var filieres = filieresArray[codeFiliere];
+			var option = '';
+			for (i=0;i<filieres.length;i++){
+			   option += '<option value="'+ filieres[i] + '">' + filieres[i] + '</option>';
+			}
+			var filiereSelectInput = selectInput.parent().parent().find(('.' + filiereInputClass));
+			filiereSelectInput.find('option').remove();
+			filiereSelectInput.append(option);
+		}		
+
 		// ####################### END - HANDLING THE DYNAMIC CREATION OF SELECT ELEMENTS #######################
 
-	});
+	});	
 </script>
 
 

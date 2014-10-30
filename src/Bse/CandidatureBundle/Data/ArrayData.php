@@ -52,8 +52,8 @@ class ArrayData
 			'BANQUE et ASSURANCE'
 		);
 
-		$data = array('FS'=> $data_1, 'FL'=>$data_2, 'FD' => $data_3);
-		return $data;
+		// $data = array($data_1);
+		return $data_1;
     }
 
     public function getEtablissementsData()
@@ -108,7 +108,6 @@ class ArrayData
 			// 'FE'=>'Faculté d\'economie',			
 		);
 		return $data;
-
     }
 
 }

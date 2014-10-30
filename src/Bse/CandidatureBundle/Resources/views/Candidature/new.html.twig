@@ -126,7 +126,7 @@
 									        <label>Année d'obtention du bac</label>	
 									        <p></p>
 									        <select id="{{ form.anneeObtentionBac.vars.id }}" name="{{ form.anneeObtentionBac.vars.full_name }}" class="form-control input-sm">
-									        	{% for i in 2012..2000 %}
+									        	{% for i in 2010..2000 %}
 									        	<option value="{{ i }}">{{ i }}</option><?php } ?>
 									        	{% endfor %}
 									        </select>						        			    
@@ -137,7 +137,7 @@
 									        <label>Année de 1ère inscription à l'université</label>	
 									        <p></p>
 									        <select id="{{ form.anneeInscription.vars.id }}" name="{{ form.anneeInscription.vars.full_name }}" class="form-control input-sm">
-									        	{% for i in 2013..2005 %}
+									        	{% for i in 2012..2005 %}
 									        	<option value="{{ i }}">{{ i }}</option><?php } ?>
 									        	{% endfor %}
 									        </select>						        			    
@@ -238,17 +238,10 @@
 								        <p>Choisissez la filière où vous désirez déposer votre candidature : <span class="label label-success">(Faites le choix par ordre de préférence)</span></label>
 								        <div id="filieresDupliqueErrorMsg" class="alert alert-danger" style="display:none">Vous ne devez pas choisir une filière plus d'une fois</div>								        
 								        <div class="row filiere_control" id="filiere_control_model">
-								        	<div class="col-md-4">
-										        <select class="form-control input-md faculteInput" name="facultes[]" required>
-										        	{% for faculteKey, faculteValue in facultesData %}
-										        	<option value="{{ faculteKey }}">{{ faculteValue }}</option>
-										        	{% endfor %}
-										        </select>
-								        	</div>
-								        	<div class="col-md-8">
+								        	<div class="col-md-12">
 										        <select class="col-xs-8 form-control input-md filiereInput" name="filieres[]" required>
 										        	<option value="">Choisissez une filière</option>
-										        	{% for filiereValue in filieresData['FS'] %}
+										        	{% for filiereValue in filieresData %}
 										        	<option value="{{ filiereValue }}">
 										        		{{ filiereValue }}
 										        	</option>
@@ -337,7 +330,6 @@
 				//var current = index+1;
 	  			// var indexOfClickedTab = tab.att('');
 	  			// alert(tab.attr('href') + tab.html());
-
 				return false;
 			},
 			onNext: function(tab, navigation, index) {					
@@ -425,23 +417,28 @@
 		var filiereControlClass = 'filiere_control';
 		var filiereInputClass = 'filiereInput';
 		var filierePropertyValue = '';
-		var filieresArray = {
-			{% for faculteKey, faculteValue in facultesData %}
-			'{{faculteKey}}' : [ {% for filiereValue in filieresData[faculteKey] %} "{{ filiereValue }}" {% if not loop.last %}, {% endif %} {% endfor %} ]
-			{% if not loop.last %}, {% endif %}
-			{% endfor %}			
-		};	
+		var filieresArray =[ {% for filiereValue in filieresData %} "{{ filiereValue }}" {% if not loop.last %}, {% endif %} {% endfor %} ];
 
 		bindChangeEventToFaculteSelectElements();
 		bindChangeEventToFiliereSelectElements();
 
 		$('#btnAddFiliere').click(function(){
 			var newFiliereControl = $('#filiere_control_model').clone();
-			newFiliereControl.appendTo('#filieresContainer');			
-			reloadSelectOptions(newFiliereControl.find('.faculteInput')); // update options of filiere 
+			newFiliereControl.find('option:eq(0)').prop('selected', true);
+			newFiliereControl.appendTo('#filieresContainer')
+			//newFiliereControl.find('.filiereInput').rules('add', {required:true});		
+			//$("#editCandidatureForm").validate();
+			var counter = 0;
+			$(('.' + filiereInputClass)).each(function () { 
+				{# VERY IMPORTANT for validation to give unique names #}
+		        $(this).attr('name','filiere[' + counter++ +']'); 
+		        $(this).rules("add", {
+		            required: true
+		        });
+		    });
 			// renbind change event so that the new one will it's own also
 			bindChangeEventToFiliereSelectElements();	
-			bindChangeEventToFaculteSelectElements();
+
 			updateFilierePropertyValue();				
 		});
 
@@ -477,11 +474,11 @@
 			filierePropertyValue = '';
 			var filieresElements = $(('.' + filiereInputClass));
 			var nbrOfFilieresElements = filieresElements.length;
-			filieresElements.each(function(index, element) {
-			  var faculteValue = $(this).parent().parent().find('.faculteInput').val();
-			  var entryValue = faculteValue + ";;;" + $(this).val()
+			filieresElements.each(function(index, element) {			  
+			  var entryValue = $(this).val()
 			  filierePropertyValue += (index != nbrOfFilieresElements - 1)? entryValue + '//': entryValue;
 			});			
+			// alert(filierePropertyValue);
 			$("#{{ form.filiere.vars.id }}").val(filierePropertyValue);
 		}
 
@@ -502,19 +499,6 @@
 			});
 			return flag;
 		}
-
-		function reloadSelectOptions(selectInput){
-			//var value = $(this).find("option:selected").val();
-			var codeFiliere = selectInput.val();
-		    var filieres = filieresArray[codeFiliere];
-			var option = '';
-			for (i=0;i<filieres.length;i++){
-			   option += '<option value="'+ filieres[i] + '">' + filieres[i] + '</option>';
-			}
-			var filiereSelectInput = selectInput.parent().parent().find(('.' + filiereInputClass));
-			filiereSelectInput.find('option').remove();
-			filiereSelectInput.append(option);
-		}		
 
 		// ####################### END - HANDLING THE DYNAMIC CREATION OF SELECT ELEMENTS #######################
 

@@ -41,7 +41,7 @@ class CandidatureController extends Controller
         
         $filieresChoosed = explode("//", $candidature->getFiliere());        
         // transform $filieresChoosed array to key -> value array where key is 'faculte' and value is 'filiere'
-        $filieresChoosed = $this->getFilieresArrayOnKeyValueForm($filieresChoosed);
+        //$filieresChoosed = $this->getFilieresArrayOnKeyValueForm($filieresChoosed);
 
         return $this->render('BseCandidatureBundle:Candidature:index.html.twig', array(
             'candidature' => $candidature, 'user' => $user , 'filieresChoosed' => $filieresChoosed
@@ -214,7 +214,7 @@ class CandidatureController extends Controller
 
         $filieresChoosed = explode("//", $entity->getFiliere());        
         // transform $filieresChoosed array to key -> value array where key is 'faculte' and value is 'filiere'
-        $filieresChoosed = $this->getFilieresArrayOnKeyValueForm($filieresChoosed);        
+        // $filieresChoosed = $this->getFilieresArrayOnKeyValueForm($filieresChoosed);        
 
         return $this->render('BseCandidatureBundle:Candidature:edit.html.twig', array(
             'entity'      => $entity,
@@ -340,7 +340,7 @@ class CandidatureController extends Controller
         
         $filieresChoosed = explode("//", $candidature->getFiliere());
         // transform $filieresChoosed array to key -> value array where key is 'faculte' and value is 'filiere'
-        $filieresChoosed = $this->getFilieresArrayOnKeyValueForm($filieresChoosed);
+        //$filieresChoosed = $this->getFilieresArrayOnKeyValueForm($filieresChoosed);
 
         // ###################### generate PDF ######################        
 

@@ -21,7 +21,7 @@
 			<div class="col-xs-9">
 				<div class="tab-content">
 					    
-					    <div class="tab-pane" id="tab1">					        
+					    <div class="tab-pane active" id="tab1">					        
 					    	
 					    	<div>{{ form_errors(form) }}</div>
 
@@ -225,7 +225,7 @@
 							</div>	
 						</div>	 
 
-						<div class="tab-pane active" id="tab3">
+						<div class="tab-pane" id="tab3">
 					      	
 					    	<div>{{ form_errors(form) }}</div>
 
@@ -431,7 +431,6 @@
 		};		
 
 		bindChangeEventToFaculteSelectElements();
-
 		bindChangeEventToFiliereSelectElements();
 
 		$('#btnAddFiliere').click(function(){
@@ -445,9 +444,7 @@
 		});
 
 		$('#btnRemoveLastFiliere').click(function(){
-			var filieresElements = $(('.' + filiereControlClass));
-			// var filieresElements = $('.filiere_control');
-			// alert(filieresElements.length);
+			var filieresElements = $(('.' + filiereControlClass));			
 			if(filieresElements.length > 1){
 				filieresElements.last().remove();
 				updateFilierePropertyValue();
@@ -482,8 +479,7 @@
 			  var faculteValue = $(this).parent().parent().find('.faculteInput').val();
 			  var entryValue = faculteValue + ";;;" + $(this).val()
 			  filierePropertyValue += (index != nbrOfFilieresElements - 1)? entryValue + '//': entryValue;
-			});
-			alert(filierePropertyValue);
+			});			
 			$("#{{ form.filiere.vars.id }}").val(filierePropertyValue);
 		}
 

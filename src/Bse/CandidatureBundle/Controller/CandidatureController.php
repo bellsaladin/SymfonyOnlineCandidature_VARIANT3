@@ -225,7 +225,8 @@ class CandidatureController extends Controller
             'paysData' => (new ArrayData())->getPaysData(),
             'mentionsData' => (new ArrayData())->getMentionsData(),
             'etablissementsData' => (new ArrayData())->getEtablissementsData(),
-            'typesDiplomeData' => (new ArrayData())->getTypesDiplomeData()
+            'typesDiplomeData' => (new ArrayData())->getTypesDiplomeData(),
+            'facultesData' => (new ArrayData())->getFacultesData()
         ));
     }
 
@@ -340,7 +341,7 @@ class CandidatureController extends Controller
         $filieresChoosed = explode("//", $candidature->getFiliere());
         // transform $filieresChoosed array to key -> value array where key is 'faculte' and value is 'filiere'
         $filieresChoosed = $this->getFilieresArrayOnKeyValueForm($filieresChoosed);
-        
+
         // ###################### generate PDF ######################        
 
         $pdfObj = $this->container->get("white_october.tcpdf")->create();
@@ -377,13 +378,12 @@ class CandidatureController extends Controller
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
      */
     private function getFilieresArrayOnKeyValueForm($filieresChoosed){
-        
         $result = array();
         foreach($filieresChoosed as $filiereChoosed){
             $explodedFiliereChoosed = explode(";;;", $filiereChoosed);
             $faculteValue = $explodedFiliereChoosed[0];
             $filiereValue = $explodedFiliereChoosed[1];
-            $result[$faculteValue] = $filiereValue;            
+            $result[] = array('faculte' => $faculteValue, 'filiere' => $filiereValue);
         }
         return $result;
     }

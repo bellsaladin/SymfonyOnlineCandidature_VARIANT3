@@ -237,16 +237,26 @@
 								    <div class="form-group" id="filieresContainer">
 								        <label>Choisissez la filière où vous désirez déposer votre candidature</label>
 								        <div id="filieresDupliqueErrorMsg" class="alert alert-danger" style="display:none">Vous ne devez pas choisir une filière plus d'une fois</div>
-								        {% for faculteValue, filiereValueChoosed in filieresChoosed %}
-								        
-								        <select class="form-control input-md filiereSelect" name="filieres[]" required>
-								        	{% for filiereValue in filieresData %}
-								        	<option value="{{ filiereValue }}" {% if filiereValue == filiereValueChoosed %} selected {% endif %} >
-								        		{{ filiereValue }}
-								        	</option>
-								        	{% endfor %}
-								        </select>
-								        <br />
+								        {{ dump(filieresChoosed) }}
+								        {% for filiereChoosed in filieresChoosed %}
+								        <div class="row filiere_control" {% if loop.first %} id="filiere_control_model"{% endif %}>
+								        	<div class="col-md-4">
+										        <select class="form-control input-md faculteInput" name="facultes[]" required>
+										        	{% for faculteKey, faculteValue in facultesData %}
+										        	<option value="{{ faculteKey }}" {% if faculteKey == filiereChoosed['faculte'] %} selected {% endif %}>{{ faculteValue }}</option>
+										        	{% endfor %}
+												</select>
+											</div>
+								        	<div class="col-md-8">
+										        <select class="form-control input-md filiereInput" name="filieres[]" required>
+										        	{% for filiereValue in filieresData[filiereChoosed['faculte']] %}
+										        	<option value="{{ filiereValue }}" {% if filiereValue == filiereChoosed['filiere'] %} selected {% endif %}>
+										        		{{ filiereValue }}
+										        	</option>
+										        	{% endfor %}
+										        </select>
+										    </div>
+										</div>
 								        {% endfor %}							        			    
 								    </div>	
 								    <div>
@@ -377,58 +387,72 @@
   		$( "#txt_note_S6" ).rules( "add", {required: true, range:[10, 20]} );		
 
 		// ####################### BEGIN - HANDLING THE DYNAMIC CREATION OF SELECT ELEMENTS #######################
-		var filiereElementClass = 'filiereSelect';
+		var filiereControlClass = 'filiere_control';
+		var filiereInputClass = 'filiereInput';
 		var filierePropertyValue = '';
-		var data = new Array({% for filiereValue in filieresData %} '{{ filiereValue }}' {% if not loop.last %}, {% endif %} {% endfor %});
-		var filieresOptions = getOptionsForSelectElement(data);				
+		var filieresArray = {
+			'FS' : [ {% for filiereValue in filieresData['FS'] %} "{{ filiereValue }}" {% if not loop.last %}, {% endif %} {% endfor %} ],
+			'FL' : [ {% for filiereValue in filieresData['FL'] %} "{{ filiereValue }}" {% if not loop.last %}, {% endif %} {% endfor %} ]
+		};		
 
+		bindChangeEventToFaculteSelectElements();
 		bindChangeEventToFiliereSelectElements();
-		
+
 		$('#btnAddFiliere').click(function(){
-			//alert('test');
-			$('<select style="margin: 10px 0" class="form-control input-md '+ filiereElementClass +'" name="filieres[]" required/>').append(filieresOptions).appendTo('#filieresContainer');
+			var newFiliereControl = $('#filiere_control_model').clone();
+			newFiliereControl.appendTo('#filieresContainer');			
+			reloadSelectOptions(newFiliereControl.find('.faculteInput')); // update options of filiere 
 			// renbind change event so that the new one will it's own also
-			bindChangeEventToFiliereSelectElements();
+			bindChangeEventToFiliereSelectElements();	
+			bindChangeEventToFaculteSelectElements();
+			updateFilierePropertyValue();				
 		});
-		
+
 		$('#btnRemoveLastFiliere').click(function(){
-			var filieresElements = $(('.' + filiereElementClass));
+			var filieresElements = $(('.' + filiereControlClass));
+			// var filieresElements = $('.filiere_control');
+			// alert(filieresElements.length);
 			if(filieresElements.length > 1){
 				filieresElements.last().remove();
-				updateFilierePropertyValue();				
-			}
+				updateFilierePropertyValue();
+			}			
 		});
-
 
 		function bindChangeEventToFiliereSelectElements(){
 			// make sure the elements have only one change event
-			$(('.' + filiereElementClass)).unbind('change');			
+			$(('.' + filiereInputClass)).unbind('change');			
 
-			$(('.' + filiereElementClass)).change(function(){
-				updateFilierePropertyValue();				
-			});
+			$(('.' + filiereInputClass)).change(function(){					
+				updateFilierePropertyValue();
+			});			  	
 		}
 
-		function updateFilierePropertyValue(){
+		function bindChangeEventToFaculteSelectElements(){
+			// make sure the elements have only one change event
+			$('.faculteInput').unbind('change');
+
+
+			$('.faculteInput').change(function(){
+				reloadSelectOptions( $(this) );
+				updateFilierePropertyValue();
+			});			  	
+		}
+
+		function updateFilierePropertyValue(){			
 			filierePropertyValue = '';
-			var nbrOfFilieresElements = $(('.' + filiereElementClass)).length;
-			$(('.' + filiereElementClass)).each(function(index, element) {
-			  filierePropertyValue += (index != nbrOfFilieresElements - 1)? $(this).val() + '//': $(this).val();
-			});
+			var filieresElements = $(('.' + filiereInputClass));
+			var nbrOfFilieresElements = filieresElements.length;
+			filieresElements.each(function(index, element) {
+			  var faculteValue = $(this).parent().parent().find('.faculteInput').val();
+			  var entryValue = faculteValue + ";;;" + $(this).val()
+			  filierePropertyValue += (index != nbrOfFilieresElements - 1)? entryValue + '//': entryValue;
+			});			
 			$("#{{ edit_form.filiere.vars.id }}").val(filierePropertyValue);
-		}
-
-		function getOptionsForSelectElement(data){
-			var options = new Array();
-			$.each(data, function(index, option) {
-			    options.push('<option value="' + option + '">'+ option +'</option>');
-			});
-			return options;
 		}
 
 		function filiereChoosedMoreThanOnce(){
 			var flag = false;
-			var filieresElements = $(('.' + filiereElementClass));				
+			var filieresElements = $(('.' + filiereInputClass));				
 			filieresElements.each(function(index, element) {
 				var comparedValue = $(this).val();
 				var occurrencesOfValue = 0;
@@ -442,6 +466,19 @@
 		  		}		  		
 			});
 			return flag;
+		}
+
+		function reloadSelectOptions(selectInput){
+			//var value = $(this).find("option:selected").val();
+			var codeFiliere = selectInput.val();
+		    var filieres = filieresArray[codeFiliere];
+			var option = '';
+			for (i=0;i<filieres.length;i++){
+			   option += '<option value="'+ filieres[i] + '">' + filieres[i] + '</option>';
+			}
+			var filiereSelectInput = selectInput.parent().parent().find(('.' + filiereInputClass));
+			filiereSelectInput.find('option').remove();
+			filiereSelectInput.append(option);
 		}
 
 		// ####################### END - HANDLING THE DYNAMIC CREATION OF SELECT ELEMENTS #######################

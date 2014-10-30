@@ -237,15 +237,14 @@
 								    <div class="form-group" id="filieresContainer">
 								        <label>Choisissez la filière où vous désirez déposer votre candidature</label>
 								        <div id="filieresDupliqueErrorMsg" class="alert alert-danger" style="display:none">Vous ne devez pas choisir une filière plus d'une fois</div>
-								        {% for filiereChoosed in filieresChoosed %}								        
+								        {% for faculteValue, filiereValueChoosed in filieresChoosed %}
+								        
 								        <select class="form-control input-md filiereSelect" name="filieres[]" required>
-								        	
 								        	{% for filiereValue in filieresData %}
-								        	<option value="{{ filiereValue }}" {% if  filiereValue == filiereChoosed %} selected {% endif %} >
+								        	<option value="{{ filiereValue }}" {% if filiereValue == filiereValueChoosed %} selected {% endif %} >
 								        		{{ filiereValue }}
 								        	</option>
 								        	{% endfor %}
-
 								        </select>
 								        <br />
 								        {% endfor %}							        			    

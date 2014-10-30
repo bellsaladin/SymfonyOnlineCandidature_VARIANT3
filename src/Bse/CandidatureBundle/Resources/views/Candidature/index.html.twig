@@ -15,7 +15,7 @@
         <h4>Vous êtes candidat aux filières suivantes :</h4>        
         <br/>        
         <ul>
-        {% for filiere in filieresChoosed %}
+        {% for faculte, filiere in filieresChoosed %}
             <li style="margin-bottom: 15px;">
                 <b class="label label-info" style="font-size:12px">{{ filiere }}</b>
             </li>            

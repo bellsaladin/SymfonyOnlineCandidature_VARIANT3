@@ -39,7 +39,10 @@ class CandidatureController extends Controller
         $candidature = $em->getRepository('BseCandidatureBundle:Candidature')->findOneBy(array(
                 'fosuserId' => $user->getId() ));
         
-        $filieresChoosed = explode("//", $candidature->getFiliere());
+        $filieresChoosed = explode("//", $candidature->getFiliere());        
+        // transform $filieresChoosed array to key -> value array where key is 'faculte' and value is 'filiere'
+        $filieresChoosed = $this->getFilieresArrayOnKeyValueForm($filieresChoosed);
+
         return $this->render('BseCandidatureBundle:Candidature:index.html.twig', array(
             'candidature' => $candidature, 'user' => $user , 'filieresChoosed' => $filieresChoosed
         ));
@@ -209,7 +212,9 @@ class CandidatureController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        $filieresChoosed = explode("//", $entity->getFiliere());
+        $filieresChoosed = explode("//", $entity->getFiliere());        
+        // transform $filieresChoosed array to key -> value array where key is 'faculte' and value is 'filiere'
+        $filieresChoosed = $this->getFilieresArrayOnKeyValueForm($filieresChoosed);        
 
         return $this->render('BseCandidatureBundle:Candidature:edit.html.twig', array(
             'entity'      => $entity,
@@ -333,7 +338,9 @@ class CandidatureController extends Controller
                 'fosuserId' => $user->getId() ));
         
         $filieresChoosed = explode("//", $candidature->getFiliere());
-
+        // transform $filieresChoosed array to key -> value array where key is 'faculte' and value is 'filiere'
+        $filieresChoosed = $this->getFilieresArrayOnKeyValueForm($filieresChoosed);
+        
         // ###################### generate PDF ######################        
 
         $pdfObj = $this->container->get("white_october.tcpdf")->create();
@@ -346,11 +353,12 @@ class CandidatureController extends Controller
         $lg['a_meta_charset'] = 'UTF-8';        
         $lg['a_meta_language'] = 'ar';
         $lg['w_page'] = 'page';
-        
+
         // set some language-dependent strings (optional)
         $pdfObj->setLanguageArray($lg);
         $pdfObj->SetFont('dejavusans', '', 12);
         $pdfObj->addPage();
+        
         $html = $this->renderView('BseCandidatureBundle:Candidature:pdfDocument.html.twig', array(
             'candidature'      => $candidature,            
             'filieresChoosed' => $filieresChoosed,
@@ -362,5 +370,21 @@ class CandidatureController extends Controller
         //$response->setCharset('UTF-8');
         
         return $response;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+     * transform $filieresChoosed array to key -> value array where key is 'faculte' and value is 'filiere'        
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+     */
+    private function getFilieresArrayOnKeyValueForm($filieresChoosed){
+        
+        $result = array();
+        foreach($filieresChoosed as $filiereChoosed){
+            $explodedFiliereChoosed = explode(";;;", $filiereChoosed);
+            $faculteValue = $explodedFiliereChoosed[0];
+            $filiereValue = $explodedFiliereChoosed[1];
+            $result[$faculteValue] = $filiereValue;            
+        }
+        return $result;
     }
 }

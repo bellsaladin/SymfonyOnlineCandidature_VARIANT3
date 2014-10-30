@@ -235,8 +235,7 @@
 						    			<input type="hidden" id="{{ form.filiere.vars.id }}" name="{{ form.filiere.vars.full_name }}"/>
 						    		</div>
 								    <div class="form-group" id="filieresContainer">
-								        <p>Choisissez la filière où vous désirez déposer votre candidature</label>
-								        <p>(Faites le choix par ordre décroissant de préférence)</p>
+								        <p>Choisissez la filière où vous désirez déposer votre candidature : <span class="label label-success">(Faites le choix par ordre de préférence)</span></label>
 								        <div id="filieresDupliqueErrorMsg" class="alert alert-danger" style="display:none">Vous ne devez pas choisir une filière plus d'une fois</div>								        
 								        <div class="row filiere_control" id="filiere_control_model">
 								        	<div class="col-md-4">
@@ -441,7 +440,8 @@
 			reloadSelectOptions(newFiliereControl.find('.faculteInput')); // update options of filiere 
 			// renbind change event so that the new one will it's own also
 			bindChangeEventToFiliereSelectElements();	
-			bindChangeEventToFaculteSelectElements();				
+			bindChangeEventToFaculteSelectElements();
+			updateFilierePropertyValue();				
 		});
 
 		$('#btnRemoveLastFiliere').click(function(){
@@ -470,6 +470,7 @@
 
 			$('.faculteInput').change(function(){
 				reloadSelectOptions( $(this) );
+				updateFilierePropertyValue();
 			});			  	
 		}
 
@@ -478,8 +479,11 @@
 			var filieresElements = $(('.' + filiereInputClass));
 			var nbrOfFilieresElements = filieresElements.length;
 			filieresElements.each(function(index, element) {
-			  filierePropertyValue += (index != nbrOfFilieresElements - 1)? $(this).val() + '//': $(this).val();
+			  var faculteValue = $(this).parent().parent().find('.faculteInput').val();
+			  var entryValue = faculteValue + ";;;" + $(this).val()
+			  filierePropertyValue += (index != nbrOfFilieresElements - 1)? entryValue + '//': entryValue;
 			});
+			alert(filierePropertyValue);
 			$("#{{ form.filiere.vars.id }}").val(filierePropertyValue);
 		}
 

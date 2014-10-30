@@ -45,7 +45,14 @@ class ArrayData
 			'Master in Culture and linguistics',
 			'Géographie et Aménagement'
 		);
-		$data = array('FS'=> $data_1, 'FL'=>$data_2);
+
+		$data_3 = array(
+			'MARKETING ET LOGISTIQUE',
+			'Management Audit et Contrôle',
+			'BANQUE et ASSURANCE'
+		);
+
+		$data = array('FS'=> $data_1, 'FL'=>$data_2, 'FD' => $data_3);
 		return $data;
     }
 
@@ -96,7 +103,8 @@ class ArrayData
     {
     	$data =array(
 			'FS'=>'Faculté des Sciences',
-			'FL'=>'Faculté des Lettres et des Sciences Humaines'
+			'FL'=>'Faculté des Lettres et des Sciences Humaines',
+			'FD'=>'Faculté de droit'
 			// 'FE'=>'Faculté d\'economie',			
 		);
 		return $data;

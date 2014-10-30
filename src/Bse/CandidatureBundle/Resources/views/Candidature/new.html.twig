@@ -426,9 +426,11 @@
 		var filiereInputClass = 'filiereInput';
 		var filierePropertyValue = '';
 		var filieresArray = {
-			'FS' : [ {% for filiereValue in filieresData['FS'] %} "{{ filiereValue }}" {% if not loop.last %}, {% endif %} {% endfor %} ],
-			'FL' : [ {% for filiereValue in filieresData['FL'] %} "{{ filiereValue }}" {% if not loop.last %}, {% endif %} {% endfor %} ]
-		};		
+			{% for faculteKey, faculteValue in facultesData %}
+			'{{faculteKey}}' : [ {% for filiereValue in filieresData[faculteKey] %} "{{ filiereValue }}" {% if not loop.last %}, {% endif %} {% endfor %} ]
+			{% if not loop.last %}, {% endif %}
+			{% endfor %}			
+		};	
 
 		bindChangeEventToFaculteSelectElements();
 		bindChangeEventToFiliereSelectElements();

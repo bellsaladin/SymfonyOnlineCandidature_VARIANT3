@@ -21,7 +21,7 @@
 			<div class="col-xs-9">
 				<div class="tab-content">
 					    
-					    <div class="tab-pane active" id="tab1">					        
+					    <div class="tab-pane" id="tab1">					        
 					    	
 					    	<div>{{ form_errors(form) }}</div>
 
@@ -87,7 +87,7 @@
 							</div>
 					    </div>
 
-						<div class="tab-pane" id="tab2">							
+						<div class="tab-pane active" id="tab2">							
 					    	<div>{{ form_errors(form) }}</div>
 
 					    	<div class="row">
@@ -101,14 +101,14 @@
 									        		{{ etablissementValue }}
 									        	</option>
 									        {% endfor %}	
-								        </select>							        			    
+								        </select>				        			    
 								    </div>
 					    			<div class="form-group">
 								        <label>Type du diplôme</label>
 								        <p>{{ form_errors(form.typeDiplome) }}</p>
 								        <select id="{{ form.typeDiplome.vars.id }}" name="{{ form.typeDiplome.vars.full_name }}" class="form-control input-md">
-								        	{% for typeDiplomeValue in typesDiplomeData %}
-									        	<option value="{{ typeDiplomeValue }}">
+								        	{% for typeDiplomeKey, typeDiplomeValue in typesDiplomeData %}
+									        	<option value="{{ typeDiplomeKey }}">
 									        		{{ typeDiplomeValue }}
 									        	</option>
 									        {% endfor %}
@@ -117,7 +117,15 @@
 								    <div class="form-group">
 								        <label>{{ form_label(form.intituleDiplome) }}</label>
 								        <p>{{ form_errors(form.intituleDiplome) }}</p>
-								        <input type="text" name="{{ form.intituleDiplome.vars.full_name }}" placeholder="ex : Licence fondamentale SMI" class="form-control input-sm" required/>	
+								        <select id="intituleDiplome" class="form-control input-md">
+								        	{% for intituleDiplomeKey, intituleDiplomeValue in intitulesDiplomeData['LF'] %}
+									        	<option value="{{ intituleDiplomeKey }}">
+									        		{{ intituleDiplomeValue }}
+									        	</option>
+									        {% endfor %}
+									        	<option value="Autre">Autre</option>
+								        </select><br/>								        
+								        <input type="text" id="{{ form.intituleDiplome.vars.id }}" name="{{ form.intituleDiplome.vars.full_name }}" placeholder="ex : Licence fondamentale SMI" class="form-control input-sm" required style="display:none;"/>
 								    </div>									
 								</div>
 								<div class="row">
@@ -280,7 +288,7 @@
 									        <input type="password" id="txt_motDePasse" name="{{ form.motDePasse.vars.full_name }}" class="form-control input-sm"/>	
 								        </div>
 								        <div class="form-group">
-									        <label>Confirmation du mot de passe</label>								        
+									        <label>Confirmation du mot de passe</label>  
 									        <input type="password" id="txt_motDePasseConfirmation" name="txt_motDePasseConfirmation" class="form-control input-sm"/>	
 									    </div>
 									</div>									
@@ -374,7 +382,7 @@
 			}				
 		});
 
-		/* ------ BEGIN - ASK JQUERY VALIDATE PLUGIN TO USE COMMA FOR FLOAT DECIMAL ---- */
+		{# ------ BEGIN - ASK JQUERY VALIDATE PLUGIN TO USE COMMA FOR FLOAT DECIMAL ---- #}
 		$.validator.methods.range = function (value, element, param) {
 		    var globalizedValue = value.replace(",", ".");
 		    return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
@@ -382,7 +390,7 @@
 		$.validator.methods.number = function (value, element) {
 		    return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
 		}
-		/* ------ END - ASK JQUERY VALIDATE PLUGIN TO USE COMMA FOR FLOAT DECIMAL ---- */
+		{# ------ END - ASK JQUERY VALIDATE PLUGIN TO USE COMMA FOR FLOAT DECIMAL ---- #}
 		
 		$("#newCandidatureForm").validate();		
   		$( "#txt_nom" ).rules( "add", {required: true} );
@@ -411,15 +419,58 @@
 
 		$( "#txt_motDePasseConfirmation" ).rules( "add", {required:true, passwordCheck: true} );  	
 		{% endif %}	
-			
-		//#################### BEGIN - HANDLING THE DYNAMIC CREATION & VALIDATION OF SELECT ELEMENTS ##################
+
+
+		{# --------------- OnChange TypeDiplome & IntituleDiplome ---------------  #}
+
+		var intitulesDiplomeArray = { {% for typeDiplomeKey, typeDiplomeValue in typesDiplomeData %}
+			'{{typeDiplomeKey}}' : [ {% for intituleDiplomeValue in intitulesDiplomeData[typeDiplomeKey] %} "{{ intituleDiplomeValue }}" {% if not loop.last %}, {% endif %} {% endfor %} ]
+			{% if not loop.last %}, {% endif %}
+			{% endfor %}			
+		};		
+
+		$('#{{ form.intituleDiplome.vars.id }}').val($('#intituleDiplome').val());
+
+		$('#intituleDiplome').change(function () { 			
+	        $('#{{ form.intituleDiplome.vars.id }}').val($(this).val());
+	        if($(this).val() =='Autre'){
+	        	$('#{{ form.intituleDiplome.vars.id }}').show();
+	        	$('#{{ form.intituleDiplome.vars.id }}').val('');
+	        }else{
+	        	$('#{{ form.intituleDiplome.vars.id }}').hide();
+	        }
+	        //alert($('#{{ form.intituleDiplome.vars.id }}').val());
+	    });
+
+	    $('#{{ form.typeDiplome.vars.id }}').change(function (){
+	        var typeDiplome = $(this).val();
+	        reloadIntituleDiplomeSelectOptions(typeDiplome);
+	    });
+
+	    function reloadIntituleDiplomeSelectOptions(typeDiplome){
+	    	// create options
+		    var intitulesDiplome = intitulesDiplomeArray[typeDiplome];
+			var option = '';
+			for (i=0;i<intitulesDiplome.length;i++){
+			   option += '<option value="'+ intitulesDiplome[i] + '">' + intitulesDiplome[i] + '</option>';
+			}
+			option += '<option value="Autre">Autre</option>';
+			// populate the select control
+			var intitulesDiplomeSelectInput = $('#intituleDiplome');
+			intitulesDiplomeSelectInput.find('option').remove();
+			intitulesDiplomeSelectInput.append(option);
+			// hide & update hidden field value
+			$('#{{ form.intituleDiplome.vars.id }}').hide();
+			$('#{{ form.intituleDiplome.vars.id }}').val($('#intituleDiplome').val());			
+		}
+
+		{# ####################### BEGIN - HANDLING THE DYNAMIC CREATION OF SELECT ELEMENTS ####################### #}
 
 		var filiereControlClass = 'filiere_control';
 		var filiereInputClass = 'filiereInput';
 		var filierePropertyValue = '';
 		var filieresArray =[ {% for filiereValue in filieresData %} "{{ filiereValue }}" {% if not loop.last %}, {% endif %} {% endfor %} ];
-
-		bindChangeEventToFaculteSelectElements();
+		
 		bindChangeEventToFiliereSelectElements();
 
 		$('#btnAddFiliere').click(function(){
@@ -458,17 +509,7 @@
 				updateFilierePropertyValue();
 			});			  	
 		}
-
-		function bindChangeEventToFaculteSelectElements(){
-			// make sure the elements have only one change event
-			$('.faculteInput').unbind('change');
-
-
-			$('.faculteInput').change(function(){
-				reloadSelectOptions( $(this) );
-				updateFilierePropertyValue();
-			});			  	
-		}
+		
 
 		function updateFilierePropertyValue(){			
 			filierePropertyValue = '';
@@ -500,7 +541,7 @@
 			return flag;
 		}
 
-		// ####################### END - HANDLING THE DYNAMIC CREATION OF SELECT ELEMENTS #######################
+		{# ####################### END - HANDLING THE DYNAMIC CREATION OF SELECT ELEMENTS ####################### #}
 
 	});	
 </script>

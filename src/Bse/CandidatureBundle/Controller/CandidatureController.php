@@ -162,6 +162,7 @@ class CandidatureController extends Controller
             'mentionsData' => ArrayData::getMentionsData(),
             'etablissementsData' => ArrayData::getEtablissementsData($this->get('kernel')),
             'typesDiplomeData' => ArrayData::getTypesDiplomeData(),
+            'intitulesDiplomeData' => ArrayData::getIntitulesDiplomeData($this->get('kernel')),
             'facultesData' => ArrayData::getFacultesData()
         ));
     }
@@ -226,6 +227,7 @@ class CandidatureController extends Controller
             'mentionsData' => ArrayData::getMentionsData(),
             'etablissementsData' => ArrayData::getEtablissementsData($this->get('kernel')),
             'typesDiplomeData' => ArrayData::getTypesDiplomeData(),
+            'intitulesDiplomeData' => ArrayData::getIntitulesDiplomeData($this->get('kernel')),
             'facultesData' => ArrayData::getFacultesData()
         ));
     }

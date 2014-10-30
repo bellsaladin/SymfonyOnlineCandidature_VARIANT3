@@ -106,18 +106,27 @@
 								        <label>Type du diplôme</label>
 								        <p>{{ form_errors(edit_form.typeDiplome) }}</p>
 								        <select id="{{ edit_form.typeDiplome.vars.id }}" name="{{ edit_form.typeDiplome.vars.full_name }}" class="form-control input-md">        	
-								        	{% for typeDiplomeValue in typesDiplomeData %}
-									        	<option value="{{ typeDiplomeValue }}" {% if  typeDiplomeValue == entity.typeDiplome %} selected {% endif %} >
+								        	{% for typeDiplomeKey, typeDiplomeValue in typesDiplomeData %}
+									        	<option value="{{ typeDiplomeKey }}" {% if  typeDiplomeKey == entity.typeDiplome %} selected {% endif %} >
 									        		{{ typeDiplomeValue }}
 									        	</option>
 									        {% endfor %}
-								        </select>							        			    
+								        </select>						        			    
 								    </div>
 								    <div class="form-group">
 								        <label>{{ form_label(edit_form.intituleDiplome) }}</label>
 								        <p>{{ form_errors(edit_form.intituleDiplome) }}</p>
+
+								        <select id="intituleDiplome" class="form-control input-md">
+								        	{% for intituleDiplomeKey, intituleDiplomeValue in intitulesDiplomeData[entity.typeDiplome] %}
+									        	<option value="{{ intituleDiplomeKey }}" {% if entity.intituleDiplome ==  intituleDiplomeKey %} selected {% endif %}>
+									        		{{ intituleDiplomeValue }}
+									        	</option>
+									        {% endfor %}
+									        	<option value="Autre" {% if entity.intituleDiplome not in intitulesDiplomeData[entity.typeDiplome]|keys %} selected {% endif %}>Autre</option>
+								        </select><br/>
 								        <input type="text" name="{{ edit_form.intituleDiplome.vars.full_name }}" placeholder="ex : Licence fondamentale SMI" class="form-control input-sm"
-								        value="{{ entity.intituleDiplome}}" required/>	
+								        id="{{ edit_form.intituleDiplome.vars.id }}" value="{{ entity.intituleDiplome}}" required {% if entity.intituleDiplome in intitulesDiplomeData[entity.typeDiplome]|keys %}style="display:none"{% endif %}/>	
 								    </div>									
 								</div>
 								<div class="row">
@@ -299,8 +308,6 @@
 	    		    				    	
     	{{ form_end(edit_form,{'render_rest': false}) }}
 
-
-
 <script type="text/javascript">  
 
 	$(document).ready(function() {
@@ -354,7 +361,7 @@
 			}				
 		});
 
-		/* ------ BEGIN - ASK JQUERY VALIDATE PLUGIN TO USE COMMA FOR FLOAT DECIMAL ---- */
+		{# ------ BEGIN - ASK JQUERY VALIDATE PLUGIN TO USE COMMA FOR FLOAT DECIMAL ----  #}
 		$.validator.methods.range = function (value, element, param) {
 		    var globalizedValue = value.replace(",", ".");
 		    return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
@@ -362,7 +369,7 @@
 		$.validator.methods.number = function (value, element) {
 		    return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
 		}
-		/* ------ END - ASK JQUERY VALIDATE PLUGIN TO USE COMMA FOR FLOAT DECIMAL ---- */
+		{# ---------------END - ASK JQUERY VALIDATE PLUGIN TO USE COMMA FOR FLOAT DECIMAL ---- #}
 		
 		$("#editCandidatureForm").validate();
   		$( "#txt_nom" ).rules( "add", {required: true} );
@@ -377,16 +384,59 @@
   		$( "#txt_note_S3" ).rules( "add", {required: true, range:[10, 20]} );
   		$( "#txt_note_S4" ).rules( "add", {required: true, range:[10, 20]} );
   		$( "#txt_note_S5" ).rules( "add", {required: true, range:[10, 20]} );
-  		$( "#txt_note_S6" ).rules( "add", {required: true, range:[10, 20]} );		
+  		$( "#txt_note_S6" ).rules( "add", {required: true, range:[10, 20]} );
 
-		// ####################### BEGIN - HANDLING THE DYNAMIC CREATION OF SELECT ELEMENTS #######################
+  		{# --------------- OnChange TypeDiplome & IntituleDiplome ---------------  #}
+
+		var intitulesDiplomeArray = { {% for typeDiplomeKey, typeDiplomeValue in typesDiplomeData %}
+			'{{typeDiplomeKey}}' : [ {% for intituleDiplomeValue in intitulesDiplomeData[typeDiplomeKey] %} "{{ intituleDiplomeValue }}" {% if not loop.last %}, {% endif %} {% endfor %} ]
+			{% if not loop.last %}, {% endif %}
+			{% endfor %}			
+		};		
+
+		$('#{{ edit_form.intituleDiplome.vars.id }}').val($('#intituleDiplome').val());
+
+		$('#intituleDiplome').change(function () {
+			alert('change');
+	        $('#{{ edit_form.intituleDiplome.vars.id }}').val($(this).val());
+	        if($(this).val() =='Autre'){
+	        	$('#{{ edit_form.intituleDiplome.vars.id }}').show();
+	        	$('#{{ edit_form.intituleDiplome.vars.id }}').val('');
+	        }else{
+	        	$('#{{ edit_form.intituleDiplome.vars.id }}').hide();
+	        }
+	        // alert('test' + $('#{{ edit_form.intituleDiplome.vars.id }}').val());
+	    });
+
+	    $('#{{ edit_form.typeDiplome.vars.id }}').change(function (){	    	
+	        var typeDiplome = $(this).val();
+	        reloadIntituleDiplomeSelectOptions(typeDiplome);
+	    });
+
+	    function reloadIntituleDiplomeSelectOptions(typeDiplome){
+	    	// create options
+		    var intitulesDiplome = intitulesDiplomeArray[typeDiplome];
+			var option = '';
+			for (i=0;i<intitulesDiplome.length;i++){
+			   option += '<option value="'+ intitulesDiplome[i] + '">' + intitulesDiplome[i] + '</option>';
+			}
+			option += '<option value="Autre">Autre</option>';
+			// populate the select control
+			var intitulesDiplomeSelectInput = $('#intituleDiplome');
+			intitulesDiplomeSelectInput.find('option').remove();
+			intitulesDiplomeSelectInput.append(option);
+			// hide & update hidden field value
+			$('#{{ edit_form.intituleDiplome.vars.id }}').hide();
+			$('#{{ edit_form.intituleDiplome.vars.id }}').val($('#intituleDiplome').val());			
+		}
+
+		{# ####################### BEGIN - HANDLING THE DYNAMIC CREATION OF SELECT ELEMENTS ####################### #}
 		
 		var filiereControlClass = 'filiere_control';
 		var filiereInputClass = 'filiereInput';
 		var filierePropertyValue = '';
 		var filieresArray =[ {% for filiereValue in filieresData %} "{{ filiereValue }}" {% if not loop.last %}, {% endif %} {% endfor %} ];
-
-		bindChangeEventToFaculteSelectElements();
+		
 		bindChangeEventToFiliereSelectElements();
 
 		$('#btnAddFiliere').click(function(){
@@ -426,17 +476,6 @@
 			});			  	
 		}
 
-		function bindChangeEventToFaculteSelectElements(){
-			// make sure the elements have only one change event
-			$('.faculteInput').unbind('change');
-
-
-			$('.faculteInput').change(function(){
-				reloadSelectOptions( $(this) );
-				updateFilierePropertyValue();
-			});			  	
-		}
-
 		function updateFilierePropertyValue(){			
 			filierePropertyValue = '';
 			var filieresElements = $(('.' + filiereInputClass));
@@ -467,7 +506,7 @@
 			return flag;
 		}
 
-		// ####################### END - HANDLING THE DYNAMIC CREATION OF SELECT ELEMENTS #######################
+		{# ####################### END - HANDLING THE DYNAMIC CREATION OF SELECT ELEMENTS ####################### #}
 
 	});
 </script>

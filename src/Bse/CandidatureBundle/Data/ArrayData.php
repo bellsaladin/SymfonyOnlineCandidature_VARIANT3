@@ -83,11 +83,40 @@ class ArrayData
 
     }
 
+    public static function getIntitulesDiplomeData($kernel)
+    {
+    	$rootDir = $kernel->getRootDir();
+
+
+    	ini_set('auto_detect_line_endings',TRUE);
+
+    	$intitulesdiplomes_LF = array();
+    	$handle = fopen($rootDir. '/../src/Bse/CandidatureBundle/Data/intitulesdiplomes_LF.csv','r');
+		while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+	        $num = count($data);
+	        $intitulesdiplomes_LF[$data[0]] = $data[1];
+	    }
+	    fclose($handle);
+
+	    $intitulesdiplomes_LP = array();
+    	$handle = fopen($rootDir. '/../src/Bse/CandidatureBundle/Data/intitulesdiplomes_LP.csv','r');
+		while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+	        $num = count($data);	        
+	        $intitulesdiplomes_LP[$data[0]] = $data[1];
+	    }
+	    fclose($handle);
+    	/*$data =array(
+			'Maroc',
+			'Autre',			
+		);*/
+		return array('LF'=> $intitulesdiplomes_LF , 'LP' => $intitulesdiplomes_LP);
+    }
+
     public static function getTypesDiplomeData()
     {
     	$data =array(
-			'Licence Fondamentale',
-			'Licence Professionnelle',			
+			'LF'=>'Licence Fondamentale',
+			'LP'=>'Licence Professionnelle',			
 		);
 		return $data;
 
@@ -137,5 +166,13 @@ class ArrayData
 		);
 		return $data;
     }
+
+    private static function utf8_fopen_read($fileName) { 
+	    $fc = iconv('windows-1250', 'utf-8', file_get_contents($fileName)); 
+	    $handle=fopen("php://memory", "rw"); 
+	    fwrite($handle, $fc); 
+	    fseek($handle, 0); 
+	    return $handle; 
+	}
 
 }

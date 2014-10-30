@@ -70,8 +70,8 @@
 								        <label>Pays</label>	
 								        <p></p>
 								        <select id="{{ edit_form.pays.vars.id }}" name="{{ edit_form.pays.vars.full_name }}" class="form-control input-sm">
-								        	{% for paysValue in paysData %}
-								        	<option value="{{ paysValue }}" {% if  paysValue == entity.pays %} selected {% endif %} >
+								        	{% for paysId, paysValue in paysData %}
+								        	<option value="{{ paysId }}" {% if  paysId == entity.pays %} selected {% endif %} >
 								        		{{ paysValue }}
 								        	</option>
 								        	{% endfor %}
@@ -95,8 +95,8 @@
 								        <label>Etablissement d'origine</label>
 								        <p>{{ form_errors(edit_form.filiere) }}</p>
 								        <select id="{{ edit_form.etablissementOrigine.vars.id }}" name="{{ edit_form.etablissementOrigine.vars.full_name }}" class="form-control input-sm">
-								        	{% for etablissementValue in etablissementsData %}
-									        	<option value="{{ etablissementValue }}" {% if  etablissementValue == entity.etablissementOrigine %} selected {% endif %} >
+								        	{% for etablissementId, etablissementValue in etablissementsData %}
+									        	<option value="{{ etablissementId }}" {% if  etablissementId == entity.etablissementOrigine %} selected {% endif %} >
 									        		{{ etablissementValue }}
 									        	</option>
 									        {% endfor %}	

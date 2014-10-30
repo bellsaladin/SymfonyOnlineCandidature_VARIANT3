@@ -158,11 +158,11 @@ class CandidatureController extends Controller
             'form'   => $form->createView(),
             'first'  => $first,
             'filieresData' => (new ArrayData())->getFilieresData(),
-            'paysData' => (new ArrayData())->getPaysData(),
-            'mentionsData' => (new ArrayData())->getMentionsData(),
-            'etablissementsData' => (new ArrayData())->getEtablissementsData(),
-            'typesDiplomeData' => (new ArrayData())->getTypesDiplomeData(),
-            'facultesData' => (new ArrayData())->getFacultesData()
+            'paysData' => ArrayData::getPaysData($this->get('kernel')),
+            'mentionsData' => ArrayData::getMentionsData(),
+            'etablissementsData' => ArrayData::getEtablissementsData($this->get('kernel')),
+            'typesDiplomeData' => ArrayData::getTypesDiplomeData(),
+            'facultesData' => ArrayData::getFacultesData()
         ));
     }
 
@@ -222,11 +222,11 @@ class CandidatureController extends Controller
             'delete_form' => $deleteForm->createView(),
             'filieresChoosed' => $filieresChoosed,
             'filieresData' => (new ArrayData())->getFilieresData(),
-            'paysData' => (new ArrayData())->getPaysData(),
-            'mentionsData' => (new ArrayData())->getMentionsData(),
-            'etablissementsData' => (new ArrayData())->getEtablissementsData(),
-            'typesDiplomeData' => (new ArrayData())->getTypesDiplomeData(),
-            'facultesData' => (new ArrayData())->getFacultesData()
+            'paysData' => ArrayData::getPaysData($this->get('kernel')),
+            'mentionsData' => ArrayData::getMentionsData(),
+            'etablissementsData' => ArrayData::getEtablissementsData($this->get('kernel')),
+            'typesDiplomeData' => ArrayData::getTypesDiplomeData(),
+            'facultesData' => ArrayData::getFacultesData()
         ));
     }
 

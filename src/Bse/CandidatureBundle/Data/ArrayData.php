@@ -5,7 +5,13 @@ namespace Bse\CandidatureBundle\Data;
 class ArrayData
 {
 
-	public function getFilieresData()
+    public function __construct()
+    {
+
+    }
+
+
+	public static function getFilieresData()
     {
     	$data_1 =array(
 			'Mathématiques et applications',
@@ -56,17 +62,28 @@ class ArrayData
 		return $data_1;
     }
 
-    public function getEtablissementsData()
+    public static function getEtablissementsData($kernel)
     {
-    	$data =array(
-			'Université Ibn Tofail',
+    	$rootDir = $kernel->getRootDir();
+
+    	$resultArray = array();
+    	ini_set('auto_detect_line_endings',TRUE);
+
+    	$handle = fopen($rootDir. '/../src/Bse/CandidatureBundle/Data/etablissements.csv','r');
+		while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+	        $num = count($data);	        
+	        $resultArray[$data[0]] = $data[1];
+	    }
+	    fclose($handle);
+    	/*$data =array(
+			'Maroc',
 			'Autre',			
-		);
-		return $data;
+		);*/
+		return $resultArray;		
 
     }
 
-    public function getTypesDiplomeData()
+    public static function getTypesDiplomeData()
     {
     	$data =array(
 			'Licence Fondamentale',
@@ -76,7 +93,7 @@ class ArrayData
 
     }
 
-    public function getMentionsData()
+    public static function getMentionsData()
     {
     	$data =array(
 			'Passable',
@@ -89,17 +106,28 @@ class ArrayData
 
     }
 
-    public function getPaysData()
+    public static function getPaysData($kernel)
     {
-    	$data =array(
+    	$rootDir = $kernel->getRootDir();
+
+    	$resultArray = array();
+    	ini_set('auto_detect_line_endings',TRUE);
+
+    	$handle = fopen($rootDir. '/../src/Bse/CandidatureBundle/Data/pays.csv','r');
+		while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+	        $num = count($data);	        
+	        $resultArray[$data[0]] = $data[1];
+	    }
+	    fclose($handle);
+    	/*$data =array(
 			'Maroc',
 			'Autre',			
-		);
-		return $data;
+		);*/
+		return $resultArray;
 
     }
 
-    public function getFacultesData()
+    public static function getFacultesData()
     {
     	$data =array(
 			'FS'=>'Faculté des Sciences',

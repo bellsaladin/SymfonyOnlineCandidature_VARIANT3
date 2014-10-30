@@ -69,10 +69,10 @@
 							        </div>
 							        <div class="form-group">
 								        <label>Pays</label>	
-								        <p></p>
-								        <select id="{{ form.pays.vars.id }}" name="{{ form.pays.vars.full_name }}" class="form-control input-sm">
-								        	{% for paysValue in paysData %}
-								        	<option value="{{ paysValue }}">
+								        <p></p>								        
+								        <select id="{{ form.pays.vars.id }}" name="{{ form.pays.vars.full_name }}" class="form-control input-sm">								        
+								        	{% for paysId, paysValue in paysData %}
+								        	<option value="{{ paysId }}">
 								        		{{ paysValue }}
 								        	</option>
 								        	{% endfor %}
@@ -96,8 +96,8 @@
 								        <label>Etablissement d'origine</label>
 								        <p>{{ form_errors(form.filiere) }}</p>
 								        <select id="{{ form.etablissementOrigine.vars.id }}" name="{{ form.etablissementOrigine.vars.full_name }}" class="form-control input-sm">
-								        	{% for etablissementValue in etablissementsData %}
-									        	<option value="{{ etablissementValue }}">
+								        	{% for etablissementId, etablissementValue in etablissementsData %}
+									        	<option value="{{ etablissementId }}">
 									        		{{ etablissementValue }}
 									        	</option>
 									        {% endfor %}	

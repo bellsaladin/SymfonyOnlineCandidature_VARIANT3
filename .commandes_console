@@ -1,6 +1,6 @@
-
-php app/console cache:clear --env=prod
-
+**************************************************************************************************************
+######################## reverse engineering : Generate entities classes from DB #########################
+*********************************************************************************************************
 
 php app/console doctrine:mapping:convert yml ./src/Bse/CandidatureBundle/Resources/config/doctrine/metadata/orm --from-database --force
 
@@ -10,5 +10,19 @@ php app/console doctrine:mapping:import BseCandidatureBundle annotation
 
 php app/console doctrine:generate:entities BseCandidatureBundle
 
+
+
+*********************************************************************************************************
+#################################### clear production cache ####################################
+*********************************************************************************************************
+
+php app/console cache:clear --env=prod
+
+
+
+
+*********************************************************************************************************
+#################################### install css to public /web folder ####################################
+*********************************************************************************************************
 
 php app/console assets:install

@@ -11,7 +11,7 @@ class ArrayData
     }
 
 
-	public static function getFilieresData()
+	public static function getFilieresData($container)
     {
     	$data_1 =array(
 			'Mathématiques et applications',
@@ -58,8 +58,8 @@ class ArrayData
 			'BANQUE et ASSURANCE'
 		);
 
-		// $data = array($data_1);
-		return $data_1;
+		$data = array('FS'=>$data_1, 'FL' => $data_2, 'FD' => $data_3);
+		return $data[$container->getParameter('faculte_code')];
     }
 
     public static function getEtablissementsData($kernel)

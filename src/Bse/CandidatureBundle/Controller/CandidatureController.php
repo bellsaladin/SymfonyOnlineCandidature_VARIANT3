@@ -364,6 +364,18 @@ class CandidatureController extends Controller
         $pdfObj->SetFont('dejavusans', '', 12);
         $pdfObj->addPage();
         
+        // get values of fields stored as keys 
+        
+        $etablissementsArray = ArrayData::getEtablissementsData($this->get('kernel'));
+        $intitulesDiplomeArray = ArrayData::getIntitulesDiplomeData($this->get('kernel')) [$candidature->getTypeDiplome()];        
+        
+        $candidature->setIntituleDiplome(ArrayData::getValueUsingKey($candidature->getIntituleDiplome(), $intitulesDiplomeArray) );
+        $candidature->setTypeDiplome(ArrayData::getValueUsingKey($candidature->getTypeDiplome(), ArrayData::getTypesDiplomeData()) );
+        $candidature->setEtablissementOrigine(ArrayData::getValueUsingKey($candidature->getEtablissementOrigine(), $etablissementsArray) );
+        $candidature->setPays(ArrayData::getValueUsingKey($candidature->getPays(), ArrayData::getPaysData($this->get('kernel'))) );
+        $candidature->setVille(ArrayData::getValueUsingKey($candidature->getVille(), ArrayData::getVillesData($this->get('kernel'))) );
+
+        // get the html output
         $html = $this->renderView('BseCandidatureBundle:Candidature:pdfDocument.html.twig', array(
             'candidature'      => $candidature,            
             'filieresChoosed' => $filieresChoosed,

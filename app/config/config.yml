@@ -27,7 +27,7 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         faculte_name : "%faculte_name%"
-        faculte_one_filiere_only : "%faculte_one_filiere_only%"
+        faculte_enableCandidatureToMultipleFilieres : "%faculte_enableCandidatureToMultipleFilieres%"
 
 # Assetic Configuration
 assetic:

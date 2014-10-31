@@ -271,7 +271,7 @@
 								    <div>
   										<button type="button" id="btnAddFiliere" class="btn btn-info btn-xs">Ajouter une autre filière</button>
   										<button type="button" id="btnRemoveLastFiliere" class="btn btn-danger btn-xs">Supprimer la dernière filière</button>
-									</div>			    				    			
+									</div>
 									{% endif %}
 								</div>
 							</div>
@@ -335,7 +335,7 @@
 					return false;
 				}
 
-				if(filiereChoosedMoreThanOnce()){
+				if(index == 3 && filiereChoosedMoreThanOnce()){
 		  			$('#filieresDupliqueErrorMsg').show();
 		  			return false;
 		  		}else{

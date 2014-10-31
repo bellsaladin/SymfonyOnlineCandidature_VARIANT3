@@ -190,21 +190,21 @@
 									    <div class="form-group">
 									        <label>Semestre 1</label>
 									        <p>{{ form_errors(edit_form.noteS1) }}</p>
-									        <input type="text" id="txt_note_S1" name="{{ edit_form.noteS1.vars.full_name }}" value="{{ entity.noteS1}}" placeholder="ex : 13,50" class="form-control input-sm"/>	
+									        <input type="text" id="txt_note_S1" name="{{ edit_form.noteS1.vars.full_name }}" value="{{ entity.noteS1|number_format(2, ',', '.') }}" placeholder="ex : 13,50" class="form-control input-sm"/>	
 								        </div>
 									</div>
 									<div class="col-xs-12 col-md-4 col-lg-4">
 										<div class="form-group">
 									        <label>Semestre 2</label>
 									        <p>{{ form_errors(edit_form.noteS2) }}</p>
-									        <input type="text" id="txt_note_S2" name="{{ edit_form.noteS2.vars.full_name }}" value="{{ entity.noteS2}}" placeholder="ex : 11,00" class="form-control input-sm"/>	
+									        <input type="text" id="txt_note_S2" name="{{ edit_form.noteS2.vars.full_name }}" value="{{ entity.noteS2|number_format(2, ',', '.') }}" placeholder="ex : 11,00" class="form-control input-sm"/>	
 									    </div>
 									</div>
 									<div class="col-xs-12 col-md-4 col-lg-4">
 										<div class="form-group">
 									        <label>Semestre 3</label>
 									        <p>{{ form_errors(edit_form.noteS3) }}</p>
-									        <input type="text" id="txt_note_S3" name="{{ edit_form.noteS3.vars.full_name }}" value="{{ entity.noteS3 }}" placeholder="ex : 14,00" class="form-control input-sm"/>	
+									        <input type="text" id="txt_note_S3" name="{{ edit_form.noteS3.vars.full_name }}" value="{{ entity.noteS3|number_format(2, ',', '.')  }}" placeholder="ex : 14,00" class="form-control input-sm"/>	
 								        </div>	    
 									</div>
 								</div>
@@ -213,21 +213,21 @@
 								        <div class="form-group">
 									        <label>Semestre 4</label>
 									        <p>{{ form_errors(edit_form.noteS4) }}</p>
-									        <input type="text" id="txt_note_S4" name="{{ edit_form.noteS4.vars.full_name }}" value="{{ entity.noteS4}}" placeholder="ex : 10,00" class="form-control input-sm"/>	
+									        <input type="text" id="txt_note_S4" name="{{ edit_form.noteS4.vars.full_name }}" value="{{ entity.noteS4|number_format(2, ',', '.') }}" placeholder="ex : 10,00" class="form-control input-sm"/>	
 									    </div>
 									</div>
 									<div class="col-xs-12 col-md-4 col-lg-4">
 								        <div class="form-group">
 									        <label>Semestre 5</label>
 									        <p>{{ form_errors(edit_form.noteS5) }}</p>
-									        <input type="text" id="txt_note_S5" name="{{ edit_form.noteS5.vars.full_name }}" value="{{ entity.noteS5}}" placeholder="ex : 14,00" class="form-control input-sm"/>	
+									        <input type="text" id="txt_note_S5" name="{{ edit_form.noteS5.vars.full_name }}" value="{{ entity.noteS5|number_format(2, ',', '.') }}" placeholder="ex : 14,00" class="form-control input-sm"/>	
 								        </div>		    
 									</div>
 									<div class="col-xs-12 col-md-4 col-lg-4">
 								        <div class="form-group">
 									        <label>Semestre 6</label>
 									        <p>{{ form_errors(edit_form.noteS6) }}</p>
-									        <input type="text" id="txt_note_S6" name="{{ edit_form.noteS6.vars.full_name }}" value="{{ entity.noteS6}}" placeholder="ex : 10,00" class="form-control input-sm"/>	
+									        <input type="text" id="txt_note_S6" name="{{ edit_form.noteS6.vars.full_name }}" value="{{ entity.noteS6|number_format(2, ',', '.') }}" placeholder="ex : 10,00" class="form-control input-sm"/>	
 									    </div>		    
 									</div>
 								</div>
@@ -392,12 +392,12 @@
 			'{{typeDiplomeKey}}' : [ {% for intituleDiplomeValue in intitulesDiplomeData[typeDiplomeKey] %} "{{ intituleDiplomeValue }}" {% if not loop.last %}, {% endif %} {% endfor %} ]
 			{% if not loop.last %}, {% endif %}
 			{% endfor %}			
-		};		
+		};
 
-		$('#{{ edit_form.intituleDiplome.vars.id }}').val($('#intituleDiplome').val());
+		if($('#{{ edit_form.intituleDiplome.vars.id }}').val() =='') {# check if empty : for edit form #}
+			$('#{{ edit_form.intituleDiplome.vars.id }}').val($('#intituleDiplome').val());	
 
-		$('#intituleDiplome').change(function () {
-			alert('change');
+		$('#intituleDiplome').change(function () {			
 	        $('#{{ edit_form.intituleDiplome.vars.id }}').val($(this).val());
 	        if($(this).val() =='Autre'){
 	        	$('#{{ edit_form.intituleDiplome.vars.id }}').show();

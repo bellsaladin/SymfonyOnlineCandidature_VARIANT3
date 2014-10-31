@@ -30,27 +30,27 @@
 								    <div class="form-group">
 								        <label>Prénom</label>
 								        <p>{{ form_errors(form.prenom) }}</p>
-								        <input type="text" id="txt_prenom" name="{{ form.prenom.vars.full_name }}" placeholder="ex : Ahmed" class="form-control input-sm"/>	
+								        <input type="text" id="txt_prenom" name="{{ form.prenom.vars.full_name }}" placeholder="ex : Ahmed" class="form-control input-sm" required/>	
 								    </div>
 								    <div class="form-group">
 								        <label>Nom</label>
 								        <p>{{ form_errors(form.nom) }}</p>
-								        <input type="text" id="txt_nom" name="{{ form.nom.vars.full_name }}" placeholder="ex : Talal" class="form-control input-sm"/>	
+								        <input type="text" id="txt_nom" name="{{ form.nom.vars.full_name }}" placeholder="ex : Talal" class="form-control input-sm" required/>	
 								    </div>
 								    <div class="form-group">
 								        <label>CIN</label>
 								        <p>{{ form_errors(form.cin) }}</p>
-								        <input type="text" id="txt_cin" name="{{ form.cin.vars.full_name }}" placeholder="ex : G 42402" class="form-control input-sm"/>	
+								        <input type="text" id="txt_cin" name="{{ form.cin.vars.full_name }}" placeholder="ex : G 42402" class="form-control input-sm" required/>	
 								    </div>
 								    <div class="form-group">
 								        <label>CNE</label>
 								        <p>{{ form_errors(form.cne) }}</p>
-								        <input type="text" id="txt_cne" name="{{ form.cne.vars.full_name }}" placeholder="ex : 30494800" class="form-control input-sm"/>	
+								        <input type="text" id="txt_cne" name="{{ form.cne.vars.full_name }}" placeholder="ex : 30494800" class="form-control input-sm" required/>	
 								    </div>	
 								    <div class="form-group">
 								        <label>{{ form_label(form.adresse) }}</label>
 								        <p>{{ form_errors(form.adresse) }}</p>
-								        <textarea id="txt_adresse" name="{{ form.adresse.vars.full_name }}" placeholder="ex : " class="form-control input-sm"></textarea>
+								        <textarea id="txt_adresse" name="{{ form.adresse.vars.full_name }}" placeholder="ex : " class="form-control input-sm" required></textarea>
 								    </div>
 								</div>									
 								<div class="col-xs-12 col-md-6 col-lg-6">									
@@ -79,7 +79,13 @@
 								    <div class="form-group">
 								        <label>{{ form_label(form.ville) }}</label>
 								        <p>{{ form_errors(form.ville) }}</p>
-								        <input type="text" id="txt_ville" name="{{ form.ville.vars.full_name }}" placeholder="ex : Kénitra" class="form-control input-sm"/>	
+								        <select id="ville" class="form-control input-md" required>
+								        	<option value="">Choisissez une ville</option>
+								        	{% for villeKey, villeValue in villesData %}
+									        	<option value="{{ villeKey }}" {% if villeKey == '350' %}required{% endif %}>{{ villeValue }}</option>
+									        {% endfor %}
+								        </select>
+								        <input type="text" id="{{ form.ville.vars.id }}" name="{{ form.ville.vars.full_name }}" placeholder="Autre ville" value="{{ entity.ville }}" class="form-control input-sm" required style="display:none"/>
 								    </div>
 								</div>
 							</div>
@@ -115,7 +121,8 @@
 								    <div class="form-group">
 								        <label>{{ form_label(form.intituleDiplome) }}</label>
 								        <p>{{ form_errors(form.intituleDiplome) }}</p>
-								        <select id="intituleDiplome" class="form-control input-md">
+								        <select id="intituleDiplome" class="form-control input-md" required>
+								        	<option value="">Choisissez votre diplôme</option>
 								        	{% for intituleDiplomeKey, intituleDiplomeValue in intitulesDiplomeData['LF'] %}
 									        	<option value="{{ intituleDiplomeKey }}">
 									        		{{ intituleDiplomeValue }}
@@ -390,13 +397,7 @@
 		}
 		{# ------ END - ASK JQUERY VALIDATE PLUGIN TO USE COMMA FOR FLOAT DECIMAL ---- #}
 		
-		$("#newCandidatureForm").validate();		
-  		$( "#txt_nom" ).rules( "add", {required: true} );
-  		$( "#txt_prenom" ).rules( "add", {required: true} );
-  		$( "#txt_cin" ).rules( "add", {required: true} );
-  		$( "#txt_cne" ).rules( "add", {required: true} );
-  		$( "#txt_ville" ).rules( "add", {required: true} );
-  		$( "#txt_adresse" ).rules( "add", {required: true} );		
+		$("#newCandidatureForm").validate();  		
 		
   		$( "#txt_note_S1" ).rules( "add", {required: true, range:[10, 20]} );
   		$( "#txt_note_S2" ).rules( "add", {required: true, range:[10, 20]} );
@@ -418,14 +419,32 @@
 		$( "#txt_motDePasseConfirmation" ).rules( "add", {required:true, passwordCheck: true} );  	
 		{% endif %}	
 
+		{# --------------- OnChange PAYS & VILLE ---------------  #}
+
+  		$('#{{ form.pays.vars.id }}').change(function () {				        
+	        if($(this).val() =='350'){
+	        	$('#ville').show();
+	        	$('#{{ form.ville.vars.id }}').val($('#ville').val());	        	
+	        	$('#{{ form.ville.vars.id }}').hide();	        	
+	        }else{
+	        	$('#ville').hide();
+	        	$('#{{ form.ville.vars.id }}').show()
+	        	$('#{{ form.ville.vars.id }}').val('');	        	
+
+	        }	        
+	    });
+
+	    $('#ville').change(function () {				        
+	        $('#{{ form.ville.vars.id }}').val($('#ville').val());	        
+	    });
 
 		{# --------------- OnChange TypeDiplome & IntituleDiplome ---------------  #}
 
 		var intitulesDiplomeArray = { {% for typeDiplomeKey, typeDiplomeValue in typesDiplomeData %}
-			'{{typeDiplomeKey}}' : [ {% for intituleDiplomeValue in intitulesDiplomeData[typeDiplomeKey] %} "{{ intituleDiplomeValue }}" {% if not loop.last %}, {% endif %} {% endfor %} ]
+			'{{typeDiplomeKey}}' : { {% for intituleDiplomeKey, intituleDiplomeValue in intitulesDiplomeData[typeDiplomeKey] %} {{ intituleDiplomeKey }} : "{{ intituleDiplomeValue }}" {% if not loop.last %}, {% endif %} {% endfor %} }
 			{% if not loop.last %}, {% endif %}
 			{% endfor %}			
-		};		
+		};
 
 		if($('#{{ form.intituleDiplome.vars.id }}').val() =='') {# check if empty : for edit form #}
 			$('#{{ form.intituleDiplome.vars.id }}').val($('#intituleDiplome').val());
@@ -449,10 +468,10 @@
 	    function reloadIntituleDiplomeSelectOptions(typeDiplome){
 	    	// create options
 		    var intitulesDiplome = intitulesDiplomeArray[typeDiplome];
-			var option = '';
-			for (i=0;i<intitulesDiplome.length;i++){
-			   option += '<option value="'+ intitulesDiplome[i] + '">' + intitulesDiplome[i] + '</option>';
-			}
+			var option = '<option value="">Choisissez votre diplôme</option>';
+			$.each( intitulesDiplome, function( intituleDiplomeKey, intituleDiplomeValue ) {
+			  	option += '<option value="'+ intituleDiplomeKey + '">' + intituleDiplomeValue + '</option>';
+			});
 			option += '<option value="Autre">Autre</option>';
 			// populate the select control
 			var intitulesDiplomeSelectInput = $('#intituleDiplome');

@@ -153,7 +153,26 @@ class ArrayData
 			'Autre',			
 		);*/
 		return $resultArray;
+    }
 
+    public static function getVillesData($kernel)
+    {
+    	$rootDir = $kernel->getRootDir();
+
+    	$resultArray = array();
+    	ini_set('auto_detect_line_endings',TRUE);
+
+    	$handle = fopen($rootDir. '/../src/Bse/CandidatureBundle/Data/villes.csv','r');
+		while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+	        $num = count($data);	        
+	        $resultArray[$data[0]] = $data[1];
+	    }
+	    fclose($handle);
+    	/*$data =array(
+			'Maroc',
+			'Autre',			
+		);*/
+		return $resultArray;
     }
 
     public static function getFacultesData()

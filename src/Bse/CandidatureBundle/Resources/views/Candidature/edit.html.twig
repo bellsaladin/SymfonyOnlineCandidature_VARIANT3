@@ -29,27 +29,27 @@
 								    <div class="form-group">
 								        <label>Prénom</label>
 								        <p>{{ form_errors(edit_form.prenom) }}</p>
-								        <input type="text" id="txt_prenom" name="{{ edit_form.prenom.vars.full_name }}" placeholder="ex : Ahmed" value="{{ entity.prenom}}" class="form-control input-sm"/>	
+								        <input type="text" id="txt_prenom" name="{{ edit_form.prenom.vars.full_name }}" placeholder="ex : Ahmed" value="{{ entity.prenom}}" class="form-control input-sm" required/>	
 								    </div>
 								    <div class="form-group">
 								        <label>Nom</label>
 								        <p>{{ form_errors(edit_form.nom) }}</p>
-								        <input type="text" id="txt_nom" name="{{ edit_form.nom.vars.full_name }}" placeholder="ex : Talal" value="{{ entity.nom}}" class="form-control input-sm"/>	
+								        <input type="text" id="txt_nom" name="{{ edit_form.nom.vars.full_name }}" placeholder="ex : Talal" value="{{ entity.nom}}" class="form-control input-sm" required/>	
 								    </div>
 								    <div class="form-group">
 								        <label>CIN</label>
 								        <p>{{ form_errors(edit_form.cin) }}</p>
-								        <input type="text" id="txt_cin" name="{{ edit_form.cin.vars.full_name }}" placeholder="ex : G 42402" value="{{ entity.cin}}" class="form-control input-sm"/>	
+								        <input type="text" id="txt_cin" name="{{ edit_form.cin.vars.full_name }}" placeholder="ex : G 42402" value="{{ entity.cin}}" class="form-control input-sm" required/>	
 								    </div>
 								    <div class="form-group">
 								        <label>CNE</label>
 								        <p>{{ form_errors(edit_form.cne) }}</p>
-								        <input type="text" id="txt_cne" name="{{ edit_form.cne.vars.full_name }}" placeholder="ex : 30494800" value="{{ entity.cne}}" class="form-control input-sm"/>	
+								        <input type="text" id="txt_cne" name="{{ edit_form.cne.vars.full_name }}" placeholder="ex : 30494800" value="{{ entity.cne}}" class="form-control input-sm" required/>	
 								    </div>	
 								    <div class="form-group">
 								        <label>{{ form_label(edit_form.adresse) }}</label>
 								        <p>{{ form_errors(edit_form.adresse) }}</p>
-								        <textarea id="txt_adresse" name="{{ edit_form.adresse.vars.full_name }}" placeholder="ex : " class="form-control input-sm">{{ entity.adresse }}</textarea>
+								        <textarea id="txt_adresse" name="{{ edit_form.adresse.vars.full_name }}" placeholder="ex : " class="form-control input-sm" required>{{ entity.adresse }}</textarea>
 								    </div>
 								</div>									
 								<div class="col-xs-12 col-md-6 col-lg-6">									
@@ -80,7 +80,13 @@
 								    <div class="form-group">
 								        <label>{{ form_label(edit_form.ville) }}</label>
 								        <p>{{ form_errors(edit_form.ville) }}</p>
-								        <input type="text" id="txt_ville" name="{{ edit_form.ville.vars.full_name }}" placeholder="ex : Kénitra" value="{{ entity.ville }}" class="form-control input-sm"/>	
+
+								        <select id="ville" class="form-control input-md" {% if entity.pays != '350' %}style="display:none"{% endif %}>
+								        	{% for villeKey, villeValue in villesData %}
+									        	<option value="{{ villeKey }}" {% if entity.ville ==  villeKey %} selected {% endif %}>{{ villeValue }}</option>
+									        {% endfor %}
+								        </select>
+								        <input type="text" id="{{ edit_form.ville.vars.id }}" name="{{ edit_form.ville.vars.full_name }}" placeholder="Autre ville" value="{{ entity.ville }}" class="form-control input-sm" required {% if entity.pays == '350' %}style="display:none"{% endif %}/>
 								    </div>
 								</div>
 							</div>
@@ -117,7 +123,7 @@
 								        <label>{{ form_label(edit_form.intituleDiplome) }}</label>
 								        <p>{{ form_errors(edit_form.intituleDiplome) }}</p>
 
-								        <select id="intituleDiplome" class="form-control input-md">
+								        <select id="intituleDiplome" class="form-control input-md" required>
 								        	{% for intituleDiplomeKey, intituleDiplomeValue in intitulesDiplomeData[entity.typeDiplome] %}
 									        	<option value="{{ intituleDiplomeKey }}" {% if entity.intituleDiplome ==  intituleDiplomeKey %} selected {% endif %}>
 									        		{{ intituleDiplomeValue }}
@@ -126,7 +132,7 @@
 									        	<option value="Autre" {% if entity.intituleDiplome not in intitulesDiplomeData[entity.typeDiplome]|keys %} selected {% endif %}>Autre</option>
 								        </select><br/>
 								        <input type="text" name="{{ edit_form.intituleDiplome.vars.full_name }}" placeholder="ex : Licence fondamentale SMI" class="form-control input-sm"
-								        id="{{ edit_form.intituleDiplome.vars.id }}" value="{{ entity.intituleDiplome}}" required {% if entity.intituleDiplome in intitulesDiplomeData[entity.typeDiplome]|keys %}style="display:none"{% endif %}/>	
+								        id="{{ edit_form.intituleDiplome.vars.id }}" value="{{ entity.intituleDiplome}}" required {% if entity.intituleDiplome in intitulesDiplomeData[entity.typeDiplome]|keys %}style="display:none"{% endif %}/>
 								    </div>									
 								</div>
 								<div class="row">
@@ -372,12 +378,6 @@
 		{# ---------------END - ASK JQUERY VALIDATE PLUGIN TO USE COMMA FOR FLOAT DECIMAL ---- #}
 		
 		$("#editCandidatureForm").validate();
-  		$( "#txt_nom" ).rules( "add", {required: true} );
-  		$( "#txt_prenom" ).rules( "add", {required: true} );
-  		$( "#txt_cin" ).rules( "add", {required: true} );
-  		$( "#txt_cne" ).rules( "add", {required: true} );
-  		$( "#txt_ville" ).rules( "add", {required: true} );
-  		$( "#txt_adresse" ).rules( "add", {required: true} );		
 		
   		$( "#txt_note_S1" ).rules( "add", {required: true, range:[10, 20]} );
   		$( "#txt_note_S2" ).rules( "add", {required: true, range:[10, 20]} );
@@ -386,10 +386,29 @@
   		$( "#txt_note_S5" ).rules( "add", {required: true, range:[10, 20]} );
   		$( "#txt_note_S6" ).rules( "add", {required: true, range:[10, 20]} );
 
+  		{# --------------- OnChange PAYS & VILLE ---------------  #}  		
+
+  		$('#{{ edit_form.pays.vars.id }}').change(function () {				        
+	        if($(this).val() =='350'){
+	        	$('#ville').show();
+	        	$('#{{ edit_form.ville.vars.id }}').val($('#ville').val());	        	
+	        	$('#{{ edit_form.ville.vars.id }}').hide();	        	
+	        }else{
+	        	$('#ville').hide();
+	        	$('#{{ edit_form.ville.vars.id }}').show()
+	        	$('#{{ edit_form.ville.vars.id }}').val('');	        	
+
+	        }	        
+	    });
+
+	    $('#ville').change(function () {				        
+	        $('#{{ edit_form.ville.vars.id }}').val($('#ville').val());	        
+	    });
+
   		{# --------------- OnChange TypeDiplome & IntituleDiplome ---------------  #}
 
 		var intitulesDiplomeArray = { {% for typeDiplomeKey, typeDiplomeValue in typesDiplomeData %}
-			'{{typeDiplomeKey}}' : [ {% for intituleDiplomeValue in intitulesDiplomeData[typeDiplomeKey] %} "{{ intituleDiplomeValue }}" {% if not loop.last %}, {% endif %} {% endfor %} ]
+			'{{typeDiplomeKey}}' : { {% for intituleDiplomeKey, intituleDiplomeValue in intitulesDiplomeData[typeDiplomeKey] %} {{ intituleDiplomeKey }} : "{{ intituleDiplomeValue }}" {% if not loop.last %}, {% endif %} {% endfor %} }
 			{% if not loop.last %}, {% endif %}
 			{% endfor %}			
 		};
@@ -416,10 +435,10 @@
 	    function reloadIntituleDiplomeSelectOptions(typeDiplome){
 	    	// create options
 		    var intitulesDiplome = intitulesDiplomeArray[typeDiplome];
-			var option = '';
-			for (i=0;i<intitulesDiplome.length;i++){
-			   option += '<option value="'+ intitulesDiplome[i] + '">' + intitulesDiplome[i] + '</option>';
-			}
+			var option = '<option value="">Choisissez votre diplôme</option>';
+			$.each( intitulesDiplome, function( intituleDiplomeKey, intituleDiplomeValue ) {
+			  	option += '<option value="'+ intituleDiplomeKey + '">' + intituleDiplomeValue + '</option>';
+			});
 			option += '<option value="Autre">Autre</option>';
 			// populate the select control
 			var intitulesDiplomeSelectInput = $('#intituleDiplome');

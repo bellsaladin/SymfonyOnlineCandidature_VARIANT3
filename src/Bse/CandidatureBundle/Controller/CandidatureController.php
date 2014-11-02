@@ -57,22 +57,30 @@ class CandidatureController extends Controller
         $entity = new Candidature();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
-        $firstCandidature = $request->request->get('firstCandidature');
+        //$firstCandidature = $request->request->get('firstCandidature');
 
         $data = $form->getData();
+        
+        // check if email is already in use            
+        $email = $form->get('email')->getData();
+        $userFoundUsingEmail = $this->get('fos_user.user_manager')->findUserByEmail($email);
+        if($userFoundUsingEmail != null){
+            return $this->render('BseCandidatureBundle:Candidature:new.html.twig', array(
+                'entity' => $entity,            
+                'form'   => $form->createView(),                    
+                'emailAlreadyInUse' => $email,
+                'filieresData' => ArrayData::getFilieresData($this->container),
+                'paysData' => ArrayData::getPaysData($this->get('kernel')),
+                'villesData' => ArrayData::getVillesData($this->get('kernel')),
+                'mentionsData' => ArrayData::getMentionsData(),
+                'etablissementsData' => ArrayData::getEtablissementsData($this->get('kernel')),
+                'typesDiplomeData' => ArrayData::getTypesDiplomeData(),
+                'intitulesDiplomeData' => ArrayData::getIntitulesDiplomeData($this->get('kernel')),
+                'facultesData' => ArrayData::getFacultesData()        
+            ));
+        }              
 
-        if($firstCandidature == 'first'){
-            // check if email is already in use            
-            $email = $form->get('email')->getData();
-            $userFoundUsingEmail = $this->get('fos_user.user_manager')->findUserByEmail($email);
-            if($userFoundUsingEmail != null){
-                return $this->render('BseCandidatureBundle:Candidature:new.html.twig', array(
-                    'entity' => $entity,            
-                    'form'   => $form->createView(), 
-                    'first' => 'first',
-                    'emailAlreadyInUse' => $email         
-                ));
-            }
+        if ($form->isValid()) {
             // create a new user
             $userManager = $this->container->get('fos_user.user_manager');
             $user = $userManager->createUser();
@@ -82,14 +90,8 @@ class CandidatureController extends Controller
             $user->setEnabled(true);
             $userManager->updateUser($user);
             // bind new entity to created user
-            $entity->setFosuserId($user->getId());
-        }else{
-            // bind new entity to logged user
-            $user = $this->get('security.context')->getToken()->getUser();
-            $entity->setFosuserId($user->getId());
-        }        
-
-        if ($form->isValid()) {
+            $entity->setFosuserId($user->getId());  
+        
             $em = $this->getDoctrine()->getManager();            
             $em->persist($entity);
             $em->flush();
@@ -111,7 +113,15 @@ class CandidatureController extends Controller
         
         return $this->render('BseCandidatureBundle:Candidature:new.html.twig', array(
             'entity' => $entity,            
-            'form'   => $form->createView(),            
+            'form'   => $form->createView(), 
+            'filieresData' => ArrayData::getFilieresData($this->container),
+            'paysData' => ArrayData::getPaysData($this->get('kernel')),
+            'villesData' => ArrayData::getVillesData($this->get('kernel')),
+            'mentionsData' => ArrayData::getMentionsData(),
+            'etablissementsData' => ArrayData::getEtablissementsData($this->get('kernel')),
+            'typesDiplomeData' => ArrayData::getTypesDiplomeData(),
+            'intitulesDiplomeData' => ArrayData::getIntitulesDiplomeData($this->get('kernel')),
+            'facultesData' => ArrayData::getFacultesData()           
         ));
     }
 
@@ -142,21 +152,20 @@ class CandidatureController extends Controller
     {
         // force going to first candidature if user is not connect and is asking a new candidature without first
         $user = $this->get('security.context')->getToken()->getUser();        
-        if(!$user instanceof FOSUserEntity && $first != 'first'){
+        /* if(!$user instanceof FOSUserEntity && $first != 'first'){
             return $this->redirect($this->generateUrl('candidature_new', array('first' => 'first')));
         }
         // force going to second candidature if user is connect and is asking a to make candidature as his first one
         if($user instanceof FOSUserEntity && $first == 'first'){ // just in case !! 
              return $this->redirect($this->generateUrl('candidature_new'));
-        }        
+        }*/    
 
         $entity = new Candidature();
         $form   = $this->createCreateForm($entity);
 
         return $this->render('BseCandidatureBundle:Candidature:new.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView(),
-            'first'  => $first,
+            'form'   => $form->createView(),            
             'filieresData' => ArrayData::getFilieresData($this->container),
             'paysData' => ArrayData::getPaysData($this->get('kernel')),
             'villesData' => ArrayData::getVillesData($this->get('kernel')),

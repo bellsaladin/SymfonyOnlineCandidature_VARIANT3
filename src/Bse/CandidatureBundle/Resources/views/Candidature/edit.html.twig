@@ -3,9 +3,70 @@
 {% block subTitle %}Modification de candidature - <span id="stepTitle" style="color: #D82828;">Etape 1 : Informations générales </span>{% endblock %}
 
 {% block content %}
+		
+		{# ################################################################################################}
+		{# ####################################### END - Email already used ###############################}
 		{% if emailAlreadyInUse is defined %}
 		<div class="alert alert-danger"><b>Erreur : </b>l'email {{ emailAlreadyInUse }} renseigné est déjà utilisé !</div>
 		{% endif %}
+		{# #################################### BEGIN - Email already used ##########################}
+		{# ##########################################################################################}
+
+		{# ##########################################################################################}
+		{# ####################################### BEGIN - Errors modal ###############################}
+				
+		{% if not edit_form.vars.valid %}
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">		  		  
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Erreurs</h4>
+		      </div>		      
+		      <div class="modal-body">
+		        <div id="form-erros" style="color:rgb(213, 0, 0);">
+					<p>{{ form_errors(edit_form) }}</p>
+					<p>{{ form_errors(edit_form.nom) }}</p>
+					<p>{{ form_errors(edit_form.prenom) }}</p>
+					<p>{{ form_errors(edit_form.dateNaissance) }}</p>
+					<p>{{ form_errors(edit_form.sexe) }}</p>
+					<p>{{ form_errors(edit_form.cne) }}</p>
+					<p>{{ form_errors(edit_form.cin) }}</p>
+					<p>{{ form_errors(edit_form.pays) }}</p>
+					<p>{{ form_errors(edit_form.ville) }}</p>
+					<p>{{ form_errors(edit_form.adresse) }}</p>
+					<p>{{ form_errors(edit_form.etablissementOrigine) }}</p>
+					<p>{{ form_errors(edit_form.typeDiplome) }}</p>
+					<p>{{ form_errors(edit_form.intituleDiplome) }}</p>
+					<p>{{ form_errors(edit_form.anneeObtentionBac) }}</p>
+					<p>{{ form_errors(edit_form.anneeInscription) }}</p>
+					<p>{{ form_errors(edit_form.anneeObtentionLicence) }}</p>
+					<p>{{ form_errors(edit_form.mention) }}</p>
+					<p>{{ form_errors(edit_form.filiere) }}</p>					
+					<p>{{ form_errors(edit_form.noteS1) }}</p>
+					<p>{{ form_errors(edit_form.noteS2) }}</p>
+					<p>{{ form_errors(edit_form.noteS3) }}</p>
+					<p>{{ form_errors(edit_form.noteS4) }}</p>
+					<p>{{ form_errors(edit_form.noteS5) }}</p>
+					<p>{{ form_errors(edit_form.noteS6) }}</p>
+					<p>{{ form_errors(edit_form.email) }}</p>
+					<p>{{ form_errors(edit_form.motDePasse) }}</p>
+				</div>	
+		      </div>		      
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Réessayer</button>		        
+		      </div>
+		    </div>
+		  </div>
+		</div>	
+		<script>
+	      	$(document).ready(function() {
+	      		$('#myModal').modal('show');
+	      	});
+	    </script>
+	    {% endif %}
+	    {# ####################################### END - Errors modal ###############################}
+	    {# ##########################################################################################}	
     	{{ form_start(edit_form, {'method': 'POST', 'attr': {'id': 'editCandidatureForm'}} ) }}   
     		<input type="hidden" name="_method" value="PUT">  		
     		<div id="rootwizard" class="wizard" style="margin-top:40px">
@@ -20,35 +81,28 @@
 			<div class="col-xs-9">
 				<div class="tab-content">
 					    
-					    <div class="tab-pane active" id="tab1">					        
-					    	
-					    	<div>{{ form_errors(edit_form) }}</div>
+					    <div class="tab-pane active" id="tab1">
 
 					    	<div class="row">
 						    	<div class="col-xs-12 col-md-6 col-lg-6">								    
 								    <div class="form-group">
-								        <label>Prénom</label>
-								        <p>{{ form_errors(edit_form.prenom) }}</p>
+								        <label>Prénom</label>								        
 								        <input type="text" id="txt_prenom" name="{{ edit_form.prenom.vars.full_name }}" placeholder="ex : Ahmed" value="{{ entity.prenom}}" class="form-control input-sm" required/>	
 								    </div>
 								    <div class="form-group">
-								        <label>Nom</label>
-								        <p>{{ form_errors(edit_form.nom) }}</p>
+								        <label>Nom</label>								        
 								        <input type="text" id="txt_nom" name="{{ edit_form.nom.vars.full_name }}" placeholder="ex : Talal" value="{{ entity.nom}}" class="form-control input-sm" required/>	
 								    </div>
 								    <div class="form-group">
-								        <label>CIN</label>
-								        <p>{{ form_errors(edit_form.cin) }}</p>
+								        <label>CIN</label>								        
 								        <input type="text" id="txt_cin" name="{{ edit_form.cin.vars.full_name }}" placeholder="ex : G 42402" value="{{ entity.cin}}" class="form-control input-sm" required/>	
 								    </div>
 								    <div class="form-group">
-								        <label>CNE</label>
-								        <p>{{ form_errors(edit_form.cne) }}</p>
+								        <label>CNE</label>								        
 								        <input type="text" id="txt_cne" name="{{ edit_form.cne.vars.full_name }}" placeholder="ex : 30494800" value="{{ entity.cne}}" class="form-control input-sm" required/>	
 								    </div>	
 								    <div class="form-group">
-								        <label>{{ form_label(edit_form.adresse) }}</label>
-								        <p>{{ form_errors(edit_form.adresse) }}</p>
+								        <label>{{ form_label(edit_form.adresse) }}</label>	        
 								        <textarea id="txt_adresse" name="{{ edit_form.adresse.vars.full_name }}" placeholder="ex : " class="form-control input-sm" required>{{ entity.adresse }}</textarea>
 								    </div>
 								</div>									
@@ -62,8 +116,7 @@
 								        </select>							        			    
 								    </div>
 									<div class="form-group">
-								        <label>{{ form_label(edit_form.dateNaissance) }}</label>
-								        <p>{{ form_errors(edit_form.dateNaissance) }}</p>
+								        <label>{{ form_label(edit_form.dateNaissance) }}</label>			        
 								        {{ form_widget(edit_form.dateNaissance) }}
 							        </div>
 							        <div class="form-group">
@@ -78,8 +131,7 @@
 								        </select>						        			    
 								    </div>
 								    <div class="form-group">
-								        <label>{{ form_label(edit_form.ville) }}</label>
-								        <p>{{ form_errors(edit_form.ville) }}</p>
+								        <label>{{ form_label(edit_form.ville) }}</label>	        
 
 								        <select id="ville" class="form-control input-md" {% if entity.pays != '350' %}style="display:none"{% endif %}>
 								        	{% for villeKey, villeValue in villesData %}
@@ -92,14 +144,12 @@
 							</div>
 					    </div>
 
-						<div class="tab-pane" id="tab2">							
-					    	<div>{{ form_errors(edit_form) }}</div>
+						<div class="tab-pane" id="tab2">
 
 					    	<div class="row">
 					    		<div class="row col-xs-12">
 					    			<div class="form-group">
-								        <label>Etablissement d'origine</label>
-								        <p>{{ form_errors(edit_form.filiere) }}</p>
+								        <label>Etablissement d'origine</label>								        
 								        <select id="{{ edit_form.etablissementOrigine.vars.id }}" name="{{ edit_form.etablissementOrigine.vars.full_name }}" class="form-control input-sm">
 								        	{% for etablissementId, etablissementValue in etablissementsData %}
 									        	<option value="{{ etablissementId }}" {% if  etablissementId == entity.etablissementOrigine %} selected {% endif %} >
@@ -109,8 +159,7 @@
 								        </select>							        			    
 								    </div>
 					    			<div class="form-group">
-								        <label>Type du diplôme</label>
-								        <p>{{ form_errors(edit_form.typeDiplome) }}</p>
+								        <label>Type du diplôme</label>								        
 								        <select id="{{ edit_form.typeDiplome.vars.id }}" name="{{ edit_form.typeDiplome.vars.full_name }}" class="form-control input-md">        	
 								        	{% for typeDiplomeKey, typeDiplomeValue in typesDiplomeData %}
 									        	<option value="{{ typeDiplomeKey }}" {% if  typeDiplomeKey == entity.typeDiplome %} selected {% endif %} >
@@ -120,8 +169,7 @@
 								        </select>						        			    
 								    </div>
 								    <div class="form-group">
-								        <label>{{ form_label(edit_form.intituleDiplome) }}</label>
-								        <p>{{ form_errors(edit_form.intituleDiplome) }}</p>
+								        <label>{{ form_label(edit_form.intituleDiplome) }}</label>			        
 
 								        <select id="intituleDiplome" class="form-control input-md" required>
 								        	{% for intituleDiplomeKey, intituleDiplomeValue in intitulesDiplomeData[entity.typeDiplome] %}
@@ -194,22 +242,19 @@
 								<div class="row">
 							    	<div class="col-xs-12 col-md-4 col-lg-4">
 									    <div class="form-group">
-									        <label>Semestre 1</label>
-									        <p>{{ form_errors(edit_form.noteS1) }}</p>
+									        <label>Semestre 1</label>									        
 									        <input type="text" id="txt_note_S1" name="{{ edit_form.noteS1.vars.full_name }}" value="{{ entity.noteS1|number_format(2, ',', '.') }}" placeholder="ex : 13,50" class="form-control input-sm"/>	
 								        </div>
 									</div>
 									<div class="col-xs-12 col-md-4 col-lg-4">
 										<div class="form-group">
-									        <label>Semestre 2</label>
-									        <p>{{ form_errors(edit_form.noteS2) }}</p>
+									        <label>Semestre 2</label>									        
 									        <input type="text" id="txt_note_S2" name="{{ edit_form.noteS2.vars.full_name }}" value="{{ entity.noteS2|number_format(2, ',', '.') }}" placeholder="ex : 11,00" class="form-control input-sm"/>	
 									    </div>
 									</div>
 									<div class="col-xs-12 col-md-4 col-lg-4">
 										<div class="form-group">
-									        <label>Semestre 3</label>
-									        <p>{{ form_errors(edit_form.noteS3) }}</p>
+									        <label>Semestre 3</label>									        
 									        <input type="text" id="txt_note_S3" name="{{ edit_form.noteS3.vars.full_name }}" value="{{ entity.noteS3|number_format(2, ',', '.')  }}" placeholder="ex : 14,00" class="form-control input-sm"/>	
 								        </div>	    
 									</div>
@@ -217,22 +262,19 @@
 								<div class="row">
 							    	<div class="col-xs-12 col-md-4 col-lg-4">
 								        <div class="form-group">
-									        <label>Semestre 4</label>
-									        <p>{{ form_errors(edit_form.noteS4) }}</p>
+									        <label>Semestre 4</label>									        
 									        <input type="text" id="txt_note_S4" name="{{ edit_form.noteS4.vars.full_name }}" value="{{ entity.noteS4|number_format(2, ',', '.') }}" placeholder="ex : 10,00" class="form-control input-sm"/>	
 									    </div>
 									</div>
 									<div class="col-xs-12 col-md-4 col-lg-4">
 								        <div class="form-group">
-									        <label>Semestre 5</label>
-									        <p>{{ form_errors(edit_form.noteS5) }}</p>
+									        <label>Semestre 5</label>									        
 									        <input type="text" id="txt_note_S5" name="{{ edit_form.noteS5.vars.full_name }}" value="{{ entity.noteS5|number_format(2, ',', '.') }}" placeholder="ex : 14,00" class="form-control input-sm"/>	
 								        </div>		    
 									</div>
 									<div class="col-xs-12 col-md-4 col-lg-4">
 								        <div class="form-group">
 									        <label>Semestre 6</label>
-									        <p>{{ form_errors(edit_form.noteS6) }}</p>
 									        <input type="text" id="txt_note_S6" name="{{ edit_form.noteS6.vars.full_name }}" value="{{ entity.noteS6|number_format(2, ',', '.') }}" placeholder="ex : 10,00" class="form-control input-sm"/>	
 									    </div>		    
 									</div>
@@ -241,8 +283,6 @@
 						</div>	 
 
 						<div class="tab-pane" id="tab3">
-					      	
-					    	<div>{{ form_errors(edit_form) }}</div>
 
 					    	<div class="row">
 						    	<div class="col-xs-12 col-md-12 col-lg-12">
@@ -277,13 +317,19 @@
 							</div>
 					    </div>
 
-						<div class="tab-pane" id="tab4">
-							
-					    	<div>{{ form_errors(edit_form) }}</div>
+						<div class="tab-pane" id="tab4">					    	
 
 					    	<div class="row">
 						    	<div class="col-xs-12">
-						    	
+						    		{# ##############################################################################}
+						    		{# ###### Give values to 'email' and 'motDePasse' field to skip validation #### #}
+						    		{# ##############################################################################}
+						    		<input type="hidden" name="{{ edit_form.email.vars.full_name }}" value="somemail@domain.com"/>
+								    <input type="hidden" name="{{ edit_form.motDePasse.vars.full_name }}" value="123"/>	
+									{# ##############################################################################}
+						    		{# ###### Give values to 'email' and 'motDePasse' field to skip validation #### #}
+						    		{# ##############################################################################}
+
 								    <div class="form-group">
 								    	<p>Voulez-vous valider les modifications apportées à votre candidature ?</b></p>
 								    </div>								    								
@@ -299,7 +345,7 @@
 				    <div class="pager wizard">					
 						<li class="previous" style="background-color: #83A29A;color:#fff"><a href="javascript:;">Etape précedente</a></li>					
 					  	<li class="next"><a href="javascript:;">Etape suivante</a></li>
-						<li class="next finish" style="display:none;"><a href="javascript:;" style="background-color:#2A2; border:0; color:#fff">Envoyer la demande de candidateure</a></li>
+						<li class="next finish" style="display:none;"><a href="javascript:;" style="background-color:#2A2; border:0; color:#fff">Modifier la candidature</a></li>
 					</div>
 
 				</div>					
@@ -332,7 +378,7 @@
 
 				// Make sure the values are valid before moving to next step
 				if(!$("#editCandidatureForm").valid()){
-					return false;
+					//return false;
 				}
 
 				if(index == 3 && filiereChoosedMoreThanOnce()){

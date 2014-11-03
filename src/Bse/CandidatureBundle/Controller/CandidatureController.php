@@ -91,7 +91,7 @@ class CandidatureController extends Controller
             $userManager->updateUser($user);
             // bind new entity to created user
             $entity->setFosuserId($user->getId());  
-        
+
             $em = $this->getDoctrine()->getManager();            
             $em->persist($entity);
             $em->flush();
@@ -277,7 +277,7 @@ class CandidatureController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
+        $editForm->handleRequest($request);        
 
         if ($editForm->isValid()) {
             $em->flush();
@@ -287,10 +287,21 @@ class CandidatureController extends Controller
             return $this->redirect($this->generateUrl('bse_candidature_welcome'));
         }
 
+        $filieresChoosed = explode("//", $entity->getFiliere());
+
         return $this->render('BseCandidatureBundle:Candidature:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'filieresChoosed' => $filieresChoosed,
+            'filieresData' => ArrayData::getFilieresData($this->container),
+            'paysData' => ArrayData::getPaysData($this->get('kernel')),
+            'villesData' => ArrayData::getVillesData($this->get('kernel')),
+            'mentionsData' => ArrayData::getMentionsData(),
+            'etablissementsData' => ArrayData::getEtablissementsData($this->get('kernel')),
+            'typesDiplomeData' => ArrayData::getTypesDiplomeData(),
+            'intitulesDiplomeData' => ArrayData::getIntitulesDiplomeData($this->get('kernel')),
+            'facultesData' => ArrayData::getFacultesData()
         ));
     }
     /**

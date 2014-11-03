@@ -66,7 +66,7 @@
 	    </script>
 	    {% endif %}
 	    {# ####################################### END - Errors modal ###############################}
-	    {# ##########################################################################################}	
+	    {# ##########################################################################################}
     	{{ form_start(edit_form, {'method': 'POST', 'attr': {'id': 'editCandidatureForm'}} ) }}   
     		<input type="hidden" name="_method" value="PUT">  		
     		<div id="rootwizard" class="wizard" style="margin-top:40px">
@@ -232,13 +232,13 @@
 									        </select>						        			    
 									    </div>
 									</div>
-									<div class="col-xs-4">												    	
+									{#<div class="col-xs-4">												    	
 						    			<div class="form-group" style="margin: 36px 0 0 0;">
 									        <label>Diplôme étranger ? &nbsp;&nbsp;<span>{{ form_widget(edit_form.diplomeEtranger) }}</span></label>
 									    </div>
-									</div>
+									</div>#}
 								</div>
-								<h4>Notes :</h4>
+								<h4>Moyennes :</h4>
 								<div class="row">
 							    	<div class="col-xs-12 col-md-4 col-lg-4">
 									    <div class="form-group">

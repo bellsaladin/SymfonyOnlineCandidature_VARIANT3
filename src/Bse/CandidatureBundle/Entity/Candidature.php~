@@ -185,7 +185,7 @@ class Candidature
     /**
      * @var string
      *
-     * @ORM\Column(name="filiere", type="string", length=150, nullable=true)
+     * @ORM\Column(name="filiere", type="text", nullable=true)
      */
     private $filiere;
 
@@ -204,4 +204,646 @@ class Candidature
     private $fosuserId;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set cin
+     *
+     * @param string $cin
+     * @return Candidature
+     */
+    public function setCin($cin)
+    {
+        $this->cin = $cin;
+
+        return $this;
+    }
+
+    /**
+     * Get cin
+     *
+     * @return string 
+     */
+    public function getCin()
+    {
+        return $this->cin;
+    }
+
+    /**
+     * Set cne
+     *
+     * @param string $cne
+     * @return Candidature
+     */
+    public function setCne($cne)
+    {
+        $this->cne = $cne;
+
+        return $this;
+    }
+
+    /**
+     * Get cne
+     *
+     * @return string 
+     */
+    public function getCne()
+    {
+        return $this->cne;
+    }
+
+    /**
+     * Set nom
+     *
+     * @param string $nom
+     * @return Candidature
+     */
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * Get nom
+     *
+     * @return string 
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * Set prenom
+     *
+     * @param string $prenom
+     * @return Candidature
+     */
+    public function setPrenom($prenom)
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    /**
+     * Get prenom
+     *
+     * @return string 
+     */
+    public function getPrenom()
+    {
+        return $this->prenom;
+    }
+
+    /**
+     * Set dateNaissance
+     *
+     * @param \DateTime $dateNaissance
+     * @return Candidature
+     */
+    public function setDateNaissance($dateNaissance)
+    {
+        $this->dateNaissance = $dateNaissance;
+
+        return $this;
+    }
+
+    /**
+     * Get dateNaissance
+     *
+     * @return \DateTime 
+     */
+    public function getDateNaissance()
+    {
+        return $this->dateNaissance;
+    }
+
+    /**
+     * Set pays
+     *
+     * @param string $pays
+     * @return Candidature
+     */
+    public function setPays($pays)
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * Get pays
+     *
+     * @return string 
+     */
+    public function getPays()
+    {
+        return $this->pays;
+    }
+
+    /**
+     * Set ville
+     *
+     * @param string $ville
+     * @return Candidature
+     */
+    public function setVille($ville)
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    /**
+     * Get ville
+     *
+     * @return string 
+     */
+    public function getVille()
+    {
+        return $this->ville;
+    }
+
+    /**
+     * Set adresse
+     *
+     * @param string $adresse
+     * @return Candidature
+     */
+    public function setAdresse($adresse)
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * Get adresse
+     *
+     * @return string 
+     */
+    public function getAdresse()
+    {
+        return $this->adresse;
+    }
+
+    /**
+     * Set sexe
+     *
+     * @param string $sexe
+     * @return Candidature
+     */
+    public function setSexe($sexe)
+    {
+        $this->sexe = $sexe;
+
+        return $this;
+    }
+
+    /**
+     * Get sexe
+     *
+     * @return string 
+     */
+    public function getSexe()
+    {
+        return $this->sexe;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Candidature
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set etablissementOrigine
+     *
+     * @param string $etablissementOrigine
+     * @return Candidature
+     */
+    public function setEtablissementOrigine($etablissementOrigine)
+    {
+        $this->etablissementOrigine = $etablissementOrigine;
+
+        return $this;
+    }
+
+    /**
+     * Get etablissementOrigine
+     *
+     * @return string 
+     */
+    public function getEtablissementOrigine()
+    {
+        return $this->etablissementOrigine;
+    }
+
+    /**
+     * Set typeDiplome
+     *
+     * @param string $typeDiplome
+     * @return Candidature
+     */
+    public function setTypeDiplome($typeDiplome)
+    {
+        $this->typeDiplome = $typeDiplome;
+
+        return $this;
+    }
+
+    /**
+     * Get typeDiplome
+     *
+     * @return string 
+     */
+    public function getTypeDiplome()
+    {
+        return $this->typeDiplome;
+    }
+
+    /**
+     * Set intituleDiplome
+     *
+     * @param string $intituleDiplome
+     * @return Candidature
+     */
+    public function setIntituleDiplome($intituleDiplome)
+    {
+        $this->intituleDiplome = $intituleDiplome;
+
+        return $this;
+    }
+
+    /**
+     * Get intituleDiplome
+     *
+     * @return string 
+     */
+    public function getIntituleDiplome()
+    {
+        return $this->intituleDiplome;
+    }
+
+    /**
+     * Set mention
+     *
+     * @param string $mention
+     * @return Candidature
+     */
+    public function setMention($mention)
+    {
+        $this->mention = $mention;
+
+        return $this;
+    }
+
+    /**
+     * Get mention
+     *
+     * @return string 
+     */
+    public function getMention()
+    {
+        return $this->mention;
+    }
+
+    /**
+     * Set diplomeEtranger
+     *
+     * @param boolean $diplomeEtranger
+     * @return Candidature
+     */
+    public function setDiplomeEtranger($diplomeEtranger)
+    {
+        $this->diplomeEtranger = $diplomeEtranger;
+
+        return $this;
+    }
+
+    /**
+     * Get diplomeEtranger
+     *
+     * @return boolean 
+     */
+    public function getDiplomeEtranger()
+    {
+        return $this->diplomeEtranger;
+    }
+
+    /**
+     * Set anneeObtentionLicence
+     *
+     * @param integer $anneeObtentionLicence
+     * @return Candidature
+     */
+    public function setAnneeObtentionLicence($anneeObtentionLicence)
+    {
+        $this->anneeObtentionLicence = $anneeObtentionLicence;
+
+        return $this;
+    }
+
+    /**
+     * Get anneeObtentionLicence
+     *
+     * @return integer 
+     */
+    public function getAnneeObtentionLicence()
+    {
+        return $this->anneeObtentionLicence;
+    }
+
+    /**
+     * Set anneeObtentionBac
+     *
+     * @param integer $anneeObtentionBac
+     * @return Candidature
+     */
+    public function setAnneeObtentionBac($anneeObtentionBac)
+    {
+        $this->anneeObtentionBac = $anneeObtentionBac;
+
+        return $this;
+    }
+
+    /**
+     * Get anneeObtentionBac
+     *
+     * @return integer 
+     */
+    public function getAnneeObtentionBac()
+    {
+        return $this->anneeObtentionBac;
+    }
+
+    /**
+     * Set noteS1
+     *
+     * @param float $noteS1
+     * @return Candidature
+     */
+    public function setNoteS1($noteS1)
+    {
+        $this->noteS1 = $noteS1;
+
+        return $this;
+    }
+
+    /**
+     * Get noteS1
+     *
+     * @return float 
+     */
+    public function getNoteS1()
+    {
+        return $this->noteS1;
+    }
+
+    /**
+     * Set noteS2
+     *
+     * @param float $noteS2
+     * @return Candidature
+     */
+    public function setNoteS2($noteS2)
+    {
+        $this->noteS2 = $noteS2;
+
+        return $this;
+    }
+
+    /**
+     * Get noteS2
+     *
+     * @return float 
+     */
+    public function getNoteS2()
+    {
+        return $this->noteS2;
+    }
+
+    /**
+     * Set noteS3
+     *
+     * @param float $noteS3
+     * @return Candidature
+     */
+    public function setNoteS3($noteS3)
+    {
+        $this->noteS3 = $noteS3;
+
+        return $this;
+    }
+
+    /**
+     * Get noteS3
+     *
+     * @return float 
+     */
+    public function getNoteS3()
+    {
+        return $this->noteS3;
+    }
+
+    /**
+     * Set noteS4
+     *
+     * @param float $noteS4
+     * @return Candidature
+     */
+    public function setNoteS4($noteS4)
+    {
+        $this->noteS4 = $noteS4;
+
+        return $this;
+    }
+
+    /**
+     * Get noteS4
+     *
+     * @return float 
+     */
+    public function getNoteS4()
+    {
+        return $this->noteS4;
+    }
+
+    /**
+     * Set noteS5
+     *
+     * @param float $noteS5
+     * @return Candidature
+     */
+    public function setNoteS5($noteS5)
+    {
+        $this->noteS5 = $noteS5;
+
+        return $this;
+    }
+
+    /**
+     * Get noteS5
+     *
+     * @return float 
+     */
+    public function getNoteS5()
+    {
+        return $this->noteS5;
+    }
+
+    /**
+     * Set noteS6
+     *
+     * @param float $noteS6
+     * @return Candidature
+     */
+    public function setNoteS6($noteS6)
+    {
+        $this->noteS6 = $noteS6;
+
+        return $this;
+    }
+
+    /**
+     * Get noteS6
+     *
+     * @return float 
+     */
+    public function getNoteS6()
+    {
+        return $this->noteS6;
+    }
+
+    /**
+     * Set filiere
+     *
+     * @param string $filiere
+     * @return Candidature
+     */
+    public function setFiliere($filiere)
+    {
+        $this->filiere = $filiere;
+
+        return $this;
+    }
+
+    /**
+     * Get filiere
+     *
+     * @return string 
+     */
+    public function getFiliere()
+    {
+        return $this->filiere;
+    }
+
+    /**
+     * Set anneeInscription
+     *
+     * @param integer $anneeInscription
+     * @return Candidature
+     */
+    public function setAnneeInscription($anneeInscription)
+    {
+        $this->anneeInscription = $anneeInscription;
+
+        return $this;
+    }
+
+    /**
+     * Get anneeInscription
+     *
+     * @return integer 
+     */
+    public function getAnneeInscription()
+    {
+        return $this->anneeInscription;
+    }
+
+    /**
+     * Set fosuserId
+     *
+     * @param integer $fosuserId
+     * @return Candidature
+     */
+    public function setFosuserId($fosuserId)
+    {
+        $this->fosuserId = $fosuserId;
+
+        return $this;
+    }
+
+    /**
+     * Get fosuserId
+     *
+     * @return integer 
+     */
+    public function getFosuserId()
+    {
+        return $this->fosuserId;
+    }
+
+    /**
+     * ####################################################################################
+     * ############################        CUSTOM CODE        #############################
+     * ####################################################################################
+     */
+
+    /**
+     * @var string     
+     */
+    private $motDePasse;
+
+    /**
+     * Get motDePasse
+     *
+     * @return string 
+     */
+    public function getMotDePasse()
+    {
+        return $this->motDePasse;
+    }
+
+    /**
+     * Set motDePasse
+     *
+     * @param string $motDePasse
+     * @return Candidature
+     */
+    public function setMotDePasse($motDePasse)
+    {
+        $this->motDePasse = $motDePasse;
+
+        return $this;
+    }
 }

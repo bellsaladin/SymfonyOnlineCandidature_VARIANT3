@@ -75,7 +75,7 @@
 	    <td><b>Diplôme étranger :</b></td>
 	    <td>{% if candidature.diplomeEtranger == true %}Oui{% else %} Non{% endif %}</td>
     </tr>
-    <tr style="line-height:12px"><td colspan="4"><br/><h4>Notes</h4><hr/></td></tr>
+    <tr style="line-height:12px"><td colspan="4"><br/><h4>Moyennes</h4><hr/></td></tr>
     <tr style="line-height:20px">
 	    <td><b>Semestre 1: </b></td>
 	    <td>{{ candidature.noteS1|number_format(2, ',', '.') }}</td>

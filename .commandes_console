@@ -16,7 +16,7 @@ php app/console doctrine:generate:entities BseCandidatureBundle
 #################################### clear production cache ####################################
 *********************************************************************************************************
 
-php app/console cache:clear --env=prod
+php app/console cache:clear --env=prod --no-debug
 
 
 

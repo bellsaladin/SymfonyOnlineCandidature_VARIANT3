@@ -81,4 +81,3 @@ fos_user:
 
 white_october_tcpdf:
     class: 'Bse\CandidatureBundle\TCPDF\CandidaturePDF'
-

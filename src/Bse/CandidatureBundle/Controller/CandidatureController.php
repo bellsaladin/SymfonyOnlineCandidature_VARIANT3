@@ -228,14 +228,16 @@ class CandidatureController extends Controller
         if($user instanceof FOSUserEntity){ 
             if($entity->getFosUserId() != $user->getId())
             return $this->redirect($this->generateUrl('bse_candidature_welcome'));
-        }        
+        }else{
+            return $this->redirect($this->generateUrl('bse_candidature_welcome'));
+        }       
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Candidature entity.');
         }
 
         $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+        //$deleteForm = $this->createDeleteForm($id);
 
         $filieresChoosed = explode("//", $entity->getFiliere());        
         // transform $filieresChoosed array to key -> value array where key is 'faculte' and value is 'filiere'
@@ -244,7 +246,7 @@ class CandidatureController extends Controller
         return $this->render('BseCandidatureBundle:Candidature:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            //'delete_form' => $deleteForm->createView(),
             'filieresChoosed' => $filieresChoosed,
             'filieresData' => ArrayData::getFilieresData($this->container),
             'paysData' => ArrayData::getPaysData($this->get('kernel')),
@@ -289,7 +291,7 @@ class CandidatureController extends Controller
             throw $this->createNotFoundException('Unable to find Candidature entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        //$deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);        
 
@@ -306,7 +308,7 @@ class CandidatureController extends Controller
         return $this->render('BseCandidatureBundle:Candidature:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            //'delete_form' => $deleteForm->createView(),
             'filieresChoosed' => $filieresChoosed,
             'filieresData' => ArrayData::getFilieresData($this->container),
             'paysData' => ArrayData::getPaysData($this->get('kernel')),
@@ -407,7 +409,8 @@ class CandidatureController extends Controller
         // get values of fields stored as keys 
         
         $etablissementsArray = ArrayData::getEtablissementsData($this->get('kernel'));
-        $intitulesDiplomeArray = ArrayData::getIntitulesDiplomeData($this->get('kernel')) [$candidature->getTypeDiplome()];        
+        $intitulesDiplomeArray = ArrayData::getIntitulesDiplomeData($this->get('kernel'));
+        $intitulesDiplomeArray = $intitulesDiplomeArray[$candidature->getTypeDiplome()];
         
         $candidature->setIntituleDiplome(ArrayData::getValueUsingKey($candidature->getIntituleDiplome(), $intitulesDiplomeArray) );
         $candidature->setTypeDiplome(ArrayData::getValueUsingKey($candidature->getTypeDiplome(), ArrayData::getTypesDiplomeData()) );

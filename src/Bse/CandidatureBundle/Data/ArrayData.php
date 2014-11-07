@@ -31,7 +31,7 @@ class ArrayData
 			'Biologie - Santé - Environnement',
 			'Nutrition humaine, Sécurité alimentaire et Management de la qualité',
 			'MASTER SPÉCIALISÉ MÉTIERS D’ENSEIGNEMENT ET DE FORMATION EN PHYSIQUE-CHIMIE',
-			'MASTER SPÉCIALISÉ MÉTIERS D’ENSEIGNEMENT ET DE FORMATION',
+			'MASTER SPÉCIALISÉ MÉTIERS D’ENSEIGNEMENT ET DE FORMATION EN MATHÉMATIQUES',
 			'Informatique'
 		);
 

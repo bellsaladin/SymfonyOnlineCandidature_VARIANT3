@@ -122,6 +122,15 @@ class ArrayData
 
     }
 
+    public static function getSystemesData()
+    {
+    	$data =array(
+			'LMD',
+			'Ancien'
+		);
+		return $data;
+    }
+
     public static function getMentionsData()
     {
     	$data =array(

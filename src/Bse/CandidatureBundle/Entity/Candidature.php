@@ -141,6 +141,13 @@ class Candidature
     private $anneeObtentionBac;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="systeme", type="string", length=10, nullable=true)
+     */
+    private $systeme;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="note_s1", type="float", precision=10, scale=0, nullable=true)
@@ -604,6 +611,29 @@ class Candidature
     public function getAnneeObtentionBac()
     {
         return $this->anneeObtentionBac;
+    }
+
+    /**
+     * Set systeme
+     *
+     * @param string $systeme
+     * @return Candidature
+     */
+    public function setSysteme($systeme)
+    {
+        $this->systeme = $systeme;
+
+        return $this;
+    }
+
+    /**
+     * Get systeme
+     *
+     * @return string 
+     */
+    public function getSysteme()
+    {
+        return $this->systeme;
     }
 
     /**

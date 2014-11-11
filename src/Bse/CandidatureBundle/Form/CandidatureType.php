@@ -35,6 +35,7 @@ class CandidatureType extends AbstractType
             ->add('anneeObtentionLicence')
             ->add('anneeObtentionBac')
             ->add('anneeInscription')
+            ->add('systeme')
             ->add('noteS1')
             ->add('noteS2')
             ->add('noteS3')
